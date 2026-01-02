@@ -49,12 +49,26 @@ export default async function handler(
     }
 
     // Convert chat history to Gemini format
-    const history = (chatHistory || []).slice(-10).map((msg: { role: string; content: string }) => ({
-      role: msg.role === 'student' ? 'user' : 'model',
-      parts: [{ text: msg.content }],
-    }));
+    // Filter and ensure first message is from user
+    let history = (chatHistory || [])
+      .slice(-10)
+      .map((msg: { role: string; content: string }) => ({
+        role: msg.role === 'student' ? 'user' : 'model',
+        parts: [{ text: msg.content }],
+      }));
 
-    // Start chat with history
+    // Gemini requires first message to be from 'user', not 'model'
+    // Remove any leading 'model' messages
+    while (history.length > 0 && history[0].role === 'model') {
+      history = history.slice(1);
+    }
+
+    // If no valid history (all were model messages), use empty history
+    if (history.length === 0 || history[0].role !== 'user') {
+      history = [];
+    }
+
+    // Start chat with history (or without if empty)
     const chat = model.startChat({
       history: history.length > 0 ? history : undefined,
     });
