@@ -39,13 +39,23 @@ export default async function handler(
     // Initialize Gemini
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Try gemini-1.5-pro first, fallback to gemini-pro
+    // Use gemini-pro (widely available) or try gemini-1.5-flash if available
+    // gemini-1.5-pro may not be available in all API versions
     let model;
     try {
-      model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+      // Try gemini-1.5-flash first (newer, faster, more available)
+      model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      console.log('Using gemini-1.5-flash');
     } catch (e) {
-      console.log('Trying gemini-pro as fallback');
-      model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+      try {
+        // Fallback to gemini-pro (most widely available)
+        model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        console.log('Using gemini-pro');
+      } catch (e2) {
+        // Last resort: try without specifying model (uses default)
+        model = genAI.getGenerativeModel({});
+        console.log('Using default model');
+      }
     }
 
     // Convert chat history to Gemini format
