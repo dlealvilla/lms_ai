@@ -17,7 +17,9 @@ class APIAIProvider implements AIProvider {
 
       if (!response.ok) {
         const errorData = await response.json();
+        console.error('API error response:', errorData);
         if (errorData.mockResponse) {
+          console.warn('Using mock response - API key may not be configured');
           return errorData.mockResponse;
         }
         throw new Error(errorData.error || 'Failed to generate response');
