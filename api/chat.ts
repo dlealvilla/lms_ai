@@ -39,10 +39,34 @@ export default async function handler(
     // Initialize Gemini
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Use gemini-pro - the most widely available and stable model
-    // Newer models (1.5-flash, 1.5-pro) may not be available in all API versions
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-    console.log('Using gemini-pro model');
+    // Try to get available models first, or use default
+    let model;
+    try {
+      // First, try to list available models to see what's accessible
+      // But for now, let's try the default model (no model name specified)
+      model = genAI.getGenerativeModel({});
+      console.log('Using default Gemini model');
+    } catch (e) {
+      // If default doesn't work, try common model names
+      const modelNames = ['gemini-pro', 'models/gemini-pro', 'gemini-1.5-flash', 'models/gemini-1.5-flash'];
+      let modelFound = false;
+      
+      for (const modelName of modelNames) {
+        try {
+          model = genAI.getGenerativeModel({ model: modelName });
+          console.log(`Using model: ${modelName}`);
+          modelFound = true;
+          break;
+        } catch (err) {
+          console.log(`Model ${modelName} not available`);
+          continue;
+        }
+      }
+      
+      if (!modelFound) {
+        throw new Error('No available Gemini models found. Please check your API key and ensure the Generative Language API is enabled.');
+      }
+    }
 
     // Convert chat history to Gemini format
     // Filter and ensure first message is from user
