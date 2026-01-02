@@ -38,7 +38,15 @@ export default async function handler(
 
     // Initialize Gemini
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    
+    // Try gemini-1.5-pro first, fallback to gemini-pro
+    let model;
+    try {
+      model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+    } catch (e) {
+      console.log('Trying gemini-pro as fallback');
+      model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    }
 
     // Convert chat history to Gemini format
     const history = (chatHistory || []).slice(-10).map((msg: { role: string; content: string }) => ({
@@ -59,9 +67,20 @@ export default async function handler(
     return response.status(200).json({ response: text });
   } catch (error: any) {
     console.error('Gemini API error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      status: error.status,
+      statusText: error.statusText,
+      stack: error.stack
+    });
+    
+    // Return more detailed error information
     return response.status(500).json({ 
       error: 'Failed to generate AI response',
-      message: error.message || 'Unknown error'
+      message: error.message || 'Unknown error',
+      details: error.status ? `Status: ${error.status}` : undefined,
+      // Include mock response so frontend can still show something
+      mockResponse: `I encountered an error: ${error.message || 'Unknown error'}. Please check your API key configuration.`
     });
   }
 }

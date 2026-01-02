@@ -16,13 +16,19 @@ class APIAIProvider implements AIProvider {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        const errorData = await response.json().catch(() => ({ error: 'Failed to parse error response' }));
         console.error('API error response:', errorData);
+        console.error('Response status:', response.status);
+        
+        // If there's a mockResponse, use it (this helps with debugging)
         if (errorData.mockResponse) {
-          console.warn('Using mock response - API key may not be configured');
+          console.warn('Using mock/fallback response');
           return errorData.mockResponse;
         }
-        throw new Error(errorData.error || 'Failed to generate response');
+        
+        // Throw error with more details
+        const errorMessage = errorData.message || errorData.error || `HTTP ${response.status}: Failed to generate response`;
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
