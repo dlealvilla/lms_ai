@@ -9,11 +9,5 @@
       "source": "/api/:path*",
       "destination": "/api/:path*"
     }
-  ],
-  "crons": [
-    {
-      "path": "/api/cron/auto-close-assessments",
-      "schedule": "0 0 * * *"
-    }
   ]
 }
