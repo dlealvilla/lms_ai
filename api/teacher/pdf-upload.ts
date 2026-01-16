@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { put, del } from '@vercel/blob';
-import { prisma } from '../../../lib/db.js';
-import { getSessionFromRequest, requireRole, AuthError } from '../../../lib/auth.js';
+import { prisma } from '../lib/db.js';
+import { getSessionFromRequest, requireRole, AuthError } from '../lib/auth.js';
 
 // Max file size: 10MB
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
@@ -18,8 +18,8 @@ export default async function handler(
     const session = getSessionFromRequest(request);
     const user = requireRole(session, ['TEACHER']);
     
-    const { assessmentId } = request.query;
-    if (!assessmentId || typeof assessmentId !== 'string') {
+    const assessmentId = request.query.assessmentId as string;
+    if (!assessmentId) {
       return response.status(400).json({ error: 'Assessment ID required' });
     }
 
@@ -48,15 +48,6 @@ export default async function handler(
 
     if (assessment.course.teachers.length === 0) {
       return response.status(403).json({ error: 'Not assigned to this course' });
-    }
-
-    // Handle multipart form data
-    // Vercel serverless functions receive the body as Buffer for multipart
-    const contentType = request.headers['content-type'] || '';
-    
-    if (!contentType.includes('application/pdf') && !contentType.includes('multipart/form-data')) {
-      // If content-type is application/pdf, body is the raw PDF
-      // Otherwise, we need to parse multipart
     }
 
     // For simplicity, expect the raw PDF body with appropriate headers
