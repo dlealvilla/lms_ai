@@ -1,4 +1,4 @@
-import { PrismaClient, Assessment } from '../../src/generated/prisma';
+import { PrismaClient, Assessment } from '../../src/generated/prisma/index.js';
 
 // Singleton PrismaClient for serverless functions
 declare global {

@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { put, del } from '@vercel/blob';
-import { prisma } from '../../../lib/db';
-import { getSessionFromRequest, requireRole, AuthError } from '../../../lib/auth';
+import { prisma } from '../../../lib/db.js';
+import { getSessionFromRequest, requireRole, AuthError } from '../../../lib/auth.js';
 
 // Max file size: 10MB
 const MAX_FILE_SIZE = 10 * 1024 * 1024;

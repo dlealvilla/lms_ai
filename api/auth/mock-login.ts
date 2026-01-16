@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { prisma } from '../lib/db';
-import { createMockToken } from '../lib/auth';
+import { prisma } from '../lib/db.js';
+import { createMockToken } from '../lib/auth.js';
 
 export default async function handler(
   request: VercelRequest,

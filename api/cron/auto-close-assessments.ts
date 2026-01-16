@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { prisma } from '../lib/db';
+import { prisma } from '../lib/db.js';
 
 // Cron endpoint to auto-close assessments
 // Protected by CRON_SECRET header

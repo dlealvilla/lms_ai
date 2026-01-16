@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { prisma } from '../lib/db';
-import { getSessionFromRequest, requireRole, AuthError } from '../lib/auth';
+import { prisma } from '../lib/db.js';
+import { getSessionFromRequest, requireRole, AuthError } from '../lib/auth.js';
 
 export default async function handler(
   request: VercelRequest,
