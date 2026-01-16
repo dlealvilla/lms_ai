@@ -1,0 +1,214 @@
+// Prisma schema for Wildmind Education LMS
+// Database: PostgreSQL (Vercel Postgres or Neon)
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum Role {
+  STUDENT
+  TEACHER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum CourseStatus {
+  CURRENT
+  PAST
+}
+
+enum AssessmentStatus {
+  OPEN
+  CLOSED
+}
+
+// Models
+
+model Tenant {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  // Relations
+  users             User[]
+  courses           Course[]
+  enrollments       Enrollment[]
+  courseTeachers    CourseTeacher[]
+  assessments       Assessment[]
+  assessmentAttempts AssessmentAttempt[]
+  statusHistory     AssessmentStatusHistory[]
+}
+
+model User {
+  id        String     @id @default(uuid())
+  tenantId  String?    // Nullable only for SUPER_ADMIN
+  name      String
+  email     String
+  role      Role       @default(STUDENT)
+  status    UserStatus @default(ACTIVE)
+  createdAt DateTime   @default(now())
+
+  // Relations
+  tenant             Tenant?              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  enrollments        Enrollment[]         @relation("StudentEnrollments")
+  courseTeachers     CourseTeacher[]      @relation("TeacherCourses")
+  assessmentAttempts AssessmentAttempt[]  @relation("StudentAttempts")
+  markedAttempts     AssessmentAttempt[]  @relation("MarkedByTeacher")
+  statusChanges      AssessmentStatusHistory[]
+
+  // Indexes
+  @@unique([tenantId, email])
+  @@index([tenantId, role])
+}
+
+model Course {
+  id        String       @id @default(uuid())
+  tenantId  String
+  code      String       // e.g., COMP101
+  title     String
+  term      String       // e.g., 2026 T1
+  status    CourseStatus @default(CURRENT)
+  createdAt DateTime     @default(now())
+
+  // Relations
+  tenant        Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  enrollments   Enrollment[]
+  teachers      CourseTeacher[]
+  assessments   Assessment[]
+
+  // Indexes
+  @@index([tenantId, status])
+  @@index([tenantId, term])
+}
+
+model Enrollment {
+  id         String   @id @default(uuid())
+  tenantId   String
+  courseId   String
+  studentId  String
+  enrolledAt DateTime @default(now())
+
+  // Relations
+  tenant  Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  course  Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  student User   @relation("StudentEnrollments", fields: [studentId], references: [id], onDelete: Cascade)
+
+  // Constraints
+  @@unique([courseId, studentId])
+  @@index([studentId])
+  @@index([courseId])
+}
+
+model CourseTeacher {
+  id         String   @id @default(uuid())
+  tenantId   String
+  courseId   String
+  teacherId  String
+  assignedAt DateTime @default(now())
+
+  // Relations
+  tenant  Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  course  Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  teacher User   @relation("TeacherCourses", fields: [teacherId], references: [id], onDelete: Cascade)
+
+  // Constraints
+  @@unique([courseId, teacherId])
+  @@index([teacherId])
+  @@index([courseId])
+}
+
+model Assessment {
+  id              String           @id @default(uuid())
+  tenantId        String
+  courseId        String
+  title           String
+  descriptionText String?
+  status          AssessmentStatus @default(OPEN)
+  dueAt           DateTime?
+  closeAtDue      Boolean          @default(true)
+  
+  // PDF upload fields (Vercel Blob)
+  pdfBlobUrl      String?
+  pdfFileName     String?
+  pdfMimeType     String?
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  // Relations
+  tenant        Tenant                    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  course        Course                    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  attempts      AssessmentAttempt[]
+  statusHistory AssessmentStatusHistory[]
+
+  // Indexes
+  @@index([courseId])
+  @@index([tenantId, status])
+  @@index([dueAt])
+}
+
+model AssessmentAttempt {
+  id           String    @id @default(uuid())
+  tenantId     String
+  assessmentId String
+  studentId    String
+  
+  // State stored as JSON (TipTap content, chat history, insertions)
+  state        Json?
+  
+  startedAt    DateTime  @default(now())
+  lastSavedAt  DateTime  @default(now())
+  submittedAt  DateTime?
+  version      Int       @default(0)
+  
+  // Marking
+  mark               Int?      // 0-100 integer
+  markedAt           DateTime?
+  markedByTeacherId  String?
+
+  // Relations
+  tenant         Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  assessment     Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  student        User       @relation("StudentAttempts", fields: [studentId], references: [id], onDelete: Cascade)
+  markedByTeacher User?     @relation("MarkedByTeacher", fields: [markedByTeacherId], references: [id], onDelete: SetNull)
+
+  // Constraints
+  @@unique([assessmentId, studentId])
+  @@index([studentId, lastSavedAt])
+  @@index([assessmentId, studentId])
+}
+
+// Audit table for assessment status changes (optional but recommended)
+model AssessmentStatusHistory {
+  id              String           @id @default(uuid())
+  tenantId        String
+  assessmentId    String
+  changedByUserId String
+  fromStatus      AssessmentStatus
+  toStatus        AssessmentStatus
+  reason          String?
+  createdAt       DateTime         @default(now())
+
+  // Relations
+  tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  assessment  Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  changedBy   User       @relation(fields: [changedByUserId], references: [id], onDelete: Cascade)
+
+  // Indexes
+  @@index([assessmentId])
+  @@index([tenantId])
+}
+

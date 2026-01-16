@@ -1,0 +1,45 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { prisma } from '../lib/db';
+import { getSessionFromRequest, requireRole, AuthError } from '../lib/auth';
+
+export default async function handler(
+  request: VercelRequest,
+  response: VercelResponse
+) {
+  if (request.method !== 'GET') {
+    return response.status(405).json({ error: 'Method not allowed' });
+  }
+
+  try {
+    const session = getSessionFromRequest(request);
+    const user = requireRole(session, ['STUDENT']);
+
+    // Get courses where student is enrolled
+    const enrollments = await prisma.enrollment.findMany({
+      where: {
+        tenantId: user.tenantId,
+        studentId: user.userId,
+      },
+      include: {
+        course: true,
+      },
+    });
+
+    const courses = enrollments.map(e => ({
+      id: e.course.id,
+      code: e.course.code,
+      title: e.course.title,
+      term: e.course.term,
+      status: e.course.status,
+    }));
+
+    return response.status(200).json({ courses });
+  } catch (error: any) {
+    if (error instanceof AuthError) {
+      return response.status(error.statusCode).json({ error: error.message });
+    }
+    console.error('Student courses error:', error);
+    return response.status(500).json({ error: 'Failed to fetch courses' });
+  }
+}
+

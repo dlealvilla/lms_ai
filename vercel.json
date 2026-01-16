@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run build && npx prisma generate",
   "outputDirectory": "dist",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
@@ -9,6 +9,11 @@
       "source": "/api/:path*",
       "destination": "/api/:path*"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/auto-close-assessments",
+      "schedule": "*/10 * * * *"
+    }
   ]
 }
-
