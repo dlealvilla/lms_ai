@@ -13,7 +13,7 @@
   "crons": [
     {
       "path": "/api/cron/auto-close-assessments",
-      "schedule": "*/10 * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }
