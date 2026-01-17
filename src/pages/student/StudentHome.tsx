@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthLayout } from '../../components/Layout/AuthLayout';
-import { getAuthHeaders } from '../../lib/auth/AuthContext';
+import { AuthenticatedLayout } from '@/components/Layout/AuthenticatedLayout';
+import { getAuthHeaders } from '@/lib/auth/AuthContext';
+import { Card, CardContent } from '@/components/ui/card';
+import { BookOpen } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface Course {
   id: string;
@@ -44,56 +47,81 @@ export function StudentHome() {
 
   if (isLoading) {
     return (
-      <AuthLayout>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">Loading courses...</div>
+      <AuthenticatedLayout title="My Courses">
+        <div className="space-y-8">
+          <div className="space-y-2">
+            <div className="h-8 w-48 bg-background-elevated rounded animate-pulse" />
+            <div className="h-5 w-96 bg-background-elevated rounded animate-pulse" />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <Card key={i}>
+                <CardContent className="pt-6">
+                  <div className="h-4 w-20 bg-background-elevated rounded animate-pulse mb-2" />
+                  <div className="h-6 w-full bg-background-elevated rounded animate-pulse mb-2" />
+                  <div className="h-4 w-32 bg-background-elevated rounded animate-pulse" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-      </AuthLayout>
+      </AuthenticatedLayout>
     );
   }
 
   if (error) {
     return (
-      <AuthLayout>
-        <div className="bg-red-50 text-red-600 p-4 rounded-lg">
-          {error}
-        </div>
-      </AuthLayout>
+      <AuthenticatedLayout title="My Courses">
+        <Card className="border-error/20 bg-error/5">
+          <CardContent className="pt-6">
+            <div className="text-error">{error}</div>
+          </CardContent>
+        </Card>
+      </AuthenticatedLayout>
     );
   }
 
   return (
-    <AuthLayout>
+    <AuthenticatedLayout title="My Courses">
       <div className="space-y-8">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">My Courses</h1>
-          <p className="text-gray-600">View your enrolled courses and assessments</p>
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold text-foreground">My Courses</h1>
+          <p className="text-foreground-muted">View your enrolled courses and assessments</p>
         </div>
 
         {/* Current Courses */}
         <section>
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">Current Courses</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">Current Courses</h2>
           {currentCourses.length === 0 ? (
-            <div className="bg-gray-50 rounded-lg p-8 text-center text-gray-500">
-              No current courses
-            </div>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="text-center py-12">
+                  <BookOpen className="h-12 w-12 text-foreground-muted mx-auto mb-4" />
+                  <p className="text-foreground-muted">No current courses</p>
+                </div>
+              </CardContent>
+            </Card>
           ) : (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {currentCourses.map((course) => (
                 <Link
                   key={course.id}
                   to={`/student/courses/${course.id}`}
-                  className="bg-white rounded-lg border border-gray-200 p-6 hover:border-blue-300 hover:shadow-md transition-all"
+                  className="block"
                 >
-                  <div className="text-sm text-blue-600 font-medium mb-1">
-                    {course.code}
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    {course.title}
-                  </h3>
-                  <div className="text-sm text-gray-500">
-                    {course.term}
-                  </div>
+                  <Card className="hover:border-primary transition-all hover:shadow-md">
+                    <CardContent className="pt-6">
+                      <div className="text-sm text-primary font-medium mb-1">
+                        {course.code}
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">
+                        {course.title}
+                      </h3>
+                      <div className="text-sm text-foreground-muted">
+                        {course.term}
+                      </div>
+                    </CardContent>
+                  </Card>
                 </Link>
               ))}
             </div>
@@ -103,30 +131,36 @@ export function StudentHome() {
         {/* Past Courses */}
         {pastCourses.length > 0 && (
           <section>
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Past Courses</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-4">Past Courses</h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {pastCourses.map((course) => (
                 <Link
                   key={course.id}
                   to={`/student/courses/${course.id}`}
-                  className="bg-gray-50 rounded-lg border border-gray-200 p-6 hover:border-gray-300 transition-all opacity-75"
+                  className="block"
                 >
-                  <div className="text-sm text-gray-500 font-medium mb-1">
-                    {course.code}
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                    {course.title}
-                  </h3>
-                  <div className="text-sm text-gray-400">
-                    {course.term}
-                  </div>
+                  <Card className={cn(
+                    "opacity-75 hover:opacity-100 transition-all",
+                    "hover:border-border-strong"
+                  )}>
+                    <CardContent className="pt-6">
+                      <div className="text-sm text-foreground-muted font-medium mb-1">
+                        {course.code}
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">
+                        {course.title}
+                      </h3>
+                      <div className="text-sm text-foreground-subtle">
+                        {course.term}
+                      </div>
+                    </CardContent>
+                  </Card>
                 </Link>
               ))}
             </div>
           </section>
         )}
       </div>
-    </AuthLayout>
+    </AuthenticatedLayout>
   );
 }
-
