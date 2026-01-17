@@ -265,4 +265,3 @@ export function AppShell({ children, title, breadcrumbs }: AppShellProps) {
     </div>
   );
 }
-
