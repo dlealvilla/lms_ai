@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './lib/auth/AuthContext';
 import { RouteGuard } from './components/RouteGuard';
-import { AuthenticatedLayout } from './components/Layout/AuthenticatedLayout';
 
 // Pages
 import { Landing } from './pages/Landing';
