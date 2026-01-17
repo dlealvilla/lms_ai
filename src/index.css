@@ -2,7 +2,131 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+@layer base {
+  :root {
+    /* ============================================
+       WILDMIND DAY MODE (DEFAULT)
+       ============================================ */
+    
+    /* Backgrounds - Paper-like in daylight */
+    --background: 250 251 253; /* #FAFBFD */
+    --background-elevated: 246 248 251; /* #F6F8FB */
+    --background-muted: 255 255 255;
+    
+    /* Text - Deep slate, never black */
+    --foreground: 31 41 55; /* #1F2937 */
+    --foreground-muted: 91 100 114; /* #5B6472 */
+    --foreground-subtle: 148 163 184;
+    
+    /* Borders & Separators */
+    --border: 15 23 42 / 0.08;
+    --border-strong: 15 23 42 / 0.12;
+    --separator: 15 23 42 / 0.08;
+    
+    /* Human Hemisphere - Cerulean/Sky Blue (cognition, writing) */
+    --primary: 111 174 255; /* #6FAEFF */
+    --primary-hover: 155 203 255; /* #9BCBFF */
+    --primary-wash: 232 242 255; /* #E8F2FF */
+    --primary-foreground: 31 41 55;
+    
+    /* AI Hemisphere - Muted Amber/Gold (system intelligence) */
+    --secondary: 244 162 97; /* #F4A261 */
+    --secondary-hover: 255 212 138; /* #FFD48A */
+    --secondary-wash: 255 241 214; /* #FFF1D6 */
+    --secondary-foreground: 31 41 55;
+    
+    /* Accents */
+    --accent: 111 174 255;
+    --accent-foreground: 31 41 55;
+    
+    /* Status Colors */
+    --success: 34 197 94;
+    --success-foreground: 255 255 255;
+    --warning: 245 158 11;
+    --warning-foreground: 31 41 55;
+    --error: 239 68 68;
+    --error-foreground: 255 255 255;
+    --info: 111 174 255;
+    --info-foreground: 255 255 255;
+    
+    /* Shadows - Soft elevation, not glow */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.1);
+    
+    /* Radius */
+    --radius-sm: 0.375rem;
+    --radius: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    
+    /* Spacing scale */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+  }
+  
+  [data-theme="night"] {
+    /* ============================================
+       WILDMIND NIGHT MODE
+       ============================================ */
+    
+    /* Backgrounds - Deep space navy */
+    --background: 7 11 20; /* #070B14 */
+    --background-elevated: 12 18 34; /* #0C1222 */
+    --background-muted: 17 26 51; /* #111A33 */
+    
+    /* Text - Light, readable */
+    --foreground: 229 231 235; /* #E5E7EB */
+    --foreground-muted: 156 163 175; /* #9CA3AF */
+    --foreground-subtle: 107 114 128;
+    
+    /* Borders - Subtle with gradient potential */
+    --border: 255 255 255 / 0.1;
+    --border-strong: 255 255 255 / 0.15;
+    --separator: 255 255 255 / 0.08;
+    
+    /* Human Hemisphere - Electric Cyan/Blue */
+    --primary: 91 200 255; /* #5BC8FF */
+    --primary-hover: 143 211 255; /* #8FD3FF */
+    --primary-wash: 91 200 255 / 0.15;
+    --primary-foreground: 7 11 20;
+    
+    /* AI Hemisphere - Electric Amber/Orange */
+    --secondary: 255 138 0; /* #FF8A00 */
+    --secondary-hover: 255 183 3; /* #FFB703 */
+    --secondary-wash: 255 138 0 / 0.15;
+    --secondary-foreground: 7 11 20;
+    
+    /* Accents */
+    --accent: 91 200 255;
+    --accent-foreground: 7 11 20;
+    
+    /* Status Colors - Adjusted for dark */
+    --success: 74 222 128;
+    --success-foreground: 7 11 20;
+    --warning: 251 191 36;
+    --warning-foreground: 7 11 20;
+    --error: 248 113 113;
+    --error-foreground: 7 11 20;
+    --info: 91 200 255;
+    --info-foreground: 7 11 20;
+    
+    /* Shadows - Glow instead of shadow */
+    --shadow-sm: 0 2px 8px rgba(91, 200, 255, 0.1);
+    --shadow: 0 8px 24px rgba(91, 200, 255, 0.15);
+    --shadow-md: 0 12px 32px rgba(91, 200, 255, 0.2);
+    --shadow-lg: 0 16px 48px rgba(91, 200, 255, 0.25);
+  }
+  
+  body {
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 }
