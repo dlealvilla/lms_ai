@@ -123,12 +123,9 @@
     --shadow-lg: 0 16px 48px rgba(91, 200, 255, 0.25);
   }
   
-  * {
-    @apply border-border;
-  }
-  
   body {
-    @apply bg-background text-foreground;
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
