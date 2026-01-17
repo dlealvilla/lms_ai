@@ -7,7 +7,6 @@ import {
   BookOpen, 
   GraduationCap, 
   Users, 
-  Settings,
   Moon,
   Sun,
   LogOut,
@@ -24,7 +23,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -40,19 +38,6 @@ export function AppShell({ children, title, breadcrumbs }: AppShellProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const getRoleIcon = () => {
-    switch (user?.role) {
-      case 'STUDENT':
-        return <GraduationCap className="h-5 w-5" />;
-      case 'TEACHER':
-        return <BookOpen className="h-5 w-5" />;
-      case 'ADMIN':
-        return <Users className="h-5 w-5" />;
-      default:
-        return <LayoutDashboard className="h-5 w-5" />;
-    }
-  };
 
   const getRoleLabel = () => {
     switch (user?.role) {
