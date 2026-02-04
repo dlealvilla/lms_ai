@@ -42,30 +42,18 @@ export function Landing() {
           </p>
 
           {/* Hero Brain Illustration */}
-          {/* 
-            TODO: Replace this placeholder with actual brain illustration.
-            Suggested image prompt for AI generation:
-            "A futuristic split human and artificial intelligence brain, 
-            left side organic and biological with warm tones, 
-            right side glowing with blue circuitry and neural networks, 
-            floating above a luminous circular platform, 
-            ethereal atmosphere, soft bloom lighting, 
-            minimal sci-fi aesthetic, premium education technology style, 
-            transparent/white background"
-          */}
           <div className="
             relative mx-auto mb-12
             opacity-0 animate-fade-in delay-200
           ">
             <div className="wm-brain-container mx-auto animate-float">
-              {/* Outer glow ring */}
-              <div className="wm-brain-glow-ring" />
-              
-              {/* Brain visual placeholder */}
-              <div className="wm-brain-visual" />
-              
-              {/* Platform glow */}
-              <div className="wm-brain-platform" />
+              <img 
+                src="/hero-brain.png" 
+                alt="Futuristic AI-human brain illustration — organic blue neural tissue merging with golden digital circuitry"
+                className="wm-brain-image"
+                loading="eager"
+                fetchPriority="high"
+              />
             </div>
           </div>
 
