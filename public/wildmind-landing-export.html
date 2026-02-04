@@ -219,107 +219,34 @@
     }
 
     /* ============================================
-       HERO BRAIN ILLUSTRATION
+       HERO BRAIN IMAGE
        ============================================ */
     .wm-brain-container {
       position: relative;
-      width: 320px;
-      height: 320px;
+      width: 100%;
+      max-width: 480px;
       margin: 0 auto;
     }
 
-    /* Atmospheric glow ring - soft edges */
-    .wm-brain-glow-ring {
-      position: absolute;
-      inset: -40px;
-      border-radius: 50%;
-      background: 
-        radial-gradient(circle at 35% 40%, rgba(240, 225, 205, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 65% 40%, rgba(136, 192, 222, 0.18) 0%, transparent 50%),
-        radial-gradient(circle, rgba(136, 192, 222, 0.08) 0%, rgba(232, 208, 160, 0.05) 30%, transparent 60%);
-      filter: blur(22px);
-      animation: pulse-ring 5s ease-in-out infinite;
+    .wm-brain-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      /* No filters, overlays, or effects - image used as-is */
     }
 
-    /* Secondary outer glow for atmosphere */
-    .wm-brain-glow-ring::before {
-      content: '';
-      position: absolute;
-      inset: -20px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(136, 192, 222, 0.05) 0%, transparent 70%);
-      filter: blur(30px);
+    /* Responsive scaling */
+    @media (max-width: 768px) {
+      .wm-brain-container {
+        max-width: 380px;
+      }
     }
 
-    .wm-brain-platform {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 8px;
-      background: linear-gradient(90deg, 
-        transparent 0%,
-        rgba(136, 192, 222, 0.15) 25%,
-        rgba(136, 192, 222, 0.22) 50%,
-        rgba(136, 192, 222, 0.15) 75%,
-        transparent 100%
-      );
-      border-radius: 50%;
-      filter: blur(12px);
-    }
-
-    /* Main brain visual - larger, more luminous */
-    .wm-brain-visual {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      margin: 40px auto;
-      border-radius: 44% 56% 52% 48% / 48% 46% 54% 52%;
-      /* Vertical split: warm left (human), cool right (AI) - softened */
-      background: 
-        /* Warm organic side - left */
-        linear-gradient(100deg, 
-          rgba(248, 235, 220, 0.7) 0%, 
-          rgba(245, 228, 210, 0.45) 25%, 
-          transparent 50%
-        ),
-        /* Cool digital side - right */
-        linear-gradient(280deg, 
-          rgba(136, 192, 222, 0.35) 0%, 
-          rgba(160, 205, 235, 0.25) 25%, 
-          transparent 50%
-        ),
-        /* Base sphere gradient - brighter */
-        radial-gradient(ellipse 80% 80% at 40% 35%, 
-          rgba(255, 254, 252, 0.95) 0%, 
-          rgba(250, 245, 238, 0.7) 40%, 
-          rgba(235, 228, 220, 0.5) 100%
-        );
-      /* Inner highlight for volume + translucency */
-      box-shadow: 
-        inset 8px 8px 40px rgba(255, 255, 255, 0.7),
-        inset -5px -5px 30px rgba(108, 182, 232, 0.15),
-        inset 0 0 60px rgba(255, 250, 245, 0.5),
-        0 15px 50px -15px rgba(31, 42, 68, 0.12);
-    }
-
-    /* Neural network hints on digital side - subtle */
-    .wm-brain-visual::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: 
-        radial-gradient(circle at 72% 28%, rgba(108, 182, 232, 0.2) 0%, transparent 18%),
-        radial-gradient(circle at 78% 55%, rgba(108, 182, 232, 0.15) 0%, transparent 15%),
-        radial-gradient(circle at 68% 75%, rgba(108, 182, 232, 0.12) 0%, transparent 12%);
-      opacity: 0.8;
-    }
-
-    /* Removed sparkle - calm intelligence, not magic */
-    .wm-brain-visual::after {
-      display: none;
+    @media (max-width: 480px) {
+      .wm-brain-container {
+        max-width: 300px;
+      }
     }
 
     /* ============================================
@@ -328,11 +255,6 @@
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-8px); }
-    }
-
-    @keyframes pulse-ring {
-      0%, 100% { opacity: 0.7; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.01); }
     }
 
     @keyframes fade-in-up {
@@ -355,7 +277,7 @@
     .delay-500 { animation-delay: 500ms; }
 
     @media (prefers-reduced-motion: reduce) {
-      .animate-float, .wm-brain-glow-ring, .wm-brain-visual::after {
+      .animate-float {
         animation: none;
       }
       .animate-fade-in {
@@ -1090,9 +1012,13 @@
         <!-- Brain Illustration - Emotional Center -->
         <div class="opacity-0 animate-fade-in delay-200" style="margin-bottom: 4.5rem;">
           <div class="wm-brain-container animate-float" style="transform-origin: center;">
-            <div class="wm-brain-glow-ring"></div>
-            <div class="wm-brain-visual"></div>
-            <div class="wm-brain-platform"></div>
+            <img 
+              src="hero-brain.png" 
+              alt="Futuristic AI-human brain illustration — organic blue neural tissue merging with golden digital circuitry"
+              class="wm-brain-image"
+              loading="eager"
+              fetchpriority="high"
+            />
           </div>
         </div>
         
