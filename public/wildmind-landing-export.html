@@ -142,9 +142,15 @@
     .font-ui { font-family: var(--font-ui); }
     
     .text-hero {
-      font-size: clamp(2.5rem, 5vw, 3.75rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+      font-size: clamp(2.5rem, 5vw, 4.25rem);
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+    
+    @media (min-width: 1024px) {
+      .text-hero {
+        font-size: 4.5rem;
+      }
     }
     
     .text-display {
@@ -399,41 +405,42 @@
       display: inline-flex;
       align-items: center;
       padding: 0.25rem 0.75rem;
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
       border-radius: var(--radius-pill);
       border: 1px solid;
     }
 
     .badge-open {
-      background: var(--wm-blue-100);
-      color: var(--wm-blue-600);
-      border-color: var(--wm-blue-200);
+      background: rgba(108, 182, 232, 0.12);
+      color: #4A9CD6;
+      border-color: rgba(108, 182, 232, 0.2);
     }
 
     .badge-closed {
-      background: rgba(236, 161, 154, 0.15);
-      color: var(--wm-coral-600);
-      border-color: rgba(236, 161, 154, 0.25);
+      background: rgba(236, 161, 154, 0.1);
+      color: #C4706A;
+      border-color: rgba(236, 161, 154, 0.18);
     }
 
     .badge-completed {
-      background: #ECFDF5;
+      background: rgba(16, 185, 129, 0.1);
       color: #059669;
-      border-color: #A7F3D0;
+      border-color: rgba(16, 185, 129, 0.18);
     }
 
     /* ============================================
        CARDS
        ============================================ */
     .glass-card {
-      background: var(--wm-glass-bg);
-      border: 1px solid var(--wm-glass-border);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-radius: var(--radius-card);
-      box-shadow: var(--shadow-glass);
-      padding: 1.5rem;
+      box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.04), 0 12px 48px -12px rgba(0, 0, 0, 0.05);
+      padding: 1.75rem;
     }
 
     .card-header {
@@ -449,8 +456,9 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-weight: 600;
+      font-weight: 500;
       color: var(--wm-navy-900);
+      opacity: 0.9;
     }
 
     .card-title-dot {
@@ -465,17 +473,17 @@
       align-items: center;
       gap: 1rem;
       padding: 1rem;
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.55);
       backdrop-filter: blur(4px);
       border-radius: var(--radius-btn);
-      border: 1px solid rgba(230, 234, 240, 0.8);
-      transition: all 0.2s;
+      border: 1px solid rgba(230, 234, 240, 0.5);
+      transition: all 0.25s ease;
     }
 
     .course-card:hover {
-      border-color: var(--wm-blue-200);
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: var(--shadow-sm);
+      border-color: rgba(108, 182, 232, 0.25);
+      background: rgba(255, 255, 255, 0.75);
+      box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.06);
     }
 
     .course-icon {
@@ -504,6 +512,7 @@
     .course-title {
       font-weight: 500;
       color: var(--wm-navy-900);
+      opacity: 0.9;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -512,6 +521,7 @@
     .course-meta {
       font-size: 0.75rem;
       color: var(--wm-muted);
+      opacity: 0.75;
     }
 
     .course-right {
@@ -600,6 +610,7 @@
     .feature-label {
       font-weight: 500;
       color: var(--wm-navy-900);
+      opacity: 0.8;
     }
 
     /* ============================================
@@ -730,14 +741,16 @@
 
     .nav-link {
       font-size: 0.875rem;
-      font-weight: 500;
+      font-weight: 400;
       color: var(--wm-muted);
+      opacity: 0.8;
       text-decoration: none;
-      transition: color 0.2s;
+      transition: all 0.2s;
     }
 
     .nav-link:hover {
       color: var(--wm-navy-900);
+      opacity: 1;
     }
 
     /* ============================================
@@ -746,8 +759,9 @@
     .footer {
       position: relative;
       z-index: 10;
-      padding: 2rem 1.5rem;
-      border-top: 1px solid rgba(230, 234, 240, 0.5);
+      padding: 3rem 1.5rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(230, 234, 240, 0.35);
     }
 
     .footer-inner {
@@ -795,7 +809,8 @@
     .text-center { text-align: center; }
     .text-right { text-align: right; }
     .text-navy { color: var(--wm-navy-900); }
-    .text-muted { color: var(--wm-muted); }
+    .text-muted { color: var(--wm-muted); opacity: 0.85; }
+    .text-secondary { color: var(--wm-navy-900); opacity: 0.75; }
     .text-blue { color: var(--wm-blue-500); }
     .text-gold { color: var(--wm-gold-400); }
     .text-white { color: white; }
@@ -850,8 +865,9 @@
     
     .divider {
       width: 1px;
-      height: 48px;
+      height: 40px;
       background: var(--wm-border);
+      opacity: 0.5;
     }
 
     .hidden { display: none; }
@@ -875,7 +891,7 @@
     .opacity-0 { opacity: 0; }
 
     .gradient-text {
-      background: linear-gradient(to right, var(--wm-blue-500), var(--wm-blue-600));
+      background: linear-gradient(to right, #7DBDE8, #5AABDE);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -932,21 +948,21 @@
     </header>
 
     <!-- HERO SECTION -->
-    <section class="relative z-10" style="padding: 2rem 1.5rem 3rem;">
+    <section class="relative z-10" style="padding: 4rem 1.5rem 5rem;">
       <div class="container-hero text-center">
         
         <!-- Headline -->
-        <h1 class="font-display text-hero text-navy mb-5 opacity-0 animate-fade-in">
+        <h1 class="font-display text-hero text-navy opacity-0 animate-fade-in" style="margin-bottom: 1.25rem;">
           Elevate Your <span class="gradient-text">Learning</span> Experience
         </h1>
         
         <!-- Subheadline -->
-        <p class="text-subheading text-muted mb-10 opacity-0 animate-fade-in delay-100">
+        <p class="text-subheading text-muted opacity-0 animate-fade-in delay-100" style="margin-bottom: 3.5rem;">
           AI-Driven · Human-Guided · Empowered Success
         </p>
         
         <!-- Brain Illustration -->
-        <div class="mb-12 opacity-0 animate-fade-in delay-200">
+        <div class="opacity-0 animate-fade-in delay-200" style="margin-bottom: 3.5rem;">
           <div class="wm-brain-container animate-float">
             <div class="wm-brain-glow-ring"></div>
             <div class="wm-brain-visual"></div>
@@ -955,7 +971,7 @@
         </div>
         
         <!-- Feature Strip -->
-        <div class="flex flex-wrap justify-center gap-6 mb-12 opacity-0 animate-fade-in delay-300" style="gap: 2.5rem;">
+        <div class="flex flex-wrap justify-center gap-6 opacity-0 animate-fade-in delay-300" style="gap: 2.5rem; margin-bottom: 3rem;">
           <div class="feature-item">
             <div class="feature-icon feature-icon-blue">
               <svg class="icon" viewBox="0 0 24 24" style="color: var(--wm-blue-500);">
@@ -1011,20 +1027,20 @@
     </section>
 
     <!-- SECTION DIVIDER -->
-    <section class="relative z-10 py-16 md-py-20">
+    <section class="relative z-10" style="padding: 5rem 1.5rem 6rem;">
       <div class="container text-center">
-        <h2 class="font-display text-display text-navy">
-          Assessments for the <span class="text-blue">Future</span>
+        <h2 class="font-display text-display text-secondary" style="opacity: 0.9;">
+          Assessments for the <span class="text-blue" style="opacity: 1;">Future</span>
         </h2>
       </div>
     </section>
 
     <!-- DASHBOARD PREVIEW -->
-    <section id="preview" class="relative z-10" style="padding: 0 1.5rem 4rem;">
+    <section id="preview" class="relative z-10" style="padding: 0 1.5rem 6rem;">
       <div class="container-content">
         
         <!-- Two Column Cards -->
-        <div class="grid grid-cols-1 md-grid-cols-2 gap-6 mb-12">
+        <div class="grid grid-cols-1 md-grid-cols-2 gap-6" style="margin-bottom: 4rem;">
           
           <!-- Current Courses -->
           <div class="glass-card opacity-0 animate-fade-in delay-200">
