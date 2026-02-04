@@ -1,0 +1,216 @@
+@import "tailwindcss";
+
+/* ============================================
+   WILDMIND DESIGN SYSTEM - CSS TOKENS
+   ============================================ */
+
+:root {
+  /* -------- BRAND PRIMITIVES -------- */
+  --wm-blue-500: 108 182 232;     /* #6CB6E8 - Primary Blue */
+  --wm-gold-400: 242 192 120;     /* #F2C078 - Accent Gold */
+  --wm-coral-500: 232 136 124;    /* #E8887C - Coral accent */
+  --wm-navy-900: 31 42 68;        /* #1F2A44 - Deep Navy */
+
+  /* -------- NEUTRALS -------- */
+  --wm-neutral-0: 255 255 255;    /* #FFFFFF */
+  --wm-neutral-50: 247 249 252;   /* #F7F9FC - Canvas */
+  --wm-neutral-100: 241 243 247;  /* #F1F3F7 */
+  --wm-neutral-200: 230 234 240;  /* #E6EAF0 - Border */
+  --wm-neutral-400: 123 135 148;  /* #7B8794 - Muted text */
+  --wm-neutral-600: 75 85 99;     /* #4B5563 */
+  --wm-neutral-800: 31 41 55;     /* #1F2937 */
+  --wm-neutral-900: 17 24 39;     /* #111827 */
+
+  /* -------- SEMANTIC TOKENS -------- */
+  --wm-bg-canvas: var(--wm-neutral-50);
+  --wm-bg-surface: var(--wm-neutral-0);
+  --wm-text-primary: var(--wm-navy-900);
+  --wm-text-muted: var(--wm-neutral-400);
+  --wm-border-subtle: var(--wm-neutral-200);
+  --wm-accent-primary: var(--wm-blue-500);
+  --wm-accent-secondary: var(--wm-gold-400);
+
+  /* -------- GLASS EFFECT -------- */
+  --wm-glass-fill: 255 255 255;
+  --wm-glass-alpha: 0.65;
+  --wm-glass-border-alpha: 0.40;
+  --wm-glass-blur: 14px;
+
+  /* -------- GLOWS -------- */
+  --wm-glow-blue: 108 182 232;
+  --wm-glow-gold: 242 192 120;
+  --wm-glow-coral: 232 136 124;
+
+  /* -------- SPACING (8pt grid) -------- */
+  --wm-space-1: 4px;
+  --wm-space-2: 8px;
+  --wm-space-3: 12px;
+  --wm-space-4: 16px;
+  --wm-space-6: 24px;
+  --wm-space-8: 32px;
+  --wm-space-12: 48px;
+  --wm-space-16: 64px;
+  --wm-space-24: 96px;
+
+  /* -------- RADIUS -------- */
+  --wm-radius-sm: 8px;
+  --wm-radius-md: 12px;   /* Buttons */
+  --wm-radius-lg: 18px;   /* Cards */
+  --wm-radius-xl: 24px;
+  --wm-radius-full: 9999px; /* Pills */
+
+  /* -------- SHADOWS / ELEVATION -------- */
+  --wm-shadow-elev0: none;
+  --wm-shadow-elev1: 0 20px 40px rgba(0, 0, 0, 0.08);
+  --wm-shadow-elev2: 0 30px 70px rgba(0, 0, 0, 0.12);
+
+  /* -------- TYPOGRAPHY -------- */
+  --wm-font-display: 'DM Serif Display', Georgia, serif;
+  --wm-font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--wm-font-ui);
+  background: rgb(var(--wm-bg-canvas));
+  color: rgb(var(--wm-text-primary));
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   COMPONENT UTILITY CLASSES
+   ============================================ */
+
+/* Glass Card */
+.wm-glass {
+  background: rgba(var(--wm-glass-fill), var(--wm-glass-alpha));
+  border: 1px solid rgba(var(--wm-glass-fill), var(--wm-glass-border-alpha));
+  backdrop-filter: blur(var(--wm-glass-blur));
+  -webkit-backdrop-filter: blur(var(--wm-glass-blur));
+  border-radius: var(--wm-radius-lg);
+  box-shadow: var(--wm-shadow-elev1);
+}
+
+.wm-glass-subtle {
+  background: rgba(var(--wm-glass-fill), 0.5);
+  border: 1px solid rgba(var(--wm-glass-fill), 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--wm-radius-lg);
+}
+
+/* Glow Effects */
+.wm-glow-blue {
+  box-shadow: 
+    0 0 0 1px rgba(var(--wm-blue-500), 0.20),
+    0 20px 50px rgba(var(--wm-glow-blue), 0.22);
+}
+
+.wm-glow-gold {
+  box-shadow: 
+    0 0 0 1px rgba(var(--wm-gold-400), 0.20),
+    0 20px 50px rgba(var(--wm-glow-gold), 0.22);
+}
+
+.wm-glow-coral {
+  box-shadow: 
+    0 0 0 1px rgba(var(--wm-coral-500), 0.20),
+    0 20px 50px rgba(var(--wm-glow-coral), 0.22);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes wm-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-16px); }
+}
+
+@keyframes wm-pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes wm-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wm-animate-float {
+  animation: wm-float 6s ease-in-out infinite;
+}
+
+.wm-animate-pulse {
+  animation: wm-pulse-glow 3s ease-in-out infinite;
+}
+
+.wm-animate-fade-in {
+  animation: wm-fade-in-up 0.6s ease-out forwards;
+}
+
+.wm-delay-100 { animation-delay: 100ms; }
+.wm-delay-200 { animation-delay: 200ms; }
+.wm-delay-300 { animation-delay: 300ms; }
+.wm-delay-400 { animation-delay: 400ms; }
+.wm-delay-500 { animation-delay: 500ms; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .wm-animate-float,
+  .wm-animate-pulse,
+  .wm-animate-fade-in {
+    animation: none;
+  }
+}
+
+/* ============================================
+   FOCUS STATES (Accessibility)
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid rgb(var(--wm-blue-500));
+  outline-offset: 2px;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--wm-neutral-50));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--wm-neutral-200));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--wm-neutral-400));
+}
