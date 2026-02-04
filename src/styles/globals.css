@@ -22,8 +22,8 @@
 
   /* -------- GLASS -------- */
   --wm-glass: 255 255 255;
-  --wm-glass-alpha: 0.65;
-  --wm-glass-border-alpha: 0.40;
+  --wm-glass-alpha: 0.4;
+  --wm-glass-border-alpha: 0.2;
 
   /* -------- GLOWS -------- */
   --wm-glow-blue: 108 182 232;
@@ -64,9 +64,7 @@ body {
   position: relative;
   min-height: 100vh;
   background: 
-    /* Soft radial vignette */
     radial-gradient(ellipse 80% 60% at 50% 0%, rgba(247,249,252,0) 0%, rgba(247,249,252,1) 100%),
-    /* Main gradient */
     linear-gradient(180deg, 
       rgba(255,255,255,1) 0%, 
       rgba(247,249,252,1) 20%,
@@ -81,14 +79,12 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  /* Blue glow top-left */
   background: 
     radial-gradient(ellipse 50% 50% at 20% 10%, rgba(108,182,232,0.15) 0%, transparent 60%),
     radial-gradient(ellipse 40% 40% at 80% 20%, rgba(242,192,120,0.12) 0%, transparent 50%),
     radial-gradient(ellipse 60% 30% at 50% 100%, rgba(108,182,232,0.08) 0%, transparent 50%);
 }
 
-/* Optional noise texture overlay */
 .wm-noise::after {
   content: '';
   position: fixed;
@@ -99,160 +95,136 @@ body {
 }
 
 /* ============================================
-   GLASSMORPHISM
+   GLASSMORPHISM - Frosted Air Effect
    ============================================ */
 
 .wm-glass {
   background: rgba(var(--wm-glass), var(--wm-glass-alpha));
   border: 1px solid rgba(var(--wm-glass), var(--wm-glass-border-alpha));
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-radius: 18px;
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.03),
-    0 20px 40px -4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 50px -15px rgba(0, 0, 0, 0.03);
+  transition: all 0.35s ease;
 }
 
-.wm-glass-subtle {
-  background: rgba(var(--wm-glass), 0.5);
-  border: 1px solid rgba(var(--wm-glass), 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 18px;
+.wm-glass:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    0 12px 60px -15px rgba(0, 0, 0, 0.04),
+    0 0 40px -15px rgba(108, 182, 232, 0.1);
 }
 
 /* ============================================
-   GLOW EFFECTS
-   ============================================ */
-
-.wm-glow-blue {
-  box-shadow: 
-    0 0 0 1px rgba(var(--wm-glow-blue), 0.15),
-    0 8px 32px -4px rgba(var(--wm-glow-blue), 0.25),
-    0 24px 60px -12px rgba(var(--wm-glow-blue), 0.20);
-}
-
-.wm-glow-gold {
-  box-shadow: 
-    0 0 0 1px rgba(var(--wm-glow-gold), 0.15),
-    0 8px 32px -4px rgba(var(--wm-glow-gold), 0.25),
-    0 24px 60px -12px rgba(var(--wm-glow-gold), 0.20);
-}
-
-/* ============================================
-   HERO BRAIN ILLUSTRATION
+   HERO BRAIN ILLUSTRATION - Iconic & Luminous
    ============================================ */
 
 .wm-brain-container {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto;
 }
 
-/* Outer glow ring */
+/* Atmospheric glow ring - soft edges */
 .wm-brain-glow-ring {
+  position: absolute;
+  inset: -40px;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at 35% 40%, rgba(245, 218, 190, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 65% 40%, rgba(108, 182, 232, 0.25) 0%, transparent 50%),
+    radial-gradient(circle, rgba(108, 182, 232, 0.12) 0%, rgba(242, 192, 120, 0.08) 30%, transparent 60%);
+  filter: blur(20px);
+  animation: pulse-ring 5s ease-in-out infinite;
+}
+
+.wm-brain-glow-ring::before {
+  content: '';
   position: absolute;
   inset: -20px;
   border-radius: 50%;
-  background: 
-    radial-gradient(circle, 
-      rgba(var(--wm-glow-blue), 0.15) 0%,
-      rgba(var(--wm-glow-gold), 0.08) 40%,
-      transparent 70%
-    );
-  animation: pulse-ring 4s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(108, 182, 232, 0.08) 0%, transparent 70%);
+  filter: blur(30px);
 }
 
-/* Inner platform glow */
 .wm-brain-platform {
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 70%;
-  height: 12px;
+  width: 60%;
+  height: 8px;
   background: linear-gradient(90deg, 
     transparent 0%,
-    rgba(var(--wm-glow-blue), 0.4) 30%,
-    rgba(var(--wm-glow-blue), 0.5) 50%,
-    rgba(var(--wm-glow-blue), 0.4) 70%,
+    rgba(108, 182, 232, 0.25) 25%,
+    rgba(108, 182, 232, 0.35) 50%,
+    rgba(108, 182, 232, 0.25) 75%,
     transparent 100%
   );
   border-radius: 50%;
-  filter: blur(8px);
+  filter: blur(12px);
 }
 
-/* Brain placeholder - gradient sphere */
+/* Main brain visual - warm/cool split */
 .wm-brain-visual {
   position: relative;
-  width: 180px;
-  height: 180px;
-  margin: 30px auto;
-  border-radius: 42% 58% 55% 45% / 50% 45% 55% 50%;
+  width: 200px;
+  height: 200px;
+  margin: 40px auto;
+  border-radius: 44% 56% 52% 48% / 48% 46% 54% 52%;
   background: 
-    /* Organic side (warm) */
-    linear-gradient(135deg, 
-      rgba(245, 222, 200, 0.9) 0%,
-      rgba(230, 200, 180, 0.7) 30%,
-      transparent 60%
+    linear-gradient(100deg, 
+      rgba(248, 230, 210, 0.85) 0%, 
+      rgba(240, 215, 190, 0.6) 25%, 
+      transparent 50%
     ),
-    /* Digital side (blue) */
-    linear-gradient(315deg,
-      rgba(108, 182, 232, 0.6) 0%,
-      rgba(130, 195, 240, 0.4) 30%,
-      transparent 60%
+    linear-gradient(280deg, 
+      rgba(108, 182, 232, 0.5) 0%, 
+      rgba(140, 200, 240, 0.35) 25%, 
+      transparent 50%
     ),
-    /* Base */
-    radial-gradient(ellipse at 30% 30%, 
-      rgba(255, 250, 245, 0.9) 0%,
-      rgba(235, 225, 215, 0.6) 50%,
-      rgba(200, 190, 180, 0.4) 100%
+    radial-gradient(ellipse 80% 80% at 40% 35%, 
+      rgba(255, 252, 248, 0.95) 0%, 
+      rgba(245, 235, 225, 0.7) 40%, 
+      rgba(220, 210, 200, 0.5) 100%
     );
-  box-shadow:
-    inset 0 0 40px rgba(255, 255, 255, 0.5),
-    0 10px 40px -10px rgba(var(--wm-navy-900), 0.15);
+  box-shadow: 
+    inset 8px 8px 40px rgba(255, 255, 255, 0.7),
+    inset -5px -5px 30px rgba(108, 182, 232, 0.15),
+    inset 0 0 60px rgba(255, 250, 245, 0.5),
+    0 15px 50px -15px rgba(31, 42, 68, 0.12);
 }
 
-/* Neural network lines overlay */
 .wm-brain-visual::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   background: 
-    radial-gradient(circle at 70% 30%, rgba(var(--wm-glow-blue), 0.3) 0%, transparent 25%),
-    radial-gradient(circle at 75% 50%, rgba(var(--wm-glow-blue), 0.2) 0%, transparent 20%),
-    radial-gradient(circle at 65% 70%, rgba(var(--wm-glow-blue), 0.25) 0%, transparent 15%);
+    radial-gradient(circle at 72% 28%, rgba(108, 182, 232, 0.2) 0%, transparent 18%),
+    radial-gradient(circle at 78% 55%, rgba(108, 182, 232, 0.15) 0%, transparent 15%),
+    radial-gradient(circle at 68% 75%, rgba(108, 182, 232, 0.12) 0%, transparent 12%);
+  opacity: 0.8;
 }
 
-/* Sparkle accent */
 .wm-brain-visual::after {
-  content: '✦';
-  position: absolute;
-  top: 10%;
-  right: 10%;
-  font-size: 14px;
-  color: rgba(var(--wm-glow-gold), 1);
-  animation: sparkle 2s ease-in-out infinite;
+  display: none;
 }
 
 /* ============================================
-   ANIMATIONS
+   ANIMATIONS - Meditative
    ============================================ */
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes pulse-ring {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.02); }
-}
-
-@keyframes sparkle {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.01); }
 }
 
 @keyframes fade-in-up {
@@ -267,7 +239,7 @@ body {
 }
 
 .animate-float {
-  animation: float 5s ease-in-out infinite;
+  animation: float 7s ease-in-out infinite;
 }
 
 .animate-fade-in {
@@ -280,11 +252,9 @@ body {
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .animate-float,
-  .wm-brain-glow-ring,
-  .wm-brain-visual::after {
+  .wm-brain-glow-ring {
     animation: none;
   }
   .animate-fade-in {
@@ -337,4 +307,16 @@ body {
 
 .text-balance {
   text-wrap: balance;
+}
+
+/* ============================================
+   TEXT OPACITY UTILITIES
+   ============================================ */
+
+.text-secondary {
+  opacity: 0.8;
+}
+
+.text-tertiary {
+  opacity: 0.65;
 }
