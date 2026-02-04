@@ -1,18 +1,16 @@
 import { type HTMLAttributes } from 'react';
 
-type BadgeVariant = 'info' | 'success' | 'warning' | 'neutral' | 'open' | 'closed';
+type BadgeVariant = 'open' | 'closed' | 'completed' | 'neutral';
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  info: 'bg-wm-blue-100 text-wm-blue-600 border-wm-blue-200',
-  success: 'bg-emerald-100 text-emerald-700 border-emerald-200',
-  warning: 'bg-wm-gold-100 text-wm-gold-600 border-wm-gold-200',
-  neutral: 'bg-wm-canvas text-wm-muted border-wm-border',
   open: 'bg-wm-blue-100 text-wm-blue-600 border-wm-blue-200',
-  closed: 'bg-wm-coral-400/20 text-wm-coral-600 border-wm-coral-400/30',
+  closed: 'bg-wm-coral-400/15 text-wm-coral-600 border-wm-coral-400/25',
+  completed: 'bg-emerald-50 text-emerald-600 border-emerald-200',
+  neutral: 'bg-wm-canvas text-wm-muted border-wm-border',
 };
 
 export function Badge({ variant = 'neutral', className = '', children, ...props }: BadgeProps) {
@@ -21,12 +19,12 @@ export function Badge({ variant = 'neutral', className = '', children, ...props 
       className={`
         inline-flex items-center
         px-3 py-1
-        text-label font-medium
-        rounded-wm-full
+        text-label font-semibold
+        rounded-wm-pill
         border
         ${variantStyles[variant]}
         ${className}
-      `.trim().replace(/\s+/g, ' ')}
+      `.replace(/\s+/g, ' ').trim()}
       {...props}
     >
       {children}
