@@ -612,55 +612,63 @@
     }
 
     /* ============================================
-       FEATURE ITEMS
+       FEATURE ITEMS - Calm Affirmation
        ============================================ */
     .feature-item {
       display: flex;
       align-items: center;
-      gap: 0.875rem;
+      gap: 0.75rem;
     }
 
     .feature-icon {
-      width: 48px;
-      height: 48px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: box-shadow 0.3s;
+      transition: all 0.4s ease;
+    }
+
+    .feature-icon svg {
+      width: 18px;
+      height: 18px;
+      opacity: 0.7;
     }
 
     .feature-icon-blue {
-      background: linear-gradient(to bottom right, var(--wm-blue-50), var(--wm-blue-100));
-      border: 1px solid rgba(108, 182, 232, 0.3);
+      background: linear-gradient(to bottom right, rgba(238, 247, 252, 0.8), rgba(220, 240, 250, 0.6));
+      border: 1px solid rgba(108, 182, 232, 0.15);
     }
 
     .feature-icon-blue:hover {
-      box-shadow: 0 0 20px rgba(108, 182, 232, 0.3);
+      box-shadow: 0 0 24px -4px rgba(108, 182, 232, 0.15);
     }
 
     .feature-icon-gold {
-      background: linear-gradient(to bottom right, var(--wm-gold-50), var(--wm-gold-100));
-      border: 1px solid rgba(242, 192, 120, 0.3);
+      background: linear-gradient(to bottom right, rgba(254, 249, 240, 0.8), rgba(253, 243, 225, 0.6));
+      border: 1px solid rgba(242, 192, 120, 0.15);
     }
 
     .feature-icon-gold:hover {
-      box-shadow: 0 0 20px rgba(242, 192, 120, 0.3);
+      box-shadow: 0 0 24px -4px rgba(242, 192, 120, 0.15);
     }
 
     .feature-icon-coral {
-      background: linear-gradient(to bottom right, #FFF1F0, #FFE4E1);
-      border: 1px solid rgba(232, 136, 124, 0.3);
+      background: linear-gradient(to bottom right, rgba(255, 241, 240, 0.8), rgba(255, 228, 225, 0.6));
+      border: 1px solid rgba(232, 136, 124, 0.15);
     }
 
     .feature-icon-coral:hover {
-      box-shadow: 0 0 20px rgba(232, 136, 124, 0.3);
+      box-shadow: 0 0 24px -4px rgba(232, 136, 124, 0.15);
     }
 
     .feature-label {
-      font-weight: 500;
+      font-weight: 400;
+      font-size: 0.9rem;
       color: var(--wm-navy-900);
-      opacity: 0.8;
+      opacity: 0.65;
+      letter-spacing: 0.01em;
     }
 
     /* ============================================
@@ -925,9 +933,9 @@
     
     .divider {
       width: 1px;
-      height: 40px;
-      background: var(--wm-border);
-      opacity: 0.5;
+      height: 28px;
+      background: linear-gradient(to bottom, transparent, rgba(230, 234, 240, 0.4), transparent);
+      opacity: 0.6;
     }
 
     .hidden { display: none; }
@@ -1030,8 +1038,8 @@
           </div>
         </div>
         
-        <!-- Feature Strip -->
-        <div class="flex flex-wrap justify-center gap-6 opacity-0 animate-fade-in delay-300" style="gap: 2.5rem; margin-bottom: 3rem;">
+        <!-- Feature Strip - Calm Affirmation -->
+        <div class="flex flex-wrap justify-center gap-6 opacity-0 animate-fade-in delay-300" style="gap: 3.5rem; margin-bottom: 3rem;">
           <div class="feature-item">
             <div class="feature-icon feature-icon-blue">
               <svg class="icon" viewBox="0 0 24 24" style="color: var(--wm-blue-500);">
