@@ -127,12 +127,21 @@
        GLASSMORPHISM
        ============================================ */
     .wm-glass {
-      background: var(--wm-glass-bg);
-      border: 1px solid var(--wm-glass-border);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-radius: var(--radius-card);
-      box-shadow: var(--shadow-glass);
+      box-shadow: 0 8px 40px -12px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+    }
+    
+    .wm-glass:hover {
+      transform: translateY(-1px);
+      box-shadow: 
+        0 12px 48px -12px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(255, 255, 255, 0.35),
+        0 0 30px -10px rgba(108, 182, 232, 0.08);
     }
 
     /* ============================================
@@ -411,16 +420,19 @@
     }
 
     .btn-ghost {
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.35);
       color: var(--wm-navy-900);
-      border: 1px solid var(--wm-border);
-      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0.9;
     }
 
     .btn-ghost:hover {
-      background: white;
-      border-color: var(--wm-blue-200);
-      box-shadow: var(--shadow-sm);
+      background: rgba(255, 255, 255, 0.55);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.04);
+      opacity: 1;
     }
 
     /* ============================================
@@ -459,13 +471,22 @@
        CARDS
        ============================================ */
     .glass-card {
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border-radius: var(--radius-card);
-      box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.04), 0 12px 48px -12px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 50px -15px rgba(0, 0, 0, 0.03);
       padding: 1.75rem;
+      transition: all 0.35s ease;
+    }
+    
+    .glass-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 
+        0 12px 60px -15px rgba(0, 0, 0, 0.04),
+        0 0 40px -15px rgba(108, 182, 232, 0.1);
     }
 
     .card-header {
@@ -474,7 +495,7 @@
       justify-content: space-between;
       margin-bottom: 1.25rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(230, 234, 240, 0.5);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .card-title {
@@ -498,17 +519,21 @@
       align-items: center;
       gap: 1rem;
       padding: 1rem;
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border-radius: var(--radius-btn);
-      border: 1px solid rgba(230, 234, 240, 0.5);
-      transition: all 0.25s ease;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.3s ease;
     }
 
     .course-card:hover {
-      border-color: rgba(108, 182, 232, 0.25);
-      background: rgba(255, 255, 255, 0.75);
-      box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.06);
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 
+        0 6px 24px -6px rgba(0, 0, 0, 0.04),
+        0 0 20px -8px rgba(108, 182, 232, 0.08);
     }
 
     .course-icon {
@@ -642,12 +667,22 @@
        AI ASSISTANT PANEL
        ============================================ */
     .ai-panel {
-      background: var(--wm-glass-bg);
-      border: 1px solid var(--wm-glass-border);
-      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border-radius: var(--radius-card);
-      box-shadow: var(--shadow-glass);
-      padding: 1.25rem;
+      box-shadow: 0 8px 50px -15px rgba(0, 0, 0, 0.03);
+      padding: 1.5rem;
+      transition: all 0.35s ease;
+    }
+    
+    .ai-panel:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 
+        0 12px 60px -15px rgba(0, 0, 0, 0.04),
+        0 0 40px -15px rgba(108, 182, 232, 0.1);
     }
 
     .ai-header {
@@ -668,11 +703,11 @@
     }
 
     .ai-prompt {
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.35);
       border-radius: var(--radius-btn);
       padding: 1rem;
       margin-bottom: 1rem;
-      border: 1px solid rgba(230, 234, 240, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .ai-suggestions {
