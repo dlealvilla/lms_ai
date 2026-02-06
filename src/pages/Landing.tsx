@@ -50,7 +50,7 @@ export function Landing() {
 
           {/* Student & Educator Buttons - Glassy Texture */}
           <div className="
-            flex flex-col sm:flex-row gap-8 justify-center items-center mb-24
+            flex flex-col sm:flex-row gap-8 justify-center items-center mb-24 -mt-5
             opacity-0 animate-fade-in delay-300
           ">
             <button className="
