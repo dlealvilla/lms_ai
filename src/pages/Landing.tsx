@@ -82,10 +82,13 @@ export function Landing() {
           </div>
 
           {/* Feature Strip - Moved down with more spacing */}
-          <div className="
-            flex flex-wrap justify-center gap-6 md:gap-10 mt-16
-            opacity-0 animate-fade-in delay-400
-          ">
+          <div 
+            className="
+              flex flex-wrap justify-center gap-6 md:gap-10 mt-16
+              opacity-0 animate-fade-in delay-400
+            "
+            style={{ transform: 'translateY(20px)' }}
+          >
             <FeatureItem
               icon={<Sparkles className="w-5 h-5" />}
               label="Smart Assessments"
