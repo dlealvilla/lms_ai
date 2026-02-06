@@ -12,20 +12,21 @@ export function Landing() {
           ============================================ */}
       <section className="relative z-10 px-6 pt-0 pb-8">
         <div className="w-full flex flex-col items-center text-center">
-          {/* Headline */}
+          {/* Headline - Cinzel font */}
           <h1 className="
-            font-display
+            font-cinzel
             text-2xl md:text-3xl lg:text-4xl
             text-wm-navy-900 mb-3
             opacity-0 animate-fade-in
           ">
             Education for the{' '}
-            <span className="text-wm-blue-500">Future</span>
+            <span className="text-[#3F6F88]">Future</span>
           </h1>
 
-          {/* Subheadline */}
+          {/* Subheadline - Cinzel font, black */}
           <p className="
-            text-wm-muted text-base md:text-lg mb-4
+            font-cinzel text-base md:text-lg mb-4
+            text-black
             opacity-0 animate-fade-in delay-100
           ">
             Develop Human Intelligence and AI Skills
@@ -47,14 +48,15 @@ export function Landing() {
             </div>
           </div>
 
-          {/* Student & Educator Buttons - 3x Larger, Distinctive Colors */}
+          {/* Student & Educator Buttons - New Color Palette */}
           <div className="
             flex flex-col sm:flex-row gap-8 justify-center items-center mb-24
             opacity-0 animate-fade-in delay-300
           ">
             <button className="
-              px-16 py-8 text-2xl md:text-3xl font-bold rounded-3xl
-              bg-gradient-to-br from-[#4A90D9] to-[#2E5C8A]
+              font-cinzel
+              px-16 py-8 text-2xl md:text-3xl font-semibold rounded-3xl
+              bg-gradient-to-br from-[#4A8BA8] to-[#3F6F88]
               text-white shadow-xl
               hover:shadow-2xl hover:scale-105
               transition-all duration-300
@@ -64,8 +66,9 @@ export function Landing() {
               Student
             </button>
             <button className="
-              px-16 py-8 text-2xl md:text-3xl font-bold rounded-3xl
-              bg-gradient-to-br from-[#E07B4C] to-[#C45A2C]
+              font-cinzel
+              px-16 py-8 text-2xl md:text-3xl font-semibold rounded-3xl
+              bg-gradient-to-br from-[#D9A63D] to-[#C9962D]
               text-white shadow-xl
               hover:shadow-2xl hover:scale-105
               transition-all duration-300

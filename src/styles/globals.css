@@ -5,20 +5,25 @@
    ============================================ */
 
 :root {
-  /* -------- BRAND PRIMITIVES (RGB triplets for Tailwind alpha) -------- */
-  --wm-blue-500: 108 182 232;     /* #6CB6E8 */
-  --wm-blue-400: 130 195 240;
-  --wm-blue-600: 74 156 214;
-  --wm-gold-400: 242 192 120;     /* #F2C078 */
-  --wm-gold-500: 212 160 84;
+  /* -------- BRAND PRIMITIVES -------- */
+  /* Cool Blue (tech side) */
+  --wm-blue-500: 63 111 136;      /* #3F6F88 */
+  --wm-blue-400: 83 131 156;
+  --wm-blue-600: 43 91 116;
+  
+  /* Warm Gold/Ochre (organic side) */
+  --wm-gold-400: 201 150 45;      /* #C9962D */
+  --wm-gold-500: 181 130 25;
+  --wm-gold-600: 161 110 15;
+  
   --wm-coral-500: 232 136 124;    /* #E8887C */
   --wm-navy-900: 31 42 68;        /* #1F2A44 */
 
   /* -------- NEUTRALS -------- */
-  --wm-canvas: 247 249 252;       /* #F7F9FC */
+  --wm-canvas: 242 240 234;       /* #F2F0EA */
   --wm-surface: 255 255 255;
-  --wm-border: 230 234 240;       /* #E6EAF0 */
-  --wm-muted: 123 135 148;        /* #7B8794 */
+  --wm-border: 230 228 222;
+  --wm-muted: 100 100 100;
 
   /* -------- GLASS -------- */
   --wm-glass: 255 255 255;
@@ -26,13 +31,13 @@
   --wm-glass-border-alpha: 0.2;
 
   /* -------- GLOWS -------- */
-  --wm-glow-blue: 108 182 232;
-  --wm-glow-gold: 242 192 120;
+  --wm-glow-blue: 63 111 136;
+  --wm-glow-gold: 201 150 45;
 
   /* -------- TYPOGRAPHY -------- */
-  --wm-font-display: 'Orbitron', 'Rajdhani', 'DM Serif Display', Georgia, serif;
+  --wm-font-display: 'Cinzel', 'DM Serif Display', Georgia, serif;
   --wm-font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --wm-font-futuristic: 'Orbitron', 'Rajdhani', sans-serif;
+  --wm-font-cinzel: 'Cinzel', serif;
 }
 
 /* ============================================
@@ -141,11 +146,10 @@ body {
   }
 }
 
-/* Futuristic font utility */
-.font-futuristic {
-  font-family: var(--wm-font-futuristic);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+/* Cinzel font utility */
+.font-cinzel {
+  font-family: var(--wm-font-cinzel);
+  letter-spacing: 0.02em;
 }
 
 /* ============================================
