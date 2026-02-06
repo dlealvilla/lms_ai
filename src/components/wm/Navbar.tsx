@@ -5,7 +5,7 @@ export function Navbar() {
         {/* Logo */}
         <a href="/" className="flex items-center group">
           <img 
-            src="/wildmindlogo_old.png" 
+            src="/wildmindlogo_new.png" 
             alt="Wildmind Education"
             className="h-[100px] w-auto object-contain"
           />
