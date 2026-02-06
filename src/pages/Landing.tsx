@@ -20,9 +20,7 @@ export function Landing() {
             opacity-0 animate-fade-in
           ">
             Education for the{' '}
-            <span className="bg-gradient-to-r from-wm-blue-500 to-wm-blue-600 bg-clip-text text-transparent">
-              Future
-            </span>
+            <span className="text-wm-blue-500">Future</span>
           </h1>
 
           {/* Subheadline */}
@@ -35,7 +33,7 @@ export function Landing() {
 
           {/* Hero Brain Illustration - Centered */}
           <div className="
-            w-full flex justify-center mb-4
+            w-full flex justify-center mb-2
             opacity-0 animate-fade-in delay-200
           ">
             <div className="wm-brain-container animate-float">
