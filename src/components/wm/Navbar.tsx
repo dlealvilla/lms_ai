@@ -3,15 +3,12 @@ export function Navbar() {
     <header className="relative z-20 px-6 py-5">
       <nav className="max-w-container mx-auto flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2 group">
+        <a href="/" className="flex items-center group">
           <img 
             src="/wildmindlogo_old.png" 
-            alt="Wildmind Education logo"
-            className="w-10 h-10 object-contain"
+            alt="Wildmind Education"
+            className="h-[100px] w-auto object-contain"
           />
-          <span className="text-lg font-semibold text-wm-navy-900 tracking-tight">
-            <span className="text-wm-blue-500">Wildmind</span> Education
-          </span>
         </a>
 
         {/* Nav Links */}

@@ -169,15 +169,12 @@ export function Landing() {
             <GlassCard className="opacity-0 animate-fade-in delay-400">
               {/* Mini navbar */}
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-wm-border/50">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center">
                   <img 
                     src="/wildmindlogo_old.png" 
-                    alt="Wildmind logo"
-                    className="w-8 h-8 object-contain"
+                    alt="Wildmind Education"
+                    className="h-[80px] w-auto object-contain"
                   />
-                  <span className="font-semibold text-wm-navy-900 text-small">
-                    <span className="text-wm-blue-500">Wildmind</span> Education
-                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <button className="p-2 rounded-full hover:bg-wm-border/30 transition-colors">
