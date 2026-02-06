@@ -30,8 +30,9 @@
   --wm-glow-gold: 242 192 120;
 
   /* -------- TYPOGRAPHY -------- */
-  --wm-font-display: 'DM Serif Display', Georgia, serif;
+  --wm-font-display: 'Orbitron', 'Rajdhani', 'DM Serif Display', Georgia, serif;
   --wm-font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --wm-font-futuristic: 'Orbitron', 'Rajdhani', sans-serif;
 }
 
 /* ============================================
@@ -63,14 +64,10 @@ body {
 .wm-bg {
   position: relative;
   min-height: 100vh;
-  background: 
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(247,249,252,0) 0%, rgba(247,249,252,1) 100%),
-    linear-gradient(180deg, 
-      rgba(255,255,255,1) 0%, 
-      rgba(247,249,252,1) 20%,
-      rgba(240,245,250,1) 50%,
-      rgba(247,249,252,1) 100%
-    );
+  background-image: url('/wildmind_background.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
   background-color: rgb(var(--wm-canvas));
 }
 
@@ -79,10 +76,7 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: 
-    radial-gradient(ellipse 50% 50% at 20% 10%, rgba(108,182,232,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(242,192,120,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 30% at 50% 100%, rgba(108,182,232,0.08) 0%, transparent 50%);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .wm-noise::after {
@@ -123,7 +117,7 @@ body {
 .wm-brain-container {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 720px;
   margin: 0 auto;
 }
 
@@ -132,20 +126,26 @@ body {
   width: 100%;
   height: auto;
   object-fit: contain;
-  /* No filters, overlays, or effects - image used as-is */
 }
 
 /* Responsive scaling */
 @media (max-width: 768px) {
   .wm-brain-container {
-    max-width: 380px;
+    max-width: 520px;
   }
 }
 
 @media (max-width: 480px) {
   .wm-brain-container {
-    max-width: 300px;
+    max-width: 380px;
   }
+}
+
+/* Futuristic font utility */
+.font-futuristic {
+  font-family: var(--wm-font-futuristic);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 /* ============================================
