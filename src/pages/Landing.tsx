@@ -11,7 +11,8 @@ export function Landing() {
           HERO SECTION
           ============================================ */}
       <section className="relative z-10 px-6 pt-0 pb-8">
-        <div className="w-full flex flex-col items-center text-center" style={{ transform: 'translateY(-80px)' }}>
+        {/* Main hero content - moved up */}
+        <div className="w-full flex flex-col items-center text-center" style={{ transform: 'translateY(-100px)' }}>
           {/* Headline - Cinzel font */}
           <h1 className="
             font-cinzel
@@ -48,13 +49,13 @@ export function Landing() {
             </div>
           </div>
 
-          {/* Student & Educator Buttons - Glassy Texture */}
+          {/* Student & Educator Buttons - Glassy Texture - moved up more */}
           <div 
             className="
-              flex flex-col sm:flex-row gap-8 justify-center items-center mb-24
+              flex flex-col sm:flex-row gap-8 justify-center items-center
               opacity-0 animate-fade-in delay-300
             "
-            style={{ transform: 'translateY(-15px)' }}
+            style={{ marginTop: '-30px' }}
           >
             <button className="
               font-cinzel
@@ -83,33 +84,33 @@ export function Landing() {
               Educator
             </button>
           </div>
+        </div>
 
-          {/* Feature Strip - Moved down with more spacing */}
-          <div 
-            className="
-              flex flex-wrap justify-center gap-6 md:gap-10 mt-16
-              opacity-0 animate-fade-in delay-400
-            "
-            style={{ transform: 'translateY(35px)' }}
-          >
-            <FeatureItem
-              icon={<Sparkles className="w-5 h-5" />}
-              label="Smart Assessments"
-              color="blue"
-            />
-            <div className="hidden sm:block w-px h-12 bg-wm-border/50" />
-            <FeatureItem
-              icon={<TrendingUp className="w-5 h-5" />}
-              label="Track Progress"
-              color="gold"
-            />
-            <div className="hidden sm:block w-px h-12 bg-wm-border/50" />
-            <FeatureItem
-              icon={<MessageCircle className="w-5 h-5" />}
-              label="Personalized Feedback"
-              color="coral"
-            />
-          </div>
+        {/* Feature Strip - Separate from translated content, positioned lower */}
+        <div 
+          className="
+            w-full flex flex-wrap justify-center gap-6 md:gap-10
+            opacity-0 animate-fade-in delay-400
+          "
+          style={{ marginTop: '40px' }}
+        >
+          <FeatureItem
+            icon={<Sparkles className="w-5 h-5" />}
+            label="Smart Assessments"
+            color="blue"
+          />
+          <div className="hidden sm:block w-px h-12 bg-wm-border/50" />
+          <FeatureItem
+            icon={<TrendingUp className="w-5 h-5" />}
+            label="Track Progress"
+            color="gold"
+          />
+          <div className="hidden sm:block w-px h-12 bg-wm-border/50" />
+          <FeatureItem
+            icon={<MessageCircle className="w-5 h-5" />}
+            label="Personalized Feedback"
+            color="coral"
+          />
         </div>
       </section>
     </div>
