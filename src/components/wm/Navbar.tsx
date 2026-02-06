@@ -7,7 +7,7 @@ export function Navbar() {
           <img 
             src="/wildmindlogo_new.png" 
             alt="Wildmind Education"
-            className="h-[100px] w-auto object-contain"
+            className="h-[300px] w-auto object-contain"
           />
         </a>
 
