@@ -48,7 +48,7 @@ export function Landing() {
             </div>
           </div>
 
-          {/* Student & Educator Buttons - New Color Palette */}
+          {/* Student & Educator Buttons - Glassy Texture */}
           <div className="
             flex flex-col sm:flex-row gap-8 justify-center items-center mb-24
             opacity-0 animate-fade-in delay-300
@@ -56,24 +56,26 @@ export function Landing() {
             <button className="
               font-cinzel
               px-16 py-8 text-2xl md:text-3xl font-semibold rounded-3xl
-              bg-gradient-to-br from-[#4A8BA8] to-[#3F6F88]
+              bg-[#3F6F88]/80 backdrop-blur-md
               text-white shadow-xl
-              hover:shadow-2xl hover:scale-105
+              hover:shadow-2xl hover:scale-105 hover:bg-[#3F6F88]/90
               transition-all duration-300
               min-w-[280px] md:min-w-[320px]
-              border-2 border-white/20
+              border border-white/30
+              bg-gradient-to-b from-white/20 to-transparent
             ">
               Student
             </button>
             <button className="
               font-cinzel
               px-16 py-8 text-2xl md:text-3xl font-semibold rounded-3xl
-              bg-gradient-to-br from-[#D9A63D] to-[#C9962D]
+              bg-[#C9962D]/80 backdrop-blur-md
               text-white shadow-xl
-              hover:shadow-2xl hover:scale-105
+              hover:shadow-2xl hover:scale-105 hover:bg-[#C9962D]/90
               transition-all duration-300
               min-w-[280px] md:min-w-[320px]
-              border-2 border-white/20
+              border border-white/30
+              bg-gradient-to-b from-white/20 to-transparent
             ">
               Educator
             </button>
