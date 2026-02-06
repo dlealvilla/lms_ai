@@ -12,19 +12,17 @@ export function Landing() {
           ============================================ */}
       <section className="relative z-10 px-6 pt-4 pb-8">
         <div className="w-full flex flex-col items-center text-center">
-          {/* Headline - Smaller, elegant, centered */}
+          {/* Headline */}
           <h1 className="
             font-display
             text-2xl md:text-3xl lg:text-4xl
             text-wm-navy-900 mb-3
             opacity-0 animate-fade-in
-            tracking-normal
           ">
-            Elevate Your{' '}
+            Education for the{' '}
             <span className="bg-gradient-to-r from-wm-blue-500 to-wm-blue-600 bg-clip-text text-transparent">
-              Learning
-            </span>{' '}
-            Experience
+              Future
+            </span>
           </h1>
 
           {/* Subheadline */}
@@ -32,12 +30,12 @@ export function Landing() {
             text-wm-muted text-base md:text-lg mb-4
             opacity-0 animate-fade-in delay-100
           ">
-            AI-Driven · Human-Guided · Empowered Success
+            Develop Human Intelligence and AI Skills
           </p>
 
           {/* Hero Brain Illustration - Centered */}
           <div className="
-            w-full flex justify-center mb-6
+            w-full flex justify-center mb-4
             opacity-0 animate-fade-in delay-200
           ">
             <div className="wm-brain-container animate-float">
@@ -53,7 +51,7 @@ export function Landing() {
 
           {/* Student & Educator Buttons - 3x Larger, Distinctive Colors */}
           <div className="
-            flex flex-col sm:flex-row gap-8 justify-center items-center mb-16
+            flex flex-col sm:flex-row gap-8 justify-center items-center mb-24
             opacity-0 animate-fade-in delay-300
           ">
             <button className="
@@ -82,7 +80,7 @@ export function Landing() {
 
           {/* Feature Strip - Moved down with more spacing */}
           <div className="
-            flex flex-wrap justify-center gap-6 md:gap-10 mt-8
+            flex flex-wrap justify-center gap-6 md:gap-10 mt-16
             opacity-0 animate-fade-in delay-400
           ">
             <FeatureItem
