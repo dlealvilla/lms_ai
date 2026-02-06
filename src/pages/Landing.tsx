@@ -169,10 +169,12 @@ export function Landing() {
             <GlassCard className="opacity-0 animate-fade-in delay-400">
               {/* Mini navbar */}
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-wm-border/50">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-wm-btn bg-gradient-to-br from-wm-blue-400 to-wm-blue-600 flex items-center justify-center shadow-sm">
-                    <Sparkles className="w-4 h-4 text-white" />
-                  </div>
+                <div className="flex items-center gap-2">
+                  <img 
+                    src="/wildmindlogo_old.png" 
+                    alt="Wildmind logo"
+                    className="w-8 h-8 object-contain"
+                  />
                   <span className="font-semibold text-wm-navy-900 text-small">
                     <span className="text-wm-blue-500">Wildmind</span> Education
                   </span>
