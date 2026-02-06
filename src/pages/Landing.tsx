@@ -10,7 +10,7 @@ export function Landing() {
       {/* ============================================
           HERO SECTION
           ============================================ */}
-      <section className="relative z-10 px-6 pt-4 pb-8">
+      <section className="relative z-10 px-6 pt-0 pb-8">
         <div className="w-full flex flex-col items-center text-center">
           {/* Headline */}
           <h1 className="
@@ -33,7 +33,7 @@ export function Landing() {
 
           {/* Hero Brain Illustration - Centered */}
           <div className="
-            w-full flex justify-center mb-2
+            w-full flex justify-center mb-0
             opacity-0 animate-fade-in delay-200
           ">
             <div className="wm-brain-container animate-float">
