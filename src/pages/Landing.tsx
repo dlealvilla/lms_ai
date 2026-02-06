@@ -49,10 +49,13 @@ export function Landing() {
           </div>
 
           {/* Student & Educator Buttons - Glassy Texture */}
-          <div className="
-            flex flex-col sm:flex-row gap-8 justify-center items-center mb-24
-            opacity-0 animate-fade-in delay-300
-          ">
+          <div 
+            className="
+              flex flex-col sm:flex-row gap-8 justify-center items-center mb-24
+              opacity-0 animate-fade-in delay-300
+            "
+            style={{ transform: 'translateY(-15px)' }}
+          >
             <button className="
               font-cinzel
               px-16 py-8 text-2xl md:text-3xl font-semibold rounded-3xl
@@ -87,7 +90,7 @@ export function Landing() {
               flex flex-wrap justify-center gap-6 md:gap-10 mt-16
               opacity-0 animate-fade-in delay-400
             "
-            style={{ transform: 'translateY(20px)' }}
+            style={{ transform: 'translateY(35px)' }}
           >
             <FeatureItem
               icon={<Sparkles className="w-5 h-5" />}
