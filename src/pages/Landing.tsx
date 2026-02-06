@@ -16,7 +16,7 @@ export function Landing() {
           <h1 className="
             font-cinzel
             text-2xl md:text-3xl lg:text-4xl
-            text-wm-navy-900 mb-3 -mt-5
+            text-wm-navy-900 mb-3 -mt-[50px]
             opacity-0 animate-fade-in
           ">
             Education for the{' '}
@@ -34,7 +34,7 @@ export function Landing() {
 
           {/* Hero Brain Illustration - Centered */}
           <div className="
-            w-full flex justify-center mb-0 -mt-5
+            w-full flex justify-center mb-0 -mt-[50px]
             opacity-0 animate-fade-in delay-200
           ">
             <div className="wm-brain-container animate-float">
@@ -50,7 +50,7 @@ export function Landing() {
 
           {/* Student & Educator Buttons - Glassy Texture */}
           <div className="
-            flex flex-col sm:flex-row gap-8 justify-center items-center mb-24 -mt-[30px]
+            flex flex-col sm:flex-row gap-8 justify-center items-center mb-24 -mt-[60px]
             opacity-0 animate-fade-in delay-300
           ">
             <button className="
