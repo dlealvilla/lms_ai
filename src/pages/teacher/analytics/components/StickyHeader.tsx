@@ -1,12 +1,13 @@
 import { ChevronRight, ArrowLeft, Download, StickyNote } from 'lucide-react';
-import { Skeleton } from './Skeleton';
+import type { AnalyticsData } from '../mockAnalyticsData';
 
 interface StickyHeaderProps {
+  data: AnalyticsData | null;
   onBack: () => void;
   onOpenNotes: () => void;
 }
 
-export function StickyHeader({ onBack, onOpenNotes }: StickyHeaderProps) {
+export function StickyHeader({ data, onBack, onOpenNotes }: StickyHeaderProps) {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
       {/* Main header row */}
@@ -18,9 +19,9 @@ export function StickyHeader({ onBack, onOpenNotes }: StickyHeaderProps) {
             <nav className="flex items-center gap-1 text-sm text-gray-500">
               <span className="hover:text-gray-700 cursor-pointer">Assessments</span>
               <ChevronRight className="w-3 h-3" />
-              <Skeleton className="h-4 w-32" />
+              <span className="text-gray-700">{data?.assessmentTitle || '—'}</span>
               <ChevronRight className="w-3 h-3" />
-              <Skeleton className="h-4 w-24" />
+              <span className="text-gray-700">{data?.studentName || '—'}</span>
               <ChevronRight className="w-3 h-3" />
               <span className="text-gray-900 font-medium">Attempt Analytics</span>
             </nav>
@@ -32,9 +33,9 @@ export function StickyHeader({ onBack, onOpenNotes }: StickyHeaderProps) {
 
             {/* Subtitle */}
             <p className="text-gray-600 flex items-center gap-2">
-              <Skeleton className="h-4 w-48" />
+              <span>{data?.assessmentTitle || '—'}</span>
               <span className="text-gray-400">—</span>
-              <Skeleton className="h-4 w-64" />
+              <span className="text-gray-500 italic">{data?.assessmentQuestion || '—'}</span>
             </p>
           </div>
 
@@ -66,21 +67,21 @@ export function StickyHeader({ onBack, onOpenNotes }: StickyHeaderProps) {
       </div>
 
       {/* Metadata bar */}
-      <MetaBar />
+      <MetaBar data={data} />
     </header>
   );
 }
 
-function MetaBar() {
+function MetaBar({ data }: { data: AnalyticsData | null }) {
+  const meta = data?.meta;
+
   const metaItems = [
-    { label: 'Prompts', value: null },
-    { label: 'Tokens in', value: null },
-    { label: 'Tokens out', value: null },
-    { label: 'Active time', value: null },
-    { label: 'Revision cycles', value: null },
-    { label: 'Confidence', value: null },
-    { label: 'Submitted', value: null },
-    { label: 'Model', value: null },
+    { label: 'Prompts', value: meta?.promptCount },
+    { label: 'Tokens in', value: meta?.tokensIn?.toLocaleString() },
+    { label: 'Tokens out', value: meta?.tokensOut?.toLocaleString() },
+    { label: 'Active time', value: meta ? `${meta.activeTimeMinutes} min` : null },
+    { label: 'Revision cycles', value: meta?.revisionCycles },
+    { label: 'Confidence', value: meta?.confidence },
   ];
 
   return (
@@ -92,11 +93,9 @@ function MetaBar() {
               <span className="text-xs text-gray-500 uppercase tracking-wide">
                 {item.label}:
               </span>
-              {item.value ? (
-                <span className="text-sm font-medium text-gray-900">{item.value}</span>
-              ) : (
-                <Skeleton className="h-4 w-10" />
-              )}
+              <span className="text-sm font-medium text-gray-900">
+                {item.value ?? '—'}
+              </span>
             </div>
           ))}
         </div>

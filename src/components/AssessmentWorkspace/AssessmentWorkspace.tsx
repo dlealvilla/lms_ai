@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { BarChart3 } from 'lucide-react';
 import { EditorPane } from '../Editor/EditorPane';
 import { ChatPane } from '../Chat/ChatPane';
 import { SubmissionModal } from '../SubmissionModal/SubmissionModal';
@@ -18,6 +19,7 @@ export interface AssessmentWorkspaceProps {
   pdfUrl?: string | null;
   pdfFileName?: string | null;
   onBack?: () => void;
+  onOpenAnalytics?: () => void;
 }
 
 export function AssessmentWorkspace({
@@ -33,6 +35,7 @@ export function AssessmentWorkspace({
   pdfUrl,
   pdfFileName,
   onBack,
+  onOpenAnalytics,
 }: AssessmentWorkspaceProps) {
   const [session, setSession] = useState<AssessmentSession>(initialSession);
   const [showSubmissionModal, setShowSubmissionModal] = useState(false);
@@ -251,6 +254,17 @@ export function AssessmentWorkspace({
                 <span className="text-red-500 text-sm">{markError}</span>
               )}
             </div>
+          )}
+
+          {/* Analytics button - Teacher only */}
+          {isTeacherMode && onOpenAnalytics && (
+            <button
+              onClick={onOpenAnalytics}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow hover:from-blue-700 hover:to-indigo-700 hover:shadow-md transition-all duration-200"
+            >
+              <BarChart3 className="w-4 h-4" />
+              Analytics
+            </button>
           )}
 
           {/* Student actions */}
