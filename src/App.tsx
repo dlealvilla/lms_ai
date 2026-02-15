@@ -12,6 +12,7 @@ import { TeacherHome } from './pages/teacher/TeacherHome';
 import { TeacherCourse } from './pages/teacher/TeacherCourse';
 import { TeacherStudent } from './pages/teacher/TeacherStudent';
 import { TeacherAssessment } from './pages/teacher/TeacherAssessment';
+import { AttemptAnalytics } from './pages/teacher/analytics';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 
 function App() {
@@ -79,6 +80,14 @@ function App() {
             element={
               <RouteGuard allowedRoles={['TEACHER']}>
                 <TeacherAssessment />
+              </RouteGuard>
+            }
+          />
+          <Route
+            path="/teacher/courses/:courseId/students/:studentId/assessments/:assessmentId/analytics"
+            element={
+              <RouteGuard allowedRoles={['TEACHER']}>
+                <AttemptAnalytics />
               </RouteGuard>
             }
           />

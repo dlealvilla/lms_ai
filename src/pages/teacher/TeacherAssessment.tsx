@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { BarChart3 } from 'lucide-react';
 import { AssessmentWorkspace } from '../../components/AssessmentWorkspace/AssessmentWorkspace';
 import { getAuthHeaders } from '../../lib/auth/AuthContext';
 import type { AssessmentSession } from '../../types/assessment';
@@ -99,6 +100,10 @@ export function TeacherAssessment() {
     navigate(`/teacher/courses/${courseId}/students/${studentId}`);
   };
 
+  const handleOpenAnalytics = () => {
+    navigate(`/teacher/courses/${courseId}/students/${studentId}/assessments/${assessmentId}/analytics`);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -126,19 +131,32 @@ export function TeacherAssessment() {
   };
 
   return (
-    <AssessmentWorkspace
-      assessmentId={assessmentId!}
-      assessmentTitle={`${assessment.title} — ${student.name}`}
-      mode="teacher"
-      readOnly={true}
-      effectiveClosed={assessment.effectiveClosed}
-      initialSession={initialSession}
-      mark={attempt?.mark}
-      onSetMark={handleSetMark}
-      pdfUrl={assessment.pdfBlobUrl}
-      pdfFileName={assessment.pdfFileName}
-      onBack={handleBack}
-    />
+    <div className="relative">
+      {/* Analytics Button - Floating at top */}
+      <div className="fixed top-4 right-4 z-50">
+        <button
+          onClick={handleOpenAnalytics}
+          className="inline-flex items-center gap-2 px-5 py-3 text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl transition-all duration-200"
+        >
+          <BarChart3 className="w-5 h-5" />
+          Analytics
+        </button>
+      </div>
+
+      <AssessmentWorkspace
+        assessmentId={assessmentId!}
+        assessmentTitle={`${assessment.title} — ${student.name}`}
+        mode="teacher"
+        readOnly={true}
+        effectiveClosed={assessment.effectiveClosed}
+        initialSession={initialSession}
+        mark={attempt?.mark}
+        onSetMark={handleSetMark}
+        pdfUrl={assessment.pdfBlobUrl}
+        pdfFileName={assessment.pdfFileName}
+        onBack={handleBack}
+      />
+    </div>
   );
 }
 
