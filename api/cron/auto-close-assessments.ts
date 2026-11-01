@@ -61,7 +61,7 @@ export default async function handler(
           data: {
             tenantId: assessment.tenantId,
             assessmentId: assessment.id,
-            changedByUserId: 'system', // System user placeholder
+            changedByUserId: null, // System action: no user performed the close
             fromStatus: 'OPEN',
             toStatus: 'CLOSED',
             reason: 'Auto-closed at due date by cron job',

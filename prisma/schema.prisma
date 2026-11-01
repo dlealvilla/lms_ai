@@ -196,7 +196,7 @@ model AssessmentStatusHistory {
   id              String           @id @default(uuid())
   tenantId        String
   assessmentId    String
-  changedByUserId String
+  changedByUserId String?
   fromStatus      AssessmentStatus
   toStatus        AssessmentStatus
   reason          String?
@@ -205,7 +205,7 @@ model AssessmentStatusHistory {
   // Relations
   tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   assessment  Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  changedBy   User       @relation(fields: [changedByUserId], references: [id], onDelete: Cascade)
+  changedBy   User?      @relation(fields: [changedByUserId], references: [id], onDelete: Cascade)
 
   // Indexes
   @@index([assessmentId])
