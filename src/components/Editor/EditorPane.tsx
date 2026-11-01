@@ -142,7 +142,7 @@ export function EditorPane({
   const showToast = (message: string) => {
     const toast = document.createElement('div');
     toast.className =
-      'fixed top-4 right-4 bg-error text-error-foreground px-4 py-2 rounded-[2px] shadow-lg z-50 text-sm';
+      'fixed top-4 right-4 bg-error text-error-foreground px-4 py-2 rounded-lg shadow-lg z-50 text-sm';
     toast.textContent = message;
     document.body.appendChild(toast);
     setTimeout(() => {
@@ -186,10 +186,10 @@ export function EditorPane({
 
   const toolBtn = (active: boolean) =>
     cn(
-      'px-2 py-0.5 text-xs rounded-[2px] font-semibold',
+      'px-2 py-0.5 text-xs rounded-lg font-semibold',
       active
-        ? 'bg-gold text-primary-foreground'
-        : 'text-ink-subtle hover:text-ink hover:bg-[#F0E8D8]',
+        ? 'bg-ink text-primary-foreground'
+        : 'text-ink-subtle hover:text-ink hover:bg-[#F3F2EE]',
     );
 
   return (
@@ -198,7 +198,7 @@ export function EditorPane({
         <div
           className={cn(
             'flex gap-1 flex-wrap shrink-0',
-            isBook ? 'px-6 sm:px-10 pb-1 justify-end' : 'border-b border-shelf/30 p-2 bg-page-muted',
+            isBook ? 'px-6 sm:px-10 pb-1 justify-end' : 'border-b border-[#E8E6E1]/30 p-2 bg-page-muted',
           )}
         >
           <button

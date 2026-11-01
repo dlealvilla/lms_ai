@@ -75,8 +75,8 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-page rounded-[2px] shadow-xl border border-[#E0D4C0] w-[90vw] h-[90vh] flex flex-col">
-        <div className="border-b border-[#E0D4C0] p-4 flex justify-between items-center">
+      <div className="bg-page rounded-lg shadow-xl border border-[#E8E6E1] w-[90vw] h-[90vh] flex flex-col">
+        <div className="border-b border-[#E8E6E1] p-4 flex justify-between items-center">
           <h2 className="text-xl font-serif font-bold text-ink">Submission Review</h2>
           <button
             onClick={onClose}
@@ -88,8 +88,8 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
 
         <div className="flex-1 overflow-hidden flex">
           {/* Left: Document Preview */}
-          <div className="flex-1 border-r border-[#E0D4C0] overflow-y-auto">
-            <div className="p-4 border-b border-[#E0D4C0] bg-gray-50">
+          <div className="flex-1 border-r border-[#E8E6E1] overflow-y-auto">
+            <div className="p-4 border-b border-[#E8E6E1] bg-gray-50">
               <h3 className="font-semibold">Document Content</h3>
             </div>
             <div className="h-full overflow-y-auto">
@@ -99,14 +99,14 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
 
           {/* Right: Chat History & Insertions */}
           <div className="w-96 overflow-y-auto">
-            <div className="p-4 border-b border-[#E0D4C0] bg-gray-50">
+            <div className="p-4 border-b border-[#E8E6E1] bg-gray-50">
               <h3 className="font-semibold">Chat History</h3>
             </div>
             <div className="p-4 space-y-4">
               {submission.chatHistory.map((message) => (
                 <div
                   key={message.id}
-                  className={`p-3 rounded-[2px] ${
+                  className={`p-3 rounded-lg ${
                     message.role === 'student'
                       ? 'bg-blue-100'
                       : 'bg-page-muted'
@@ -121,7 +121,7 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
               ))}
             </div>
 
-            <div className="p-4 border-t border-[#E0D4C0] bg-gray-50">
+            <div className="p-4 border-t border-[#E8E6E1] bg-gray-50">
               <h3 className="font-semibold">Insertions ({submission.insertions.length})</h3>
             </div>
             <div className="p-4 space-y-3">
@@ -153,7 +153,7 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
           </div>
         </div>
 
-        <div className="border-t border-[#E0D4C0] p-4 flex justify-end gap-2">
+        <div className="border-t border-[#E8E6E1] p-4 flex justify-end gap-2">
           <button
             onClick={onDownload}
             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"

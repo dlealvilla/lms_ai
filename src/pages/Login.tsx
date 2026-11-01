@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth, Role } from '../lib/auth/AuthContext';
 import { GraduationCap } from 'lucide-react';
-import { DecorativeSpine, ShelfBoard } from '@/components/bookshelf';
+import { DecorativeSpine } from '@/components/bookshelf';
 
 export function Login() {
   const { role: roleParam } = useParams<{ role: string }>();
@@ -68,122 +68,120 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-wood text-parchment relative flex items-center justify-center px-4 overflow-hidden">
-      {/* Decorative shelf behind the card */}
-      <div className="absolute bottom-[10%] left-8 right-8 sm:left-16 sm:right-16 pointer-events-none select-none">
-        <div className="flex items-end justify-between h-[220px] px-4 sm:px-10">
-          <div className="flex items-end gap-2">
-            <DecorativeSpine label="COMP101" color="#6B2D3C" width={48} height={190} />
-            <DecorativeSpine label="WRIT201" color="#2D4A6B" width={54} height={210} />
-            <DecorativeSpine label="HIST201" color="#3D5A3A" width={44} height={170} />
-          </div>
-          <div className="hidden sm:flex items-end gap-2">
-            <DecorativeSpine label="Wildmind" color="#8B6914" width={50} height={200} />
-            <DecorativeSpine label="Demo" color="#4A3060" width={42} height={160} />
-          </div>
+    <div className="min-h-screen bg-[#FAFAF8] text-ink flex">
+      <aside
+        className="hidden sm:flex w-[72px] py-7 flex-col items-center border-r border-[#E8E6E1] bg-white"
+        aria-label="Decorative spine rail"
+      >
+        <div className="w-9 h-9 rounded-[10px] bg-ink text-white flex items-center justify-center mb-4">
+          <GraduationCap className="h-4 w-4" />
         </div>
-        <ShelfBoard />
-      </div>
-
-      {/* Login page card */}
-      <div className="relative z-10 w-full max-w-[400px] bg-page text-ink rounded-[2px] shadow-lg px-9 py-9 mb-16 sm:mb-20">
-        <div className="flex items-center gap-2.5 mb-2">
-          <div className="w-8 h-8 bg-secondary text-secondary-foreground flex items-center justify-center rounded-[2px]">
-            <GraduationCap className="h-4 w-4" />
-          </div>
-          <span className="text-[12px] font-bold tracking-[0.08em] text-ink-muted">
-            WILDMIND LIBRARY
-          </span>
+        <div className="flex flex-col items-center gap-2.5 flex-1">
+          <DecorativeSpine label="COMP101" color="#C45C4A" height={56} />
+          <DecorativeSpine label="WRIT201" color="#3D6B9A" height={72} />
+          <DecorativeSpine label="HIST201" color="#4A7A52" height={48} />
         </div>
+        <div className="w-7 h-7 rounded-full bg-[#E8E6E1] text-[11px] font-bold flex items-center justify-center text-[#555]">
+          SS
+        </div>
+      </aside>
 
-        <h1 className="font-serif text-[28px] font-bold text-ink mt-3 mb-1.5">{config.title}</h1>
-        <p className="text-sm text-ink-muted mb-6">Sign in to Wildmind Education</p>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-[11px] font-bold text-ink-muted tracking-[0.06em] mb-1"
-            >
-              EMAIL
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={config.defaultEmail}
-              className="w-full py-2.5 bg-transparent border-0 border-b-[1.5px] border-ink text-[15px] text-ink outline-none focus:border-gold placeholder:text-ink-subtle"
-            />
+      <main className="flex-1 flex items-center justify-center px-4 py-10">
+        <div className="w-full max-w-[400px] bg-white border border-[#E8E6E1] rounded-xl shadow-folio px-9 py-10">
+          <div className="text-[12px] font-semibold tracking-[0.08em] text-[#888] mb-2">
+            WILDMIND · FOLIO
           </div>
+          <h1 className="font-serif text-[36px] text-ink tracking-[-0.02em] mb-1.5">
+            {config.title}
+          </h1>
+          <p className="text-sm text-ink-muted mb-7">Sign in to Wildmind Education</p>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-[11px] font-bold text-ink-muted tracking-[0.06em] mb-1"
-            >
-              PASSWORD
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full py-2.5 bg-transparent border-0 border-b-[1.5px] border-ink text-[15px] text-ink outline-none focus:border-gold placeholder:text-ink-subtle"
-            />
-            <p className="text-xs text-ink-subtle mt-2">(Mock login — any password works)</p>
-          </div>
-
-          {error && (
-            <div className="bg-error/10 text-error px-3 py-2 rounded-[2px] text-sm border border-error/30">
-              {error}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full py-3 bg-gold text-primary-foreground font-semibold text-[13px] rounded-[2px] border border-gold hover:brightness-105 disabled:opacity-60"
-          >
-            {isLoading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
-
-        <div className="mt-5 text-center">
-          <p className="text-[11px] text-ink-subtle mb-2">Quick login (for demo)</p>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {config.quick.map((q) => (
-              <button
-                key={q.email}
-                type="button"
-                onClick={() => quickFill(q.email)}
-                className="px-3 py-1.5 text-xs font-semibold text-ink bg-[#F5E6D3] border border-gold rounded-[2px] hover:bg-gold/30"
+          <form onSubmit={handleSubmit} className="space-y-3.5">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-[11px] font-semibold text-[#888] tracking-[0.06em] mb-1.5"
               >
-                {q.label}
-              </button>
-            ))}
+                EMAIL
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={config.defaultEmail}
+                className="w-full px-3.5 py-3 border border-[#E8E6E1] rounded-lg bg-[#FAFAF8] text-[14px] text-ink outline-none focus:border-ink focus:ring-1 focus:ring-ink placeholder:text-ink-subtle"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-[11px] font-semibold text-[#888] tracking-[0.06em] mb-1.5"
+              >
+                PASSWORD
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full px-3.5 py-3 border border-[#E8E6E1] rounded-lg bg-[#FAFAF8] text-[14px] text-ink outline-none focus:border-ink focus:ring-1 focus:ring-ink placeholder:text-ink-subtle"
+              />
+              <p className="text-xs text-ink-subtle mt-2">Mock login — any password works</p>
+            </div>
+
+            {error && (
+              <div className="bg-error/10 text-error px-3 py-2 rounded-lg text-sm border border-error/30">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-3 bg-ink text-white font-semibold text-[13px] rounded-lg hover:bg-[#222] disabled:opacity-60"
+            >
+              {isLoading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
+
+          <div className="mt-5 pt-4 border-t border-[#E8E6E1] text-center">
+            <p className="text-[11px] text-ink-subtle mb-2">Quick login</p>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {config.quick.map((q) => (
+                <button
+                  key={q.email}
+                  type="button"
+                  onClick={() => quickFill(q.email)}
+                  className="px-3 py-1.5 text-xs font-semibold text-ink bg-[#F3F2EE] rounded-lg hover:bg-[#E8E6E1]"
+                >
+                  {q.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 text-center text-xs text-ink-subtle">
+            {role !== 'STUDENT' && (
+              <Link to="/login/student" className="hover:text-ink mx-2">
+                Student Login
+              </Link>
+            )}
+            {role !== 'TEACHER' && (
+              <Link to="/login/teacher" className="hover:text-ink mx-2">
+                Teacher Login
+              </Link>
+            )}
+            {role !== 'ADMIN' && (
+              <Link to="/login/admin" className="hover:text-ink mx-2">
+                Admin Login
+              </Link>
+            )}
           </div>
         </div>
-
-        <div className="mt-6 text-center text-xs text-ink-subtle">
-          {role !== 'STUDENT' && (
-            <Link to="/login/student" className="hover:text-ink mx-2">
-              Student Login
-            </Link>
-          )}
-          {role !== 'TEACHER' && (
-            <Link to="/login/teacher" className="hover:text-ink mx-2">
-              Teacher Login
-            </Link>
-          )}
-          {role !== 'ADMIN' && (
-            <Link to="/login/admin" className="hover:text-ink mx-2">
-              Admin Login
-            </Link>
-          )}
-        </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -90,16 +90,16 @@ export function StudentAssessment() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-wood">
-        <div className="text-foreground-muted">Loading assessment...</div>
+      <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8]">
+        <div className="text-ink-muted">Loading assessment...</div>
       </div>
     );
   }
 
   if (error || !assessment) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-wood">
-        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-[2px]">
+      <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8]">
+        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg">
           {error || 'Assessment not found'}
         </div>
       </div>

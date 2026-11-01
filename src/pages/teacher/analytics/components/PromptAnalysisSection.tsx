@@ -6,10 +6,10 @@ export function PromptAnalysisSection() {
   return (
     <section id="prompt-analysis" className="scroll-mt-24">
       <div className="mb-6">
-        <h2 className="font-serif text-xl font-bold text-parchment">
+        <h2 className="font-serif text-xl font-bold text-ink">
           Prompt-Level Analysis
         </h2>
-        <p className="text-sm text-[#A89070] mt-1">
+        <p className="text-sm text-ink-muted mt-1">
           Each prompt is analysed independently. Expand a prompt to view all measurements and insights.
         </p>
       </div>
@@ -29,7 +29,7 @@ export function PromptAnalysisSection() {
 
 function EmptyPromptState() {
   return (
-    <div className="bg-page-muted border border-dashed border-[#C4A35A]/40 rounded-[3px] p-8 text-center">
+    <div className="bg-page-muted border border-dashed border-[#111111]/40 rounded-[3px] p-8 text-center">
       <MessageSquare className="w-10 h-10 text-ink-subtle mx-auto mb-3" />
       <h3 className="text-sm font-medium text-ink-muted">No prompts to display</h3>
       <p className="text-sm text-ink-subtle mt-1">
@@ -47,14 +47,14 @@ function PromptRowAccordion({ promptNumber }: PromptRowAccordionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-page border border-shelf/40 rounded-[2px] overflow-hidden">
+    <div className="bg-page border border-[#E8E6E1] rounded-lg overflow-hidden">
       {/* Collapsed Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full px-4 py-4 flex items-start gap-4 hover:bg-page-muted transition-colors text-left"
       >
         {/* Prompt number */}
-        <div className="flex-shrink-0 w-8 h-8 bg-page-muted rounded-[2px] flex items-center justify-center">
+        <div className="flex-shrink-0 w-8 h-8 bg-page-muted rounded-lg flex items-center justify-center">
           <span className="text-sm font-medium text-ink-muted">#{promptNumber}</span>
         </div>
 
@@ -73,7 +73,7 @@ function PromptRowAccordion({ promptNumber }: PromptRowAccordionProps) {
             {/* Cognitive level */}
             <SkeletonChip className="w-14 bg-spine-writ/20" />
             {/* Intent */}
-            <SkeletonChip className="w-18 bg-gold/20" />
+            <SkeletonChip className="w-18 bg-ink/20" />
           </div>
 
           {/* Contribution mini-indicators */}
@@ -91,7 +91,7 @@ function PromptRowAccordion({ promptNumber }: PromptRowAccordionProps) {
 
             {/* AIU contributions */}
             <div className="flex items-center gap-2">
-              <Cpu className="w-3 h-3 text-gold" />
+              <Cpu className="w-3 h-3 text-ink" />
               <div className="flex gap-1">
                 <MiniBar />
                 <MiniBar />
@@ -118,7 +118,7 @@ function PromptRowAccordion({ promptNumber }: PromptRowAccordionProps) {
 
       {/* Expanded Content */}
       {isExpanded && (
-        <div className="border-t border-shelf/25">
+        <div className="border-t border-[#E8E6E1]/25">
           <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-shelf/25">
             {/* Left: Domain Knowledge */}
             <PromptDKPanel />
@@ -128,7 +128,7 @@ function PromptRowAccordion({ promptNumber }: PromptRowAccordionProps) {
           </div>
 
           {/* Links row */}
-          <div className="px-4 py-3 bg-page-muted border-t border-shelf/25 flex items-center gap-4">
+          <div className="px-4 py-3 bg-page-muted border-t border-[#E8E6E1]/25 flex items-center gap-4">
             <a
               href="#dk-breakdown"
               className="inline-flex items-center gap-1 text-xs text-spine-writ hover:text-spine-writ"
@@ -138,7 +138,7 @@ function PromptRowAccordion({ promptNumber }: PromptRowAccordionProps) {
             </a>
             <a
               href="#aiu-breakdown"
-              className="inline-flex items-center gap-1 text-xs text-gold hover:text-ink"
+              className="inline-flex items-center gap-1 text-xs text-ink hover:text-ink"
             >
               <ExternalLink className="w-3 h-3" />
               Jump to AIU component
@@ -244,7 +244,7 @@ function PromptAIUPanel() {
   return (
     <div className="p-4 space-y-4">
       <div className="flex items-center gap-2 mb-3">
-        <Cpu className="w-4 h-4 text-gold" />
+        <Cpu className="w-4 h-4 text-ink" />
         <h4 className="text-sm font-semibold text-ink">AI Usage</h4>
       </div>
 
@@ -254,7 +254,7 @@ function PromptAIUPanel() {
           Intent
         </span>
         <div className="mt-2">
-          <SkeletonChip className="bg-gold/20" />
+          <SkeletonChip className="bg-ink/20" />
         </div>
       </div>
 

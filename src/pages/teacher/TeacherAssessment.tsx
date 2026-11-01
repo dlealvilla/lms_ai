@@ -107,16 +107,16 @@ export function TeacherAssessment() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-wood">
-        <div className="text-foreground-muted">Loading student attempt...</div>
+      <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8]">
+        <div className="text-ink-muted">Loading student attempt...</div>
       </div>
     );
   }
 
   if (error || !assessment || !student) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-wood">
-        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-[2px]">
+      <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8]">
+        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg">
           {error || 'Attempt not found'}
         </div>
       </div>

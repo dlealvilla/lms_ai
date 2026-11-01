@@ -33,9 +33,9 @@ function DomainKnowledgeCard({ data }: { data: AnalyticsData | null }) {
   const scoreColor = getScoreColor(composite);
 
   return (
-    <div className="bg-page border border-shelf/40 rounded-[3px] shadow-sm p-6">
+    <div className="bg-page border border-[#E8E6E1] rounded-[3px] shadow-sm p-6">
       <div className="flex items-start gap-4">
-        <div className="p-3 bg-spine-writ/15 rounded-[2px]">
+        <div className="p-3 bg-spine-writ/15 rounded-lg">
           <Brain className="w-6 h-6 text-spine-writ" />
         </div>
         <div className="flex-1">
@@ -103,10 +103,10 @@ function AIUsageCard({ data }: { data: AnalyticsData | null }) {
   const scoreColor = getScoreColor(composite);
 
   return (
-    <div className="bg-page border border-shelf/40 rounded-[3px] shadow-sm p-6">
+    <div className="bg-page border border-[#E8E6E1] rounded-[3px] shadow-sm p-6">
       <div className="flex items-start gap-4">
-        <div className="p-3 bg-gold/15 rounded-[2px]">
-          <Cpu className="w-6 h-6 text-gold" />
+        <div className="p-3 bg-ink/15 rounded-lg">
+          <Cpu className="w-6 h-6 text-ink" />
         </div>
         <div className="flex-1">
           <h3 className="font-serif text-lg font-bold text-ink">
@@ -178,7 +178,7 @@ function HighlightsRow({ data }: { data: AnalyticsData | null }) {
         {insights?.gaps.slice(0, 2).map((gap, i) => (
           <span
             key={`gap-${i}`}
-            className="px-3 py-1.5 text-sm bg-gold/15 text-ink border border-gold/30 rounded-full"
+            className="px-3 py-1.5 text-sm bg-ink/15 text-ink border border-ink/30 rounded-full"
           >
             ⚠ {gap}
           </span>
@@ -193,8 +193,8 @@ function HighlightsRow({ data }: { data: AnalyticsData | null }) {
 
 // Helper components
 function ScoreBar({ score, variant }: { score: number; variant: 'blue' | 'amber' }) {
-  const bgColor = variant === 'blue' ? 'bg-spine-writ/150' : 'bg-gold/150';
-  const trackColor = variant === 'blue' ? 'bg-spine-writ/20' : 'bg-gold/20';
+  const bgColor = variant === 'blue' ? 'bg-spine-writ/150' : 'bg-ink/150';
+  const trackColor = variant === 'blue' ? 'bg-spine-writ/20' : 'bg-ink/20';
 
   return (
     <div className={`h-2 ${trackColor} rounded-full overflow-hidden`}>
@@ -208,7 +208,7 @@ function ScoreBar({ score, variant }: { score: number; variant: 'blue' | 'amber'
 
 function getScoreColor(score: number): string {
   if (score >= 80) return 'text-success';
-  if (score >= 60) return 'text-gold';
+  if (score >= 60) return 'text-ink';
   if (score >= 40) return 'text-warning';
   return 'text-red-500';
 }

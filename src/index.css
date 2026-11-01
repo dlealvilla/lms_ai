@@ -4,80 +4,78 @@
 @layer base {
   :root {
     /* ============================================
-       BOOKSHELF THEME — Wildmind Library
-       Library metaphor: wood shelves, cream pages, gold accents
+       FOLIO THEME — WildMind AI for Education
+       Modern evolution of Bookshelf: flat spines, Instrument Serif + Inter
        ============================================ */
 
-    /* Wood backgrounds */
-    --background: 44 24 16; /* #2C1810 wood */
-    --background-elevated: 61 37 24; /* #3D2518 */
-    --background-muted: 26 14 8; /* #1A0E08 */
+    --background: 250 250 248; /* #FAFAF8 */
+    --background-elevated: 255 255 255; /* #FFFFFF */
+    --background-muted: 243 242 238; /* #F3F2EE */
 
-    /* Cream / parchment text on wood UI chrome uses parchment; pages use ink */
-    --foreground: 245 230 211; /* #F5E6D3 parchment */
-    --foreground-muted: 168 144 112; /* #A89070 */
-    --foreground-subtle: 139 105 20; /* #8B6914 */
+    --foreground: 17 17 17; /* #111111 */
+    --foreground-muted: 102 102 102; /* #666666 */
+    --foreground-subtle: 153 153 153; /* #999999 */
 
-    /* Borders */
-    --border: 92 58 40 / 0.55; /* shelf */
-    --border-strong: 196 163 90 / 0.45; /* gold */
-    --separator: 92 58 40 / 0.4;
+    --border: 232 230 225; /* #E8E6E1 */
+    --border-strong: 17 17 17 / 0.18;
+    --separator: 232 230 225;
 
-    /* Primary CTA — gold */
-    --primary: 196 163 90; /* #C4A35A */
-    --primary-hover: 212 184 120;
-    --primary-wash: 196 163 90 / 0.18;
-    --primary-foreground: 26 14 8; /* #1A0E08 */
+    /* Primary CTA — ink black */
+    --primary: 17 17 17;
+    --primary-hover: 34 34 34;
+    --primary-wash: 17 17 17 / 0.06;
+    --primary-foreground: 255 255 255;
 
-    /* Secondary — burgundy spine */
-    --secondary: 107 45 60; /* #6B2D3C */
-    --secondary-hover: 122 48 64;
-    --secondary-wash: 107 45 60 / 0.18;
-    --secondary-foreground: 245 230 211;
+    /* Secondary — dusty blue spine */
+    --secondary: 61 107 154; /* #3D6B9A */
+    --secondary-hover: 52 92 132;
+    --secondary-wash: 61 107 154 / 0.12;
+    --secondary-foreground: 255 255 255;
 
-    --accent: 196 163 90;
-    --accent-foreground: 26 14 8;
+    --accent: 196 92 74; /* COMP terracotta */
+    --accent-foreground: 255 255 255;
 
-    /* Status */
-    --success: 74 222 128;
-    --success-foreground: 26 14 8;
-    --warning: 196 163 90;
-    --warning-foreground: 26 14 8;
-    --error: 239 68 68;
+    --success: 15 107 62; /* #0F6B3E */
+    --success-foreground: 255 255 255;
+    --warning: 160 128 32;
+    --warning-foreground: 17 17 17;
+    --error: 185 50 50;
     --error-foreground: 255 255 255;
-    --info: 138 180 212;
-    --info-foreground: 26 14 8;
+    --info: 61 107 154;
+    --info-foreground: 255 255 255;
 
-    /* Page / ink (open book surfaces) */
-    --page: 255 254 245; /* #FFFEF5 */
-    --page-muted: 240 232 216; /* #F0E8D8 */
-    --ink: 42 32 16; /* #2A2010 */
-    --ink-muted: 107 90 64; /* #6B5A40 */
-    --ink-subtle: 139 122 96; /* #8B7A60 */
+    /* Surfaces / ink */
+    --page: 255 255 255;
+    --page-muted: 250 250 248;
+    --ink: 17 17 17;
+    --ink-muted: 102 102 102;
+    --ink-subtle: 153 153 153;
 
-    /* Wood / shelf / gold / spines */
-    --wood: 44 24 16;
-    --wood-mid: 61 35 23; /* #3D2317 */
-    --wood-deep: 26 14 8;
-    --shelf: 92 58 40; /* #5C3A28 */
-    --shelf-deep: 61 37 24;
-    --gold: 196 163 90;
-    --spine-comp: 107 45 60; /* #6B2D3C */
-    --spine-writ: 45 74 107; /* #2D4A6B */
-    --spine-hist: 61 90 58; /* #3D5A3A */
-    --spine-gold: 139 105 20; /* #8B6914 */
-    --spine-purple: 74 48 96; /* #4A3060 */
-    --binding: 212 196 168; /* #D4C4A8 */
+    /* Folio spine accents (kept as named tokens for Tailwind) */
+    --wood: 250 250 248;
+    --wood-mid: 243 242 238;
+    --wood-deep: 232 230 225;
+    --shelf: 232 230 225;
+    --shelf-deep: 243 242 238;
+    --gold: 17 17 17; /* primary CTA maps here for legacy class reuse */
+    --spine-comp: 196 92 74; /* #C45C4A */
+    --spine-writ: 61 107 154; /* #3D6B9A */
+    --spine-hist: 74 122 82; /* #4A7A52 */
+    --spine-gold: 160 128 32;
+    --spine-purple: 110 80 140;
+    --binding: 232 230 225;
+    --sticky: 255 249 230; /* #FFF9E6 */
+    --hairline: 232 230 225;
 
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
-    --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
-    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow: 0 8px 40px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.08);
 
-    --radius-sm: 2px;
-    --radius: 3px;
-    --radius-md: 4px;
-    --radius-lg: 6px;
+    --radius-sm: 8px;
+    --radius: 10px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
 
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
@@ -86,19 +84,20 @@
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
 
-    --font-serif: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
-    --font-sans: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
-  /* Keep night as a slightly deeper wood variant (same metaphor) */
   [data-theme="night"] {
-    --background: 26 14 8;
-    --background-elevated: 44 24 16;
-    --background-muted: 18 10 6;
-    --foreground: 245 230 211;
-    --foreground-muted: 168 144 112;
-    --primary: 196 163 90;
-    --primary-foreground: 26 14 8;
+    --background: 24 24 22;
+    --background-elevated: 34 34 32;
+    --background-muted: 40 40 38;
+    --foreground: 250 250 248;
+    --foreground-muted: 168 168 160;
+    --primary: 250 250 248;
+    --primary-foreground: 17 17 17;
+    --page: 34 34 32;
+    --ink: 250 250 248;
   }
 
   body {
@@ -111,50 +110,73 @@
 
   h1, h2, h3, .font-serif, .serif {
     font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--ink));
+    outline-offset: 2px;
   }
 }
 
 @layer utilities {
   .bg-wood {
-    background: linear-gradient(180deg, #3D2317 0%, #2C1810 40%, #1A0E08 100%);
+    background-color: #FAFAF8;
   }
   .bg-shelf-board {
-    background: linear-gradient(180deg, #5C3A28, #3D2518);
+    background-color: #F3F2EE;
   }
   .bg-page {
-    background-color: #FFFEF5;
-    color: #2A2010;
+    background-color: #FFFFFF;
+    color: #111111;
+  }
+  .bg-sticky {
+    background-color: #FFF9E6;
   }
   .text-ink {
-    color: #2A2010;
+    color: #111111;
   }
   .text-ink-muted {
-    color: #6B5A40;
+    color: #666666;
   }
   .text-ink-subtle {
-    color: #8B7A60;
+    color: #999999;
   }
   .text-gold {
-    color: #C4A35A;
+    color: #111111;
   }
   .text-parchment {
-    color: #F5E6D3;
+    color: #111111;
   }
   .border-gold {
-    border-color: #C4A35A;
+    border-color: #111111;
+  }
+  .border-hairline {
+    border-color: #E8E6E1;
   }
   .writing-spine {
     writing-mode: vertical-rl;
     text-orientation: mixed;
   }
+  .shadow-folio {
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.04);
+  }
+  .pill-open {
+    background: #E8F6EE;
+    color: #0F6B3E;
+  }
+  .pill-closed {
+    background: #F3F2EE;
+    color: #888888;
+  }
 }
 
-/* TipTap AI-inserted mark — parchment highlight */
+/* TipTap AI-inserted mark — Folio terracotta accent */
 .ai-inserted-text {
-  background-color: #F5EBD0;
-  border-left: 3px solid #C4A35A;
+  background-color: #FFF8F6;
+  border-left: 3px solid #C45C4A;
   padding: 2px 6px;
-  border-radius: 2px;
+  border-radius: 0 8px 8px 0;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
@@ -162,17 +184,18 @@
 .ProseMirror {
   outline: none;
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.7;
-  color: #2A2010;
+  color: #111111;
 }
 .ProseMirror h1,
 .ProseMirror h2 {
   font-family: var(--font-serif);
-  font-weight: 700;
-  color: #2A2010;
+  font-weight: 400;
+  color: #111111;
+  letter-spacing: -0.02em;
 }
-.ProseMirror h1 { font-size: 1.5rem; margin: 0 0 1rem; }
-.ProseMirror h2 { font-size: 1.25rem; margin: 0 0 0.75rem; }
+.ProseMirror h1 { font-size: 1.75rem; margin: 0 0 1rem; }
+.ProseMirror h2 { font-size: 1.35rem; margin: 0 0 0.75rem; }
 .ProseMirror p { margin: 0 0 0.75rem; }
 .ProseMirror ul, .ProseMirror ol { padding-left: 1.5em; margin: 0 0 0.75rem; }

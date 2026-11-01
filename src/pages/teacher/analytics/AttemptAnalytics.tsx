@@ -37,7 +37,7 @@ export function AttemptAnalytics() {
   };
 
   return (
-    <div className="min-h-screen bg-wood text-parchment">
+    <div className="min-h-screen bg-[#FAFAF8] text-ink">
       <StickyHeader
         data={analyticsData}
         onBack={handleBack}

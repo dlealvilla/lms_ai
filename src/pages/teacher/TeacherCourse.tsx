@@ -102,7 +102,7 @@ export function TeacherCourse() {
     return (
       <AuthLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="text-foreground-muted">Loading course...</div>
+          <div className="text-ink-muted">Loading course...</div>
         </div>
       </AuthLayout>
     );
@@ -111,7 +111,7 @@ export function TeacherCourse() {
   if (error || !course) {
     return (
       <AuthLayout>
-        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-[2px]">
+        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg">
           {error || 'Course not found'}
         </div>
       </AuthLayout>
@@ -122,27 +122,27 @@ export function TeacherCourse() {
     <AuthLayout>
       <div className="space-y-6">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-foreground-muted">
-          <Link to="/teacher/home" className="hover:text-parchment">Home</Link>
+        <div className="flex items-center gap-2 text-sm text-ink-muted">
+          <Link to="/teacher/home" className="hover:text-ink">Home</Link>
           <span>/</span>
           <span className="text-ink">{course.code}</span>
         </div>
 
         {/* Course header */}
-        <div className="bg-page rounded-[2px] border border-[#E0D4C0] p-6">
+        <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] p-6">
           <div className="text-sm text-secondary font-medium mb-1">{course.code}</div>
-          <h1 className="text-2xl font-bold text-ink mb-2">{course.title}</h1>
-          <div className="text-foreground-muted">{course.term}</div>
+          <h1 className="font-serif text-3xl tracking-[-0.02em] text-ink mb-2">{course.title}</h1>
+          <div className="text-ink-muted">{course.term}</div>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-4 border-b border-[#E0D4C0]">
+        <div className="flex gap-4 border-b border-[#E8E6E1]">
           <button
             onClick={() => setActiveTab('students')}
             className={`pb-2 px-1 font-medium ${
               activeTab === 'students'
-                ? 'border-b-2 border-gold text-secondary'
-                : 'text-foreground-muted hover:text-parchment'
+                ? 'border-b-2 border-ink text-secondary'
+                : 'text-ink-muted hover:text-ink'
             }`}
           >
             Students ({course.students.length})
@@ -151,8 +151,8 @@ export function TeacherCourse() {
             onClick={() => setActiveTab('assessments')}
             className={`pb-2 px-1 font-medium ${
               activeTab === 'assessments'
-                ? 'border-b-2 border-gold text-secondary'
-                : 'text-foreground-muted hover:text-parchment'
+                ? 'border-b-2 border-ink text-secondary'
+                : 'text-ink-muted hover:text-ink'
             }`}
           >
             Assessments ({course.assessments.length})
@@ -163,28 +163,28 @@ export function TeacherCourse() {
         {activeTab === 'students' && (
           <section>
             {course.students.length === 0 ? (
-              <div className="bg-page-muted rounded-[2px] p-8 text-center text-foreground-muted">
+              <div className="bg-page-muted rounded-lg p-8 text-center text-ink-muted">
                 No students enrolled
               </div>
             ) : (
-              <div className="bg-page rounded-[2px] border border-[#E0D4C0] overflow-hidden">
+              <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] overflow-hidden">
                 <table className="w-full">
                   <thead className="bg-page-muted">
                     <tr>
-                      <th className="text-left px-4 py-3 text-sm font-medium text-foreground-muted">Name</th>
-                      <th className="text-left px-4 py-3 text-sm font-medium text-foreground-muted">Email</th>
-                      <th className="text-left px-4 py-3 text-sm font-medium text-foreground-muted">Attempts</th>
-                      <th className="text-left px-4 py-3 text-sm font-medium text-foreground-muted">Last Active</th>
+                      <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Name</th>
+                      <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Email</th>
+                      <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Attempts</th>
+                      <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Last Active</th>
                       <th className="px-4 py-3"></th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E0D4C0]">
+                  <tbody className="divide-y divide-[#E8E6E1]">
                     {course.students.map((student) => (
                       <tr key={student.id} className="hover:bg-page-muted">
                         <td className="px-4 py-3 font-medium text-ink">{student.name}</td>
-                        <td className="px-4 py-3 text-foreground-muted">{student.email}</td>
-                        <td className="px-4 py-3 text-foreground-muted">{student.attemptCount}</td>
-                        <td className="px-4 py-3 text-foreground-muted text-sm">
+                        <td className="px-4 py-3 text-ink-muted">{student.email}</td>
+                        <td className="px-4 py-3 text-ink-muted">{student.attemptCount}</td>
+                        <td className="px-4 py-3 text-ink-muted text-sm">
                           {formatDate(student.lastActiveAt)}
                         </td>
                         <td className="px-4 py-3 text-right">
@@ -208,11 +208,11 @@ export function TeacherCourse() {
         {activeTab === 'assessments' && (
           <section className="space-y-4">
             {course.assessments.length === 0 ? (
-              <div className="bg-page-muted rounded-[2px] p-8 text-center text-foreground-muted">
+              <div className="bg-page-muted rounded-lg p-8 text-center text-ink-muted">
                 No assessments yet
               </div>
             ) : (
-              <div className="bg-page rounded-[2px] border border-[#E0D4C0] divide-y">
+              <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] divide-y">
                 {course.assessments.map((assessment) => (
                   <div key={assessment.id} className="p-4">
                     <div className="flex items-center justify-between">
@@ -229,13 +229,13 @@ export function TeacherCourse() {
                             {assessment.effectiveClosed ? 'Closed' : 'Open'}
                           </span>
                           {assessment.closeAtDue && (
-                            <span className="px-2 py-0.5 rounded text-xs bg-gold/20 text-[#8B6914] border border-gold/40">
+                            <span className="px-2 py-0.5 rounded text-xs bg-ink/20 text-ink-subtle border border-ink/40">
                               Auto-close
                             </span>
                           )}
                         </div>
                         
-                        <div className="flex items-center gap-4 text-sm text-foreground-muted">
+                        <div className="flex items-center gap-4 text-sm text-ink-muted">
                           <span>Due: {formatDate(assessment.dueAt)}</span>
                           <span>{assessment.attemptCount} attempts</span>
                           <span>{assessment.markedCount} marked</span>

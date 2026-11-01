@@ -12,7 +12,7 @@ export function Skeleton({ className, variant = 'rectangular' }: SkeletonProps) 
         'animate-pulse bg-binding ',
         variant === 'circular' && 'rounded-full',
         variant === 'text' && 'rounded h-4',
-        variant === 'rectangular' && 'rounded-[2px]',
+        variant === 'rectangular' && 'rounded-lg',
         className
       )}
     />

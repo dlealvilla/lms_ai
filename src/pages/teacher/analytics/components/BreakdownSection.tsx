@@ -9,7 +9,7 @@ interface BreakdownSectionProps {
 export function BreakdownSection({ data }: BreakdownSectionProps) {
   return (
     <section id="breakdown" className="scroll-mt-24">
-      <h2 className="font-serif text-xl font-bold text-parchment mb-6">
+      <h2 className="font-serif text-xl font-bold text-ink mb-6">
         Detailed Breakdown
       </h2>
 
@@ -84,7 +84,7 @@ function DomainKnowledgeBreakdown({ data }: { data: AnalyticsData | null }) {
     <div className="space-y-4" id="dk-breakdown">
       <div className="flex items-center gap-2 mb-4">
         <Brain className="w-5 h-5 text-info" />
-        <h3 className="font-serif text-lg font-medium text-parchment">Domain Knowledge</h3>
+        <h3 className="font-serif text-lg font-medium text-ink">Domain Knowledge</h3>
       </div>
 
       {components.map((component) => (
@@ -174,8 +174,8 @@ function AIUsageBreakdown({ data }: { data: AnalyticsData | null }) {
   return (
     <div className="space-y-4" id="aiu-breakdown">
       <div className="flex items-center gap-2 mb-4">
-        <Cpu className="w-5 h-5 text-gold" />
-        <h3 className="font-serif text-lg font-medium text-parchment">AI Usage Skill</h3>
+        <Cpu className="w-5 h-5 text-ink" />
+        <h3 className="font-serif text-lg font-medium text-ink">AI Usage Skill</h3>
       </div>
 
       {components.map((component) => (
@@ -218,11 +218,11 @@ function BreakdownCard({
 }: BreakdownCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const accentBg = variant === 'domain' ? 'bg-spine-writ/150' : 'bg-gold/150';
+  const accentBg = variant === 'domain' ? 'bg-spine-writ/150' : 'bg-ink/150';
   const scoreColor = getScoreColor(score ?? 0);
 
   return (
-    <div className="bg-page border border-shelf/40 rounded-[2px] overflow-hidden">
+    <div className="bg-page border border-[#E8E6E1] rounded-lg overflow-hidden">
       {/* Header - Clickable */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
@@ -249,7 +249,7 @@ function BreakdownCard({
 
       {/* Expanded content */}
       {isExpanded && (
-        <div className="px-4 pb-4 pt-2 border-t border-shelf/25 bg-page-muted/60 space-y-4">
+        <div className="px-4 pb-4 pt-2 border-t border-[#E8E6E1]/25 bg-page-muted/60 space-y-4">
           {/* What this measures */}
           <div>
             <div className="flex items-center gap-1 mb-1">
@@ -269,7 +269,7 @@ function BreakdownCard({
               </span>
               <div className="mt-2 grid grid-cols-2 gap-2">
                 {metrics.map((metric) => (
-                  <div key={metric.label} className="flex items-center justify-between bg-page px-3 py-2 rounded border border-shelf/25">
+                  <div key={metric.label} className="flex items-center justify-between bg-page px-3 py-2 rounded border border-[#E8E6E1]/25">
                     <span className="text-xs text-ink-muted">{metric.label}</span>
                     <span className="text-sm font-medium text-ink">{metric.value}</span>
                   </div>
@@ -315,7 +315,7 @@ function BreakdownCard({
                           ? 'bg-success/15 text-success border border-success/30'
                           : isFalse
                           ? 'bg-error/10 text-error border border-error/30'
-                          : 'bg-page-muted text-ink-muted border border-shelf/40'
+                          : 'bg-page-muted text-ink-muted border border-[#E8E6E1]'
                       }`}
                     >
                       {isTrue && <Check className="w-3 h-3" />}
@@ -372,7 +372,7 @@ function EducatorOverridePanel() {
               min="0"
               max="100"
               disabled
-              className="flex-1 h-2 bg-binding rounded-[2px] appearance-none cursor-not-allowed"
+              className="flex-1 h-2 bg-binding rounded-lg appearance-none cursor-not-allowed"
             />
             <span className="text-sm text-ink-subtle w-12">— / 100</span>
           </div>
@@ -389,7 +389,7 @@ function EducatorOverridePanel() {
               min="0"
               max="100"
               disabled
-              className="flex-1 h-2 bg-binding rounded-[2px] appearance-none cursor-not-allowed"
+              className="flex-1 h-2 bg-binding rounded-lg appearance-none cursor-not-allowed"
             />
             <span className="text-sm text-ink-subtle w-12">— / 100</span>
           </div>
@@ -404,7 +404,7 @@ function EducatorOverridePanel() {
         <textarea
           disabled
           placeholder="Add notes about this assessment attempt..."
-          className="w-full h-24 px-3 py-2 text-sm border border-shelf/40 rounded-[2px] bg-page resize-none cursor-not-allowed"
+          className="w-full h-24 px-3 py-2 text-sm border border-[#E8E6E1] rounded-lg bg-page resize-none cursor-not-allowed"
         />
       </div>
     </div>
@@ -413,7 +413,7 @@ function EducatorOverridePanel() {
 
 function getScoreColor(score: number): string {
   if (score >= 80) return 'text-success';
-  if (score >= 60) return 'text-gold';
+  if (score >= 60) return 'text-ink';
   if (score >= 40) return 'text-warning';
   return 'text-red-500';
 }

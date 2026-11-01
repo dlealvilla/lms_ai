@@ -18,13 +18,13 @@ export function MiniNav({ className }: MiniNavProps) {
         className
       )}
     >
-      <div className="bg-[#3D2518]/90 backdrop-blur-sm border border-[#8B6914]/40 rounded-[2px] p-2 shadow-md">
+      <div className="bg-[#F3F2EE]/90 backdrop-blur-sm border border-[#E8E6E1]/40 rounded-lg p-2 shadow-md">
         <ul className="space-y-1">
           {navItems.map((item) => (
             <li key={item.id}>
               <a
                 href={`#${item.id}`}
-                className="block px-3 py-2 text-xs font-medium text-[#A89070] hover:text-parchment hover:bg-[#2C1810] rounded transition-colors"
+                className="block px-3 py-2 text-xs font-medium text-ink-muted hover:text-ink hover:bg-[#F3F2EE] rounded transition-colors"
               >
                 {item.label}
               </a>
@@ -37,7 +37,7 @@ export function MiniNav({ className }: MiniNavProps) {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="block px-3 py-2 text-xs font-medium text-[#8B6914] hover:text-[#A89070] hover:bg-[#2C1810] rounded transition-colors"
+              className="block px-3 py-2 text-xs font-medium text-ink-subtle hover:text-ink-muted hover:bg-[#F3F2EE] rounded transition-colors"
             >
               ↑ Top
             </a>

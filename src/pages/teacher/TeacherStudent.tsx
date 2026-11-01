@@ -119,7 +119,7 @@ export function TeacherStudent() {
     return (
       <AuthLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="text-foreground-muted">Loading student details...</div>
+          <div className="text-ink-muted">Loading student details...</div>
         </div>
       </AuthLayout>
     );
@@ -128,7 +128,7 @@ export function TeacherStudent() {
   if (error || !student || !course) {
     return (
       <AuthLayout>
-        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-[2px]">
+        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg">
           {error || 'Student not found'}
         </div>
       </AuthLayout>
@@ -139,10 +139,10 @@ export function TeacherStudent() {
     <AuthLayout>
       <div className="space-y-6">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-foreground-muted">
-          <Link to="/teacher/home" className="hover:text-parchment">Home</Link>
+        <div className="flex items-center gap-2 text-sm text-ink-muted">
+          <Link to="/teacher/home" className="hover:text-ink">Home</Link>
           <span>/</span>
-          <Link to={`/teacher/courses/${courseId}`} className="hover:text-parchment">
+          <Link to={`/teacher/courses/${courseId}`} className="hover:text-ink">
             {course.code}
           </Link>
           <span>/</span>
@@ -150,21 +150,21 @@ export function TeacherStudent() {
         </div>
 
         {/* Student header */}
-        <div className="bg-page rounded-[2px] border border-[#E0D4C0] p-6">
+        <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] p-6">
           <h1 className="text-2xl font-bold text-ink mb-2">{student.name}</h1>
-          <div className="text-foreground-muted">{student.email}</div>
+          <div className="text-ink-muted">{student.email}</div>
         </div>
 
         {/* Assessments list */}
         <section>
-          <h2 className="text-lg font-semibold text-parchment mb-4">Assessments</h2>
+          <h2 className="text-lg font-semibold text-ink mb-4">Assessments</h2>
           
           {student.attempts.length === 0 ? (
-            <div className="bg-page-muted rounded-[2px] p-8 text-center text-foreground-muted">
+            <div className="bg-page-muted rounded-lg p-8 text-center text-ink-muted">
               No assessments for this course
             </div>
           ) : (
-            <div className="bg-page rounded-[2px] border border-[#E0D4C0] divide-y">
+            <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] divide-y">
               {student.attempts.map((attempt) => (
                 <div key={attempt.assessmentId} className="p-4">
                   <div className="flex items-center justify-between">
@@ -183,13 +183,13 @@ export function TeacherStudent() {
                           {attempt.effectiveClosed ? 'Closed' : 'Open'}
                         </span>
                         {!attempt.hasAttempt && (
-                          <span className="px-2 py-0.5 rounded text-xs bg-page-muted text-foreground-muted">
+                          <span className="px-2 py-0.5 rounded text-xs bg-page-muted text-ink-muted">
                             Not started
                           </span>
                         )}
                       </div>
                       
-                      <div className="text-sm text-foreground-muted">
+                      <div className="text-sm text-ink-muted">
                         Last saved: {formatDate(attempt.lastSavedAt)}
                       </div>
                     </div>

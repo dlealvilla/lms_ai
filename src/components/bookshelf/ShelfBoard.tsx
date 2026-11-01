@@ -1,9 +1,10 @@
 import { cn } from '@/lib/utils';
 
+/** Folio hairline divider (replaces wood shelf board) */
 export function ShelfBoard({ className }: { className?: string }) {
   return (
     <div
-      className={cn('bg-shelf-board h-4 rounded-[2px] shadow-[0_4px_12px_rgba(0,0,0,0.4)]', className)}
+      className={cn('h-px w-full bg-[#E8E6E1]', className)}
       aria-hidden
     />
   );

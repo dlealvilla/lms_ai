@@ -71,7 +71,7 @@ export function StudentCourse() {
     return (
       <AuthLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="text-foreground-muted">Loading course...</div>
+          <div className="text-ink-muted">Loading course...</div>
         </div>
       </AuthLayout>
     );
@@ -80,7 +80,7 @@ export function StudentCourse() {
   if (error || !course) {
     return (
       <AuthLayout>
-        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-[2px]">
+        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg">
           {error || 'Course not found'}
         </div>
       </AuthLayout>
@@ -91,29 +91,29 @@ export function StudentCourse() {
     <AuthLayout>
       <div className="space-y-6">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-foreground-muted">
-          <Link to="/student/home" className="hover:text-parchment">Home</Link>
+        <div className="flex items-center gap-2 text-sm text-ink-muted">
+          <Link to="/student/home" className="hover:text-ink">Home</Link>
           <span>/</span>
           <span className="text-ink">{course.code}</span>
         </div>
 
         {/* Course header */}
-        <div className="bg-page rounded-[2px] border border-[#E0D4C0] p-6">
+        <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] p-6">
           <div className="text-sm text-[#2D4A6B] font-medium mb-1">{course.code}</div>
-          <h1 className="text-2xl font-bold text-ink mb-2">{course.title}</h1>
-          <div className="text-foreground-muted">{course.term}</div>
+          <h1 className="font-serif text-3xl tracking-[-0.02em] text-ink mb-2">{course.title}</h1>
+          <div className="text-ink-muted">{course.term}</div>
         </div>
 
         {/* Assessments */}
         <section>
-          <h2 className="text-lg font-semibold text-parchment mb-4">Assessments</h2>
+          <h2 className="text-lg font-semibold text-ink mb-4">Assessments</h2>
           
           {course.assessments.length === 0 ? (
-            <div className="bg-page-muted rounded-[2px] p-8 text-center text-foreground-muted">
+            <div className="bg-page-muted rounded-lg p-8 text-center text-ink-muted">
               No assessments yet
             </div>
           ) : (
-            <div className="bg-page rounded-[2px] border border-[#E0D4C0] divide-y">
+            <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] divide-y">
               {course.assessments.map((assessment) => (
                 <Link
                   key={assessment.id}
@@ -137,7 +137,7 @@ export function StudentCourse() {
                         </span>
                       </div>
                       
-                      <div className="flex items-center gap-4 text-sm text-foreground-muted">
+                      <div className="flex items-center gap-4 text-sm text-ink-muted">
                         {assessment.dueAt && (
                           <span>Due: {formatDate(assessment.dueAt)}</span>
                         )}
@@ -152,7 +152,7 @@ export function StudentCourse() {
 
                     <div className="flex items-center gap-4">
                       {assessment.attempt?.mark !== null && assessment.attempt?.mark !== undefined ? (
-                        <span className="px-3 py-1 bg-gold/20 text-ink border border-gold rounded-[2px] font-medium">
+                        <span className="px-3 py-1 bg-ink/20 text-ink border border-ink rounded-lg font-medium">
                           {assessment.attempt.mark}/100
                         </span>
                       ) : (
