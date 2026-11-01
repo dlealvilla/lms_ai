@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { AuthLayout } from '../../components/Layout/AuthLayout';
-import { getAuthHeaders } from '../../lib/auth/AuthContext';
+import { ArrowRight } from 'lucide-react';
+import { LibraryShell } from '@/components/bookshelf';
+import { PageSkeleton } from '@/components/ui/Skeleton';
+import { getAuthHeaders } from '@/lib/auth/AuthContext';
+import { spineColor } from '@/lib/bookshelf/spineColors';
+import { showToast } from '@/lib/toast';
 
 interface Student {
   id: string;
@@ -41,9 +45,7 @@ export function TeacherCourse() {
   const [activeTab, setActiveTab] = useState<'students' | 'assessments'>('students');
 
   useEffect(() => {
-    if (courseId) {
-      fetchCourseDetails();
-    }
+    if (courseId) fetchCourseDetails();
   }, [courseId]);
 
   const fetchCourseDetails = async () => {
@@ -51,11 +53,7 @@ export function TeacherCourse() {
       const response = await fetch(`/api/teacher/courses/${courseId}`, {
         headers: getAuthHeaders(),
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch course details');
-      }
-
+      if (!response.ok) throw new Error('Failed to fetch course details');
       const data = await response.json();
       setCourse(data);
     } catch (err: any) {
@@ -76,14 +74,12 @@ export function TeacherCourse() {
         },
         body: JSON.stringify({ status: newStatus }),
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to update assessment');
-      }
-
+      if (!response.ok) throw new Error('Failed to update assessment');
+      showToast(newStatus === 'OPEN' ? 'Assessment reopened' : 'Assessment closed', 'success');
       fetchCourseDetails();
     } catch (err) {
       console.error('Failed to toggle status:', err);
+      showToast('Could not update assessment', 'error');
     }
   };
 
@@ -100,179 +96,196 @@ export function TeacherCourse() {
 
   if (isLoading) {
     return (
-      <AuthLayout>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-ink-muted">Loading course...</div>
-        </div>
-      </AuthLayout>
+      <LibraryShell>
+        <PageSkeleton rows={4} />
+      </LibraryShell>
     );
   }
 
   if (error || !course) {
     return (
-      <AuthLayout>
-        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg">
+      <LibraryShell>
+        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg" role="alert">
           {error || 'Course not found'}
         </div>
-      </AuthLayout>
+      </LibraryShell>
     );
   }
 
+  const color = spineColor(course.code);
+
   return (
-    <AuthLayout>
-      <div className="space-y-6">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-ink-muted">
-          <Link to="/teacher/home" className="hover:text-ink">Home</Link>
-          <span>/</span>
-          <span className="text-ink">{course.code}</span>
-        </div>
+    <LibraryShell
+      shelfCourses={[
+        {
+          id: course.id,
+          code: course.code,
+          title: course.title,
+          href: `/teacher/courses/${course.id}`,
+        },
+      ]}
+      activeCourseId={course.id}
+      showHeader={false}
+      contentClassName="!max-w-5xl"
+    >
+      <nav className="flex items-center gap-2 text-sm text-ink-muted mb-6">
+        <Link to="/teacher/home" className="hover:text-ink">
+          Home
+        </Link>
+        <span aria-hidden>/</span>
+        <span className="text-ink font-medium">{course.code}</span>
+      </nav>
 
-        {/* Course header */}
-        <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] p-6">
-          <div className="text-sm text-secondary font-medium mb-1">{course.code}</div>
-          <h1 className="font-serif text-3xl tracking-[-0.02em] text-ink mb-2">{course.title}</h1>
-          <div className="text-ink-muted">{course.term}</div>
+      <header className="folio-card p-6 mb-6">
+        <div className="flex items-start gap-3">
+          <span className="w-2 rounded-lg shrink-0 mt-1" style={{ height: 48, background: color }} aria-hidden />
+          <div>
+            <div className="text-[12px] font-bold tracking-[0.06em]" style={{ color }}>
+              {course.code}
+            </div>
+            <h1 className="font-serif text-[32px] tracking-[0.01em] text-ink mt-1">{course.title}</h1>
+            <div className="text-sm text-ink-muted mt-1">
+              {course.term} · {course.students.length} students · {course.assessments.length} assessments
+            </div>
+          </div>
         </div>
+      </header>
 
-        {/* Tabs */}
-        <div className="flex gap-4 border-b border-[#E8E6E1]">
+      <div className="flex gap-1 border-b border-[#E8E6E1] mb-5" role="tablist">
+        {(
+          [
+            ['students', `Students (${course.students.length})`],
+            ['assessments', `Assessments (${course.assessments.length})`],
+          ] as const
+        ).map(([id, label]) => (
           <button
-            onClick={() => setActiveTab('students')}
-            className={`pb-2 px-1 font-medium ${
-              activeTab === 'students'
-                ? 'border-b-2 border-ink text-secondary'
-                : 'text-ink-muted hover:text-ink'
+            key={id}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === id}
+            onClick={() => setActiveTab(id)}
+            className={`px-4 py-2.5 text-sm font-semibold border-b-2 -mb-px transition-colors ${
+              activeTab === id
+                ? 'border-ink text-ink'
+                : 'border-transparent text-ink-muted hover:text-ink'
             }`}
           >
-            Students ({course.students.length})
+            {label}
           </button>
-          <button
-            onClick={() => setActiveTab('assessments')}
-            className={`pb-2 px-1 font-medium ${
-              activeTab === 'assessments'
-                ? 'border-b-2 border-ink text-secondary'
-                : 'text-ink-muted hover:text-ink'
-            }`}
-          >
-            Assessments ({course.assessments.length})
-          </button>
-        </div>
+        ))}
+      </div>
 
-        {/* Students tab */}
-        {activeTab === 'students' && (
-          <section>
-            {course.students.length === 0 ? (
-              <div className="bg-page-muted rounded-lg p-8 text-center text-ink-muted">
-                No students enrolled
-              </div>
-            ) : (
-              <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] overflow-hidden">
-                <table className="w-full">
-                  <thead className="bg-page-muted">
-                    <tr>
-                      <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Name</th>
-                      <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Email</th>
-                      <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Attempts</th>
-                      <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Last Active</th>
-                      <th className="px-4 py-3"></th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#E8E6E1]">
-                    {course.students.map((student) => (
-                      <tr key={student.id} className="hover:bg-page-muted">
-                        <td className="px-4 py-3 font-medium text-ink">{student.name}</td>
-                        <td className="px-4 py-3 text-ink-muted">{student.email}</td>
-                        <td className="px-4 py-3 text-ink-muted">{student.attemptCount}</td>
-                        <td className="px-4 py-3 text-ink-muted text-sm">
-                          {formatDate(student.lastActiveAt)}
-                        </td>
-                        <td className="px-4 py-3 text-right">
-                          <Link
-                            to={`/teacher/courses/${courseId}/students/${student.id}`}
-                            className="text-secondary hover:text-secondary text-sm font-medium"
-                          >
-                            View Progress →
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* Assessments tab */}
-        {activeTab === 'assessments' && (
-          <section className="space-y-4">
-            {course.assessments.length === 0 ? (
-              <div className="bg-page-muted rounded-lg p-8 text-center text-ink-muted">
-                No assessments yet
-              </div>
-            ) : (
-              <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] divide-y">
-                {course.assessments.map((assessment) => (
-                  <div key={assessment.id} className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="font-semibold text-ink">{assessment.title}</h3>
-                          <span
-                            className={`px-2 py-0.5 rounded text-xs font-medium ${
-                              assessment.effectiveClosed
-                                ? 'bg-error/10 text-error border border-error/30'
-                                : 'bg-success/10 text-success border border-success/30'
-                            }`}
-                          >
-                            {assessment.effectiveClosed ? 'Closed' : 'Open'}
-                          </span>
-                          {assessment.closeAtDue && (
-                            <span className="px-2 py-0.5 rounded text-xs bg-ink/20 text-ink-subtle border border-ink/40">
-                              Auto-close
-                            </span>
-                          )}
-                        </div>
-                        
-                        <div className="flex items-center gap-4 text-sm text-ink-muted">
-                          <span>Due: {formatDate(assessment.dueAt)}</span>
-                          <span>{assessment.attemptCount} attempts</span>
-                          <span>{assessment.markedCount} marked</span>
-                          {assessment.pdfBlobUrl && (
-                            <a
-                              href={assessment.pdfBlobUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-[#2D4A6B] hover:underline"
-                            >
-                              📄 {assessment.pdfFileName || 'View PDF'}
-                            </a>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => handleToggleStatus(assessment.id, assessment.status)}
-                          className={`px-3 py-1 rounded text-sm font-medium ${
-                            assessment.status === 'OPEN'
-                              ? 'bg-error/10 text-error border border-error/30 hover:bg-error/20'
-                              : 'bg-success/10 text-success border border-success/30 hover:bg-success/20'
-                          }`}
+      {activeTab === 'students' && (
+        <section>
+          {course.students.length === 0 ? (
+            <div className="folio-card p-10 text-center text-sm text-ink-muted">
+              No students enrolled yet.
+            </div>
+          ) : (
+            <div className="folio-card overflow-hidden overflow-x-auto">
+              <table className="w-full min-w-[560px]">
+                <thead className="bg-[#FAFAF8]">
+                  <tr>
+                    <th className="text-left px-4 py-3 text-[11px] font-semibold tracking-[0.06em] text-ink-subtle">
+                      NAME
+                    </th>
+                    <th className="text-left px-4 py-3 text-[11px] font-semibold tracking-[0.06em] text-ink-subtle">
+                      EMAIL
+                    </th>
+                    <th className="text-left px-4 py-3 text-[11px] font-semibold tracking-[0.06em] text-ink-subtle">
+                      ATTEMPTS
+                    </th>
+                    <th className="text-left px-4 py-3 text-[11px] font-semibold tracking-[0.06em] text-ink-subtle">
+                      LAST ACTIVE
+                    </th>
+                    <th className="px-4 py-3" />
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#E8E6E1]">
+                  {course.students.map((student) => (
+                    <tr key={student.id} className="hover:bg-[#FAFAF8]">
+                      <td className="px-4 py-3.5 font-semibold text-ink text-sm">{student.name}</td>
+                      <td className="px-4 py-3.5 text-ink-muted text-sm">{student.email}</td>
+                      <td className="px-4 py-3.5 text-ink-muted text-sm">{student.attemptCount}</td>
+                      <td className="px-4 py-3.5 text-ink-muted text-sm">{formatDate(student.lastActiveAt)}</td>
+                      <td className="px-4 py-3.5 text-right">
+                        <Link
+                          to={`/teacher/courses/${courseId}/students/${student.id}`}
+                          className="inline-flex items-center gap-1 text-sm font-semibold text-ink hover:underline"
                         >
-                          {assessment.status === 'OPEN' ? 'Close' : 'Reopen'}
-                        </button>
-                      </div>
+                          Progress <ArrowRight className="h-3.5 w-3.5" />
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+      )}
+
+      {activeTab === 'assessments' && (
+        <section>
+          {course.assessments.length === 0 ? (
+            <div className="folio-card p-10 text-center text-sm text-ink-muted">
+              No assessments yet. Create one from the home shelf.
+            </div>
+          ) : (
+            <div className="folio-card divide-y divide-[#E8E6E1]">
+              {course.assessments.map((assessment) => (
+                <div key={assessment.id} className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
+                      <h3 className="font-semibold text-ink">{assessment.title}</h3>
+                      <span
+                        className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                          assessment.effectiveClosed ? 'pill-closed' : 'pill-open'
+                        }`}
+                      >
+                        {assessment.effectiveClosed ? 'Closed' : 'Open'}
+                      </span>
+                      {assessment.closeAtDue && (
+                        <span className="inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#F3F2EE] text-ink-subtle">
+                          Auto-close
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-ink-muted">
+                      <span>Due {formatDate(assessment.dueAt)}</span>
+                      <span>
+                        {assessment.attemptCount} attempt{assessment.attemptCount === 1 ? '' : 's'}
+                      </span>
+                      <span>{assessment.markedCount} marked</span>
+                      {assessment.pdfBlobUrl && (
+                        <a
+                          href={assessment.pdfBlobUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-ink hover:underline"
+                        >
+                          {assessment.pdfFileName || 'View PDF'}
+                        </a>
+                      )}
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </section>
-        )}
-      </div>
-    </AuthLayout>
+                  <button
+                    type="button"
+                    onClick={() => handleToggleStatus(assessment.id, assessment.status)}
+                    className={
+                      assessment.status === 'OPEN'
+                        ? 'folio-btn-secondary !text-[#B93232]'
+                        : 'folio-btn-primary'
+                    }
+                  >
+                    {assessment.status === 'OPEN' ? 'Close' : 'Reopen'}
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+    </LibraryShell>
   );
 }
-

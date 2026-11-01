@@ -89,7 +89,7 @@ export function AdminDashboard() {
     <AuthLayout>
       <div className="space-y-8">
         <div>
-          <h1 className="font-serif text-3xl tracking-[-0.02em] text-ink mb-2">Admin Dashboard</h1>
+          <h1 className="font-serif text-3xl tracking-[0.01em] text-ink mb-2">Admin Dashboard</h1>
           <p className="text-ink-muted">Manage users, courses, and assessments</p>
         </div>
 

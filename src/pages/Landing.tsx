@@ -17,16 +17,10 @@ export function Landing() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Link
-              to="/login/student"
-              className="px-3 py-1.5 text-sm font-semibold rounded-lg bg-[#F3F2EE] text-ink hover:bg-[#E8E6E1]"
-            >
+            <Link to="/login/student" className="folio-btn-secondary">
               Student Login
             </Link>
-            <Link
-              to="/login/teacher"
-              className="px-4 py-1.5 text-sm font-semibold rounded-lg bg-ink text-white hover:bg-[#222]"
-            >
+            <Link to="/login/teacher" className="folio-btn-primary">
               Teacher Login
             </Link>
           </div>
@@ -35,7 +29,7 @@ export function Landing() {
 
       <main className="mx-auto max-w-[1440px] px-6 lg:px-16 py-16 lg:py-24">
         <div className="max-w-3xl">
-          <h1 className="font-serif text-4xl md:text-5xl tracking-[-0.02em] mb-5 leading-tight">
+          <h1 className="font-serif text-4xl md:text-5xl tracking-[0.01em] mb-5 leading-tight">
             Assessments,
             <br />
             <span className="text-[#C45C4A]">without the noise.</span>
@@ -44,16 +38,10 @@ export function Landing() {
             Write with autosave. Teach with visibility. Grade with confidence — from a quiet shelf of courses.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 mb-16">
-            <Link
-              to="/login/student"
-              className="px-5 py-3 text-sm font-semibold rounded-lg bg-[#F3F2EE] text-ink text-center hover:bg-[#E8E6E1]"
-            >
+            <Link to="/login/student" className="folio-btn-secondary !px-5 !py-3 text-center">
               I&apos;m a Student
             </Link>
-            <Link
-              to="/login/teacher"
-              className="px-5 py-3 text-sm font-semibold rounded-lg bg-ink text-white text-center hover:bg-[#222]"
-            >
+            <Link to="/login/teacher" className="folio-btn-primary !px-5 !py-3 text-center">
               I&apos;m a Teacher
             </Link>
           </div>
@@ -77,7 +65,7 @@ export function Landing() {
               body: 'Simple 0–100 marking. Students see exactly where they stand.',
             },
           ].map(({ icon: Icon, title, body }) => (
-            <div key={title} className="bg-white text-ink rounded-xl border border-[#E8E6E1] shadow-folio p-6">
+            <div key={title} className="folio-card p-6">
               <div className="w-10 h-10 bg-[#F3F2EE] rounded-lg flex items-center justify-center mb-4">
                 <Icon className="h-5 w-5 text-[#3D6B9A]" />
               </div>

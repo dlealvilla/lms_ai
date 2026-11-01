@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T03:25:22.704Z",
+  "generatedAt": "2026-11-01T03:40:55.875Z",
   "base": "http://127.0.0.1:5173",
   "checklist": [
     {
@@ -24,6 +24,11 @@
     },
     {
       "name": "Teacher dashboard greeting visible",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Teacher dashboard queue panels",
       "pass": true,
       "note": ""
     },
@@ -115,7 +120,7 @@
     {
       "name": "Submit Assessment opens confirmation (cancelled)",
       "pass": true,
-      "note": "dismissed via Escape"
+      "note": ""
     },
     {
       "name": "Admin mock login → dashboard",
@@ -138,6 +143,6 @@
       "note": ""
     }
   ],
-  "pass": 27,
+  "pass": 28,
   "fail": 0
 }

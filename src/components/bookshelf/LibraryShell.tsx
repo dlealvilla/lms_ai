@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, Menu, X } from 'lucide-react';
 import { BrandLockup } from '@/components/BrandLockup';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { cn } from '@/lib/utils';
 import { spineColor } from '@/lib/bookshelf/spineColors';
 
-/** Folio shell: optional slim spine rail + main content */
+/** Folio shell: optional slim/wide shelf rail + main content (mobile drawer). */
 export function LibraryShell({
   children,
   className,
@@ -25,6 +25,7 @@ export function LibraryShell({
   activeCourseId?: string;
 }) {
   const { user, logout } = useAuth();
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const home =
     user?.role === 'TEACHER'
       ? '/teacher/home'
@@ -44,13 +45,73 @@ export function LibraryShell({
 
   const showWideRail = Boolean(shelfCourses && shelfCourses.length > 0);
 
+  useEffect(() => {
+    if (!drawerOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setDrawerOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [drawerOpen]);
+
+  useEffect(() => {
+    setDrawerOpen(false);
+  }, [activeCourseId]);
+
+  const shelfNav = showWideRail ? (
+    <nav className="flex flex-col gap-1 flex-1 overflow-y-auto" aria-label="Course shelf">
+      {shelfCourses!.map((c) => {
+        const active = c.id === activeCourseId;
+        return (
+          <Link
+            key={c.id}
+            to={c.href || '#'}
+            onClick={() => setDrawerOpen(false)}
+            className={cn(
+              'flex items-center gap-3.5 px-3.5 py-2.5 rounded-[10px] transition-colors',
+              active ? 'bg-[#F3F2EE]' : 'hover:bg-[#FAFAF8]',
+            )}
+          >
+            <span
+              className="w-2 rounded-lg shrink-0"
+              style={{ height: 40, background: spineColor(c.code) }}
+              aria-hidden
+            />
+            <span className="min-w-0">
+              <span className="block text-[11px] font-bold tracking-[0.06em] text-[#888]">
+                {c.code}
+              </span>
+              {c.title && (
+                <span className="block text-[13px] font-semibold text-ink truncate">{c.title}</span>
+              )}
+            </span>
+          </Link>
+        );
+      })}
+    </nav>
+  ) : null;
+
+  const userCard = user ? (
+    <div className="mt-4 p-3 rounded-[10px] bg-[#FAFAF8] flex items-center gap-2.5">
+      <div className="w-8 h-8 rounded-full bg-[#E8E6E1] text-[11px] font-bold flex items-center justify-center text-[#555]">
+        {initials}
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[13px] font-semibold truncate">{user.name}</div>
+        <button type="button" onClick={logout} className="text-[11px] text-[#999] hover:text-ink">
+          Sign out
+        </button>
+      </div>
+    </div>
+  ) : null;
+
   return (
     <div className={cn('min-h-screen bg-[#FAFAF8] text-ink flex', className)}>
-      {/* Slim or wide Folio shelf rail */}
+      {/* Desktop rail */}
       <aside
         className={cn(
-          'shrink-0 border-r border-[#E8E6E1] bg-white flex flex-col',
-          showWideRail ? 'w-[280px] px-4 py-6' : 'w-[72px] py-7 items-center',
+          'shrink-0 border-r border-[#E8E6E1] bg-white flex-col',
+          showWideRail ? 'folio-desktop-only flex w-[280px] px-4 py-6' : 'hidden sm:flex w-[72px] py-7 items-center',
         )}
         aria-label="Shelf navigation"
       >
@@ -62,54 +123,8 @@ export function LibraryShell({
             <div className="text-[11px] font-semibold tracking-[0.08em] text-[#AAA] px-3.5 pb-1.5">
               SHELF
             </div>
-            <nav className="flex flex-col gap-1 flex-1 overflow-y-auto">
-              {shelfCourses!.map((c) => {
-                const active = c.id === activeCourseId;
-                return (
-                  <Link
-                    key={c.id}
-                    to={c.href || '#'}
-                    className={cn(
-                      'flex items-center gap-3.5 px-3.5 py-2.5 rounded-[10px] transition-colors',
-                      active ? 'bg-[#F3F2EE]' : 'hover:bg-[#FAFAF8]',
-                    )}
-                  >
-                    <span
-                      className="w-2 rounded-lg shrink-0"
-                      style={{ height: 40, background: spineColor(c.code) }}
-                      aria-hidden
-                    />
-                    <span className="min-w-0">
-                      <span className="block text-[11px] font-bold tracking-[0.06em] text-[#888]">
-                        {c.code}
-                      </span>
-                      {c.title && (
-                        <span className="block text-[13px] font-semibold text-ink truncate">
-                          {c.title}
-                        </span>
-                      )}
-                    </span>
-                  </Link>
-                );
-              })}
-            </nav>
-            {user && (
-              <div className="mt-4 p-3 rounded-[10px] bg-[#FAFAF8] flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-[#E8E6E1] text-[11px] font-bold flex items-center justify-center text-[#555]">
-                  {initials}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="text-[13px] font-semibold truncate">{user.name}</div>
-                  <button
-                    type="button"
-                    onClick={logout}
-                    className="text-[11px] text-[#999] hover:text-ink"
-                  >
-                    Sign out
-                  </button>
-                </div>
-              </div>
-            )}
+            {shelfNav}
+            {userCard}
           </>
         ) : (
           <>
@@ -137,35 +152,96 @@ export function LibraryShell({
         )}
       </aside>
 
+      {/* Mobile drawer */}
+      {showWideRail && (
+        <>
+          <div
+            className={cn(
+              'folio-mobile-only fixed inset-0 z-40 bg-ink/30 backdrop-blur-[1px] transition-opacity',
+              drawerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',
+            )}
+            onClick={() => setDrawerOpen(false)}
+            aria-hidden={!drawerOpen}
+          />
+          <aside
+            className={cn(
+              'folio-mobile-only fixed inset-y-0 left-0 z-50 w-[280px] max-w-[85vw] bg-white border-r border-[#E8E6E1] px-4 py-6 flex flex-col',
+              'transition-transform duration-200 ease-out',
+              drawerOpen ? 'translate-x-0' : '-translate-x-full',
+            )}
+            aria-label="Shelf navigation"
+            aria-hidden={!drawerOpen}
+          >
+            <div className="flex items-center justify-between px-2 pb-5">
+              <Link to={home} onClick={() => setDrawerOpen(false)}>
+                <BrandLockup size="sm" />
+              </Link>
+              <button
+                type="button"
+                className="folio-btn-secondary !px-2 !py-2"
+                aria-label="Close menu"
+                onClick={() => setDrawerOpen(false)}
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="text-[11px] font-semibold tracking-[0.08em] text-[#AAA] px-3.5 pb-1.5">
+              SHELF
+            </div>
+            {shelfNav}
+            {userCard}
+          </aside>
+        </>
+      )}
+
       <div className="flex-1 flex flex-col min-w-0">
-        {showHeader && !showWideRail && (
+        {(showHeader && !showWideRail) || showWideRail ? (
           <header
             className={cn(
-              'flex justify-between items-center px-6 sm:px-10 border-b border-[#E8E6E1] bg-white',
-              compactHeader ? 'py-3' : 'py-4',
+              'flex justify-between items-center px-4 sm:px-8 border-b border-[#E8E6E1] bg-white lg:border-0',
+              showWideRail ? 'folio-mobile-only py-3' : compactHeader ? 'py-3' : 'py-4',
+              !showWideRail && showHeader ? '' : showWideRail ? '' : 'hidden',
             )}
           >
-            <Link to={home} className="leading-tight">
-              <div className="font-serif text-xl text-ink tracking-[-0.02em]">WildMind</div>
-              <div className="text-[11px] text-[#999]">AI for Education</div>
-            </Link>
+            <div className="flex items-center gap-3">
+              {showWideRail && (
+                <button
+                  type="button"
+                  className="folio-btn-secondary !px-2.5 !py-2 lg:hidden"
+                  aria-label="Open shelf"
+                  aria-expanded={drawerOpen}
+                  onClick={() => setDrawerOpen(true)}
+                >
+                  <Menu className="h-4 w-4" />
+                </button>
+              )}
+              {!showWideRail && showHeader && (
+                <Link to={home} className="leading-tight">
+                  <div className="font-serif text-xl text-ink tracking-[0.01em]">WildMind</div>
+                  <div className="text-[11px] text-[#999]">AI for Education</div>
+                </Link>
+              )}
+              {showWideRail && (
+                <div className="leading-tight lg:hidden">
+                  <div className="font-semibold text-sm text-ink">WildMind</div>
+                  <div className="text-[11px] text-[#999]">AI for Education</div>
+                </div>
+              )}
+            </div>
             {user && (
               <div className="text-right">
                 <div className="font-semibold text-sm text-ink">{user.name}</div>
                 <div className="text-xs text-[#999] flex items-center justify-end gap-3">
-                  <span>{user.role}</span>
-                  <button
-                    type="button"
-                    onClick={logout}
-                    className="hover:text-ink"
-                  >
+                  <span className="hidden sm:inline">{user.role}</span>
+                  <button type="button" onClick={logout} className="hover:text-ink">
                     Sign out
                   </button>
                 </div>
               </div>
             )}
           </header>
-        )}
+        ) : null}
+
         <div
           className={cn(
             'flex-1 w-full mx-auto',

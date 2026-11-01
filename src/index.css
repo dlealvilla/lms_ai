@@ -5,7 +5,7 @@
   :root {
     /* ============================================
        FOLIO THEME — WildMind AI for Education
-       Modern evolution of Bookshelf: flat spines, Instrument Serif + Inter
+       Modern evolution of Bookshelf: flat spines, Newsreader + Inter
        ============================================ */
 
     --background: 250 250 248; /* #FAFAF8 */
@@ -84,7 +84,7 @@
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
 
-    --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    --font-serif: 'Newsreader', 'Source Serif 4', Georgia, 'Times New Roman', serif;
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
@@ -108,9 +108,19 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
+  button, a, input, textarea, select {
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease,
+      box-shadow 160ms ease, opacity 160ms ease, transform 160ms ease;
+  }
+
   h1, h2, h3, .font-serif, .serif {
     font-family: var(--font-serif);
-    font-weight: 400;
+    font-weight: 560;
+    font-optical-sizing: auto;
+    letter-spacing: 0.005em;
+  }
+  h1 {
+    letter-spacing: 0.01em;
   }
 
   :focus-visible {
@@ -175,27 +185,117 @@
 .ai-inserted-text {
   background-color: #FFF8F6;
   border-left: 3px solid #C45C4A;
+  border-right: 2px solid #C45C4A;
   padding: 2px 6px;
   border-radius: 0 8px 8px 0;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
 
+
+
+.folio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.folio-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #111;
+  color: #fff;
+}
+.folio-btn-primary:hover { background: #222; }
+.folio-btn-primary:active { background: #000; }
+.folio-btn-primary:disabled { opacity: 0.45; pointer-events: none; }
+.folio-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #F3F2EE;
+  color: #111;
+}
+.folio-btn-secondary:hover { background: #E8E6E1; }
+.folio-btn-secondary:active { background: #DEDAD2; }
+.folio-btn-secondary:disabled { opacity: 0.45; pointer-events: none; }
+.folio-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #E8E6E1;
+  background: #FAFAF8;
+  color: #111;
+  font-size: 14px;
+}
+.folio-input::placeholder { color: #999; }
+.folio-input:hover { border-color: #DEDAD2; }
+.folio-input:focus {
+  outline: none;
+  border-color: #111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.12);
+}
+.folio-card {
+  background: #fff;
+  border: 1px solid #E8E6E1;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.04);
+}
+.folio-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #999;
+}
+
+@keyframes folio-toast-in {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Comfortable writing measure */
 .ProseMirror {
   outline: none;
   font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.75;
   color: #111111;
+  max-width: 72ch;
+  margin-inline: auto;
 }
+
 .ProseMirror h1,
 .ProseMirror h2 {
   font-family: var(--font-serif);
-  font-weight: 400;
+  font-weight: 560;
   color: #111111;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.005em;
 }
-.ProseMirror h1 { font-size: 1.75rem; margin: 0 0 1rem; }
-.ProseMirror h2 { font-size: 1.35rem; margin: 0 0 0.75rem; }
-.ProseMirror p { margin: 0 0 0.75rem; }
+.ProseMirror h1 { font-size: 1.85rem; margin: 0 0 1rem; }
+.ProseMirror h2 { font-size: 1.4rem; margin: 0 0 0.75rem; }
+.ProseMirror p { margin: 0 0 1rem; }
 .ProseMirror ul, .ProseMirror ol { padding-left: 1.5em; margin: 0 0 0.75rem; }
+
+
+/* Reliable Folio responsive helpers (avoid Tailwind variant edge cases) */
+@media (min-width: 1024px) {
+  .folio-mobile-only { display: none !important; }
+}
+@media (max-width: 1023px) {
+  .folio-desktop-only { display: none !important; }
+}

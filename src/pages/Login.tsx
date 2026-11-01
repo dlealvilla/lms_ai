@@ -91,7 +91,7 @@ export function Login() {
           <div className="text-[12px] font-semibold tracking-[0.08em] text-[#888] mb-2">
             WILDMIND AI FOR EDUCATION
           </div>
-          <h1 className="font-serif text-[36px] text-ink tracking-[-0.02em] mb-1.5">
+          <h1 className="font-serif text-[36px] text-ink tracking-[0.01em] mb-1.5">
             {config.title}
           </h1>
           <p className="text-sm text-ink-muted mb-7">Sign in to WildMind AI for Education</p>
@@ -110,7 +110,7 @@ export function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={config.defaultEmail}
-                className="w-full px-3.5 py-3 border border-[#E8E6E1] rounded-lg bg-[#FAFAF8] text-[14px] text-ink outline-none focus:border-ink focus:ring-1 focus:ring-ink placeholder:text-ink-subtle"
+                className="folio-input"
               />
             </div>
 
@@ -127,7 +127,7 @@ export function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-3.5 py-3 border border-[#E8E6E1] rounded-lg bg-[#FAFAF8] text-[14px] text-ink outline-none focus:border-ink focus:ring-1 focus:ring-ink placeholder:text-ink-subtle"
+                className="folio-input"
               />
               <p className="text-xs text-ink-subtle mt-2">Mock login — any password works</p>
             </div>
@@ -141,9 +141,9 @@ export function Login() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 bg-ink text-white font-semibold text-[13px] rounded-lg hover:bg-[#222] disabled:opacity-60"
+              className="folio-btn-primary w-full !py-3"
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading ? 'Signing in…' : 'Sign In'}
             </button>
           </form>
 
@@ -155,7 +155,7 @@ export function Login() {
                   key={q.email}
                   type="button"
                   onClick={() => quickFill(q.email)}
-                  className="px-3 py-1.5 text-xs font-semibold text-ink bg-[#F3F2EE] rounded-lg hover:bg-[#E8E6E1]"
+                  className="folio-btn-secondary !text-xs"
                 >
                   {q.label}
                 </button>

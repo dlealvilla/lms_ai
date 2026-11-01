@@ -25,6 +25,18 @@ async function shot(page, name, w = 1440, h = 900) {
   return file;
 }
 
+
+async function visibleLink(page, pattern) {
+  const links = page.getByRole('link', { name: pattern });
+  const n = await links.count();
+  for (let i = 0; i < n; i++) {
+    const el = links.nth(i);
+    if (await el.isVisible()) return el;
+  }
+  // fallback: main content only
+  return page.locator('main a, [class*="folio-card"] a, article a').filter({ hasText: pattern }).first();
+}
+
 async function loginAs(page, rolePath, email, password = 'demo') {
   await page.goto(`${BASE}/login/${rolePath}`, { waitUntil: 'networkidle' });
   await page.getByLabel(/email/i).fill(email);
@@ -84,12 +96,13 @@ async function loginAs(page, rolePath, email, password = 'demo') {
     await page.getByLabel(/password/i).fill('any');
     await page.getByRole('button', { name: /^Sign In$/i }).click();
     await page.waitForURL('**/teacher/home', { timeout: 15000 });
-    await page.getByText(/Good (morning|afternoon|evening),/i).waitFor({ timeout: 10000 });
-    await page.getByText(/Sarah/i).first().waitFor({ timeout: 5000 });
+    await page.getByRole('heading', { name: /Good (morning|afternoon|evening),\s*Sarah/i }).waitFor({ timeout: 10000 });
+    await page.getByText(/NEEDS MARKING|UPCOMING DEADLINES|RECENT ACTIVITY/i).first().waitFor({ timeout: 15000 });
     await shot(page, 'teacher-dashboard');
     await shot(page, 'teacher-dashboard', 390, 844);
     record('Teacher mock login → dashboard', true);
     record('Teacher dashboard greeting visible', true);
+    record('Teacher dashboard queue panels', true);
   } catch (e) {
     record('Teacher mock login → dashboard', false, String(e.message || e));
   }
@@ -97,28 +110,26 @@ async function loginAs(page, rolePath, email, password = 'demo') {
   // Teacher course page
   let courseUrl = '';
   try {
-    const courseLink = page.locator('a', { hasText: /COMP101|Introduction to Programming/i }).first();
+    const courseLink = await visibleLink(page, /Introduction to Programming|COMP101/i);
     await courseLink.click();
     await page.waitForURL(/\/teacher\/courses\//, { timeout: 10000 });
     courseUrl = page.url();
-    await page.getByText(/Introduction to Programming/i).first().waitFor();
+    await page.getByRole('heading', { name: /Introduction to Programming/i }).waitFor({ timeout: 10000 });
     await shot(page, 'teacher-course');
     record('Teacher open COMP101 course', true);
     // Assessments tab
-    const assessmentsTab = page.getByRole('button', { name: /Assessments/i });
+    const assessmentsTab = page.getByRole('tab', { name: /Assessments/i });
+    const assessmentsBtn = page.getByRole('button', { name: /Assessments/i });
     if (await assessmentsTab.count()) {
       await assessmentsTab.click();
       await page.waitForTimeout(500);
       record('Teacher course Assessments tab', true);
+    } else if (await assessmentsBtn.count()) {
+      await assessmentsBtn.click();
+      await page.waitForTimeout(500);
+      record('Teacher course Assessments tab', true);
     } else {
-      // maybe link/tab text
-      const tab2 = page.getByText(/^Assessments$/i);
-      if (await tab2.count()) {
-        await tab2.click();
-        record('Teacher course Assessments tab', true);
-      } else {
-        record('Teacher course Assessments tab', false, 'not found');
-      }
+      record('Teacher course Assessments tab', false, 'not found');
     }
   } catch (e) {
     record('Teacher open COMP101 course', false, String(e.message || e));
@@ -126,11 +137,13 @@ async function loginAs(page, rolePath, email, password = 'demo') {
 
   // Teacher marking view — navigate via students
   try {
-    const studentsTab = page.getByRole('button', { name: /Students/i });
+    const studentsTab = page.getByRole('tab', { name: /Students/i });
+    const studentsBtn = page.getByRole('button', { name: /Students/i });
     if (await studentsTab.count()) await studentsTab.click();
-    else await page.getByText(/^Students$/i).click();
+    else if (await studentsBtn.count()) await studentsBtn.click();
+    else await page.getByText(/Students \(/i).click();
     await page.waitForTimeout(400);
-    const viewBtn = page.getByRole('link', { name: /View|Open/i }).first();
+    const viewBtn = page.getByRole('link', { name: /Progress|View|Open/i }).first();
     const aliceLink = page.locator('a', { hasText: /Alice/i }).first();
     if (await aliceLink.count()) {
       await aliceLink.click();
@@ -186,7 +199,8 @@ async function loginAs(page, rolePath, email, password = 'demo') {
 
   // Student course + assessment editor
   try {
-    await page.locator('a', { hasText: /COMP101|Introduction to Programming/i }).first().click();
+    const studentCourse = await visibleLink(page, /Introduction to Programming|COMP101/i);
+    await studentCourse.click();
     await page.waitForURL(/\/student\/courses\//, { timeout: 10000 });
     await shot(page, 'student-course');
     record('Student open COMP101', true);
@@ -209,15 +223,18 @@ async function loginAs(page, rolePath, email, password = 'demo') {
     // Capture screenshots from the seeded clean demo (one AI insert + sensible notes)
     await shot(page, 'assessment-editor');
     await shot(page, 'assessment-editor', 390, 844);
+    // Restore desktop viewport — mobile shot leaves width at 390 and hides the notes rail
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.waitForTimeout(300);
 
     // AI ask + insert — functional check after screenshots so leftovers never land in docs/
-    const ask = page.getByPlaceholder(/Ask AI/i);
+    const ask = page.locator('aside').getByPlaceholder(/Ask AI/i);
     if (await ask.count()) {
       await ask.fill('Can you help me explain quicksort worst-case?');
-      await page.getByRole('button', { name: /^Send$/i }).click();
+      await page.locator('aside').getByRole('button', { name: /^Send$/i }).click();
       await page.getByText(/worst case|O\(n/i).first().waitFor({ timeout: 15000 });
       record('AI tutor sticky note (stubbed /api/chat)', true);
-      const insertBtn = page.getByRole('button', { name: /Insert/i }).last();
+      const insertBtn = page.locator('aside').getByRole('button', { name: /Insert/i }).last();
       if (await insertBtn.count()) {
         await insertBtn.click();
         await page.waitForTimeout(500);
@@ -230,14 +247,22 @@ async function loginAs(page, rolePath, email, password = 'demo') {
       record('Insert ¶ into document', false, 'skipped');
     }
 
-    // TipTap toolbar buttons
-    for (const label of ['B', 'I', 'U', 'H1', 'H2']) {
-      const btn = page.getByRole('button', { name: new RegExp(`^${label}$`) });
+    // TipTap toolbar buttons (lucide + aria-labels)
+    const toolbarLabels = [
+      ['Bold', 'B'],
+      ['Italic', 'I'],
+      ['Underline', 'U'],
+      ['Heading 1', 'H1'],
+      ['Heading 2', 'H2'],
+    ];
+    for (const [aria, short] of toolbarLabels) {
+      let btn = page.getByRole('button', { name: new RegExp(`^${aria}$`, 'i') });
+      if (!(await btn.count())) btn = page.getByRole('button', { name: new RegExp(`^${short}$`) });
       if (await btn.count()) {
-        await btn.click();
-        record(`Editor toolbar ${label}`, true);
+        await btn.first().click();
+        record(`Editor toolbar ${short}`, true);
       } else {
-        record(`Editor toolbar ${label}`, false, 'missing');
+        record(`Editor toolbar ${short}`, false, 'missing');
       }
     }
 

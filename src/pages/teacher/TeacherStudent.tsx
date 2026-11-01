@@ -118,8 +118,9 @@ export function TeacherStudent() {
   if (isLoading) {
     return (
       <AuthLayout>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-ink-muted">Loading student details...</div>
+        <div className="space-y-4" role="status" aria-label="Loading">
+          <div className="h-10 w-64 max-w-full animate-pulse rounded-lg bg-[#E8E6E1]/70" />
+          <div className="h-40 animate-pulse rounded-xl bg-[#E8E6E1]/70" />
         </div>
       </AuthLayout>
     );
@@ -150,9 +151,9 @@ export function TeacherStudent() {
         </div>
 
         {/* Student header */}
-        <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] p-6">
-          <h1 className="text-2xl font-bold text-ink mb-2">{student.name}</h1>
-          <div className="text-ink-muted">{student.email}</div>
+        <div className="folio-card p-6">
+          <h1 className="font-serif text-[32px] tracking-[0.01em] text-ink mb-1">{student.name}</h1>
+          <div className="text-sm text-ink-muted">{student.email}</div>
         </div>
 
         {/* Assessments list */}
@@ -160,11 +161,11 @@ export function TeacherStudent() {
           <h2 className="text-lg font-semibold text-ink mb-4">Assessments</h2>
           
           {student.attempts.length === 0 ? (
-            <div className="bg-page-muted rounded-lg p-8 text-center text-ink-muted">
+            <div className="folio-card p-10 text-center text-sm text-ink-muted">
               No assessments for this course
             </div>
           ) : (
-            <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] divide-y">
+            <div className="folio-card divide-y divide-[#E8E6E1]">
               {student.attempts.map((attempt) => (
                 <div key={attempt.assessmentId} className="p-4">
                   <div className="flex items-center justify-between">
@@ -174,10 +175,8 @@ export function TeacherStudent() {
                           {attempt.assessmentTitle}
                         </h3>
                         <span
-                          className={`px-2 py-0.5 rounded text-xs font-medium ${
-                            attempt.effectiveClosed
-                              ? 'bg-error/10 text-error border border-error/30'
-                              : 'bg-success/10 text-success border border-success/30'
+                          className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                            attempt.effectiveClosed ? 'pill-closed' : 'pill-open'
                           }`}
                         >
                           {attempt.effectiveClosed ? 'Closed' : 'Open'}
@@ -207,13 +206,15 @@ export function TeacherStudent() {
                             [attempt.assessmentId]: e.target.value,
                           }))}
                           placeholder="0-100"
-                          className="w-20 px-2 py-1 border border-gray-300 rounded text-center text-sm"
+                          className="folio-input !w-20 !py-1.5 text-center text-sm"
                           disabled={!attempt.hasAttempt}
+                          aria-label={`Mark for ${attempt.assessmentTitle}`}
                         />
                         <button
+                          type="button"
                           onClick={() => handleSaveMark(attempt.assessmentId)}
                           disabled={!attempt.hasAttempt || savingMarks[attempt.assessmentId]}
-                          className="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 disabled:opacity-50"
+                          className="folio-btn-primary !py-1.5 !text-xs"
                         >
                           {savingMarks[attempt.assessmentId] ? '...' : 'Save'}
                         </button>
@@ -223,7 +224,7 @@ export function TeacherStudent() {
                       {attempt.hasAttempt && (
                         <Link
                           to={`/teacher/courses/${courseId}/students/${studentId}/assessments/${attempt.assessmentId}`}
-                          className="text-secondary hover:text-secondary text-sm font-medium"
+                          className="inline-flex items-center gap-1 text-sm font-semibold text-ink hover:underline"
                         >
                           View →
                         </Link>
