@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { GraduationCap } from 'lucide-react';
+import { BrandLockup } from '@/components/BrandLockup';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { cn } from '@/lib/utils';
 import { spineColor } from '@/lib/bookshelf/spineColors';
@@ -56,13 +57,7 @@ export function LibraryShell({
         {showWideRail ? (
           <>
             <Link to={home} className="flex items-center gap-2.5 px-2 pb-5">
-              <div className="w-8 h-8 rounded-[9px] bg-ink text-white flex items-center justify-center">
-                <GraduationCap className="h-4 w-4" />
-              </div>
-              <div>
-                <div className="font-semibold text-sm text-ink">Wildmind</div>
-                <div className="text-[11px] text-[#999]">Library · Folio</div>
-              </div>
+              <BrandLockup size="sm" />
             </Link>
             <div className="text-[11px] font-semibold tracking-[0.08em] text-[#AAA] px-3.5 pb-1.5">
               SHELF
@@ -150,9 +145,9 @@ export function LibraryShell({
               compactHeader ? 'py-3' : 'py-4',
             )}
           >
-            <Link to={home} className="flex items-center gap-3">
-              <div className="font-serif text-xl text-ink">Wildmind</div>
-              <div className="text-[11px] tracking-[0.08em] text-[#999]">FOLIO</div>
+            <Link to={home} className="leading-tight">
+              <div className="font-serif text-xl text-ink tracking-[-0.02em]">WildMind</div>
+              <div className="text-[11px] text-[#999]">AI for Education</div>
             </Link>
             {user && (
               <div className="text-right">

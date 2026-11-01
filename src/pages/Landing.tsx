@@ -11,9 +11,9 @@ export function Landing() {
             <div className="flex h-9 w-9 items-center justify-center rounded-[9px] bg-ink text-white">
               <GraduationCap className="h-5 w-5" />
             </div>
-            <div>
-              <div className="font-semibold text-[15px]">Wildmind</div>
-              <div className="text-[11px] text-[#999]">Library · Folio</div>
+            <div className="leading-tight">
+              <div className="font-semibold text-[15px]">WildMind</div>
+              <div className="text-[11px] text-[#999]">AI for Education</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -41,7 +41,7 @@ export function Landing() {
             <span className="text-[#C45C4A]">without the noise.</span>
           </h1>
           <p className="text-lg text-ink-muted mb-10 max-w-xl">
-            Write with autosave. Teach with visibility. Grade with confidence — from a quiet folio of courses.
+            Write with autosave. Teach with visibility. Grade with confidence — from a quiet shelf of courses.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 mb-16">
             <Link
@@ -96,7 +96,7 @@ export function Landing() {
       </main>
 
       <footer className="border-t border-[#E8E6E1] py-6 text-center text-xs text-ink-subtle">
-        WildMind AI for Education · Folio
+        WildMind AI for Education
       </footer>
     </div>
   );

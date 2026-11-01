@@ -81,20 +81,20 @@ export function Login() {
           <DecorativeSpine label="WRIT201" color="#3D6B9A" height={72} />
           <DecorativeSpine label="HIST201" color="#4A7A52" height={48} />
         </div>
-        <div className="w-7 h-7 rounded-full bg-[#E8E6E1] text-[11px] font-bold flex items-center justify-center text-[#555]">
-          SS
+        <div className="w-7 h-7 rounded-full bg-[#E8E6E1] text-[11px] font-bold flex items-center justify-center text-[#555]" aria-hidden>
+          WM
         </div>
       </aside>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-[400px] bg-white border border-[#E8E6E1] rounded-xl shadow-folio px-9 py-10">
           <div className="text-[12px] font-semibold tracking-[0.08em] text-[#888] mb-2">
-            WILDMIND · FOLIO
+            WILDMIND AI FOR EDUCATION
           </div>
           <h1 className="font-serif text-[36px] text-ink tracking-[-0.02em] mb-1.5">
             {config.title}
           </h1>
-          <p className="text-sm text-ink-muted mb-7">Sign in to Wildmind Education</p>
+          <p className="text-sm text-ink-muted mb-7">Sign in to WildMind AI for Education</p>
 
           <form onSubmit={handleSubmit} className="space-y-3.5">
             <div>

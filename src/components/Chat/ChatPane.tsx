@@ -75,6 +75,7 @@ export function ChatPane({
         role: 'ai',
         content: friendly,
         createdAt: Date.now(),
+        isError: true,
       };
       onNewMessage(errorMessage);
     } finally {
@@ -142,10 +143,10 @@ export function ChatPane({
                   isStudent ? 'text-[#3D6B9A]' : 'text-[#A08020]',
                 )}
               >
-                {isStudent ? 'You asked' : 'AI · draft ready'}
+                {isStudent ? 'You asked' : message.isError ? 'AI · notice' : 'AI · draft ready'}
               </div>
               <div className="whitespace-pre-wrap break-words">{message.content}</div>
-              {!isStudent && !readOnly && (
+              {!isStudent && !readOnly && !message.isError && (
                 <button
                   onClick={() => handleInsert(message)}
                   className="mt-2.5 inline-flex text-[11px] font-semibold px-2 py-1 rounded bg-white border border-[#F0E0A0] text-ink hover:bg-[#FFF9E6]"

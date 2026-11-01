@@ -195,19 +195,29 @@ async function loginAs(page, rolePath, email, password = 'demo') {
     await openAssessment.click();
     await page.waitForURL(/\/assessments\//, { timeout: 15000 });
     await page.waitForTimeout(1000);
-    // Wait for editor / Folio chrome
-    await page.getByText(/MARGIN NOTES|Ask AI|Algorithm|Submit Assessment/i).first().waitFor({ timeout: 15000 });
+    // Wait for editor chrome (seeded essay + margin notes — screenshot from clean seed state)
+    await page.getByText(/MARGIN NOTES|Ask AI|Programming Fundamentals|Submit Assessment/i).first().waitFor({ timeout: 15000 });
+    // Sanity: seeded AI-highlighted hook visible; no empty-response leftovers
+    const emptyNote = page.getByText(/empty response|temporarily unavailable|not configured yet/i);
+    if (await emptyNote.count()) {
+      record('Assessment editor clean (no error notes)', false, 'error/empty note visible before AI test');
+    } else {
+      record('Assessment editor clean (no error notes)', true);
+    }
     record('Student assessment editor loads', true);
 
-    // AI ask
+    // Capture screenshots from the seeded clean demo (one AI insert + sensible notes)
+    await shot(page, 'assessment-editor');
+    await shot(page, 'assessment-editor', 390, 844);
+
+    // AI ask + insert — functional check after screenshots so leftovers never land in docs/
     const ask = page.getByPlaceholder(/Ask AI/i);
     if (await ask.count()) {
       await ask.fill('Can you help me explain quicksort worst-case?');
       await page.getByRole('button', { name: /^Send$/i }).click();
       await page.getByText(/worst case|O\(n/i).first().waitFor({ timeout: 15000 });
       record('AI tutor sticky note (stubbed /api/chat)', true);
-      // Insert
-      const insertBtn = page.getByRole('button', { name: /Insert/i }).first();
+      const insertBtn = page.getByRole('button', { name: /Insert/i }).last();
       if (await insertBtn.count()) {
         await insertBtn.click();
         await page.waitForTimeout(500);
@@ -219,9 +229,6 @@ async function loginAs(page, rolePath, email, password = 'demo') {
       record('AI tutor sticky note (stubbed /api/chat)', false, 'Ask AI missing');
       record('Insert ¶ into document', false, 'skipped');
     }
-
-    await shot(page, 'assessment-editor');
-    await shot(page, 'assessment-editor', 390, 844);
 
     // TipTap toolbar buttons
     for (const label of ['B', 'I', 'U', 'H1', 'H2']) {

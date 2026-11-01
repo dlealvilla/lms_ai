@@ -1,5 +1,24 @@
 import type { AIProvider } from './types';
 
+/** Pull a usable assistant string from common API / stub shapes. */
+function extractAssistantText(data: unknown): string | null {
+  if (!data || typeof data !== 'object') return null;
+  const d = data as Record<string, unknown>;
+  for (const key of ['response', 'reply', 'message', 'text', 'content']) {
+    const v = d[key];
+    if (typeof v === 'string' && v.trim()) return v.trim();
+  }
+  // Nested: { data: { response } } / { result: { text } }
+  for (const nest of ['data', 'result', 'output']) {
+    const inner = d[nest];
+    if (inner && typeof inner === 'object') {
+      const found = extractAssistantText(inner);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
 class APIAIProvider implements AIProvider {
   async generateResponse(prompt: string, chatHistory: Array<{ role: string; content: string }>): Promise<string> {
     const response = await fetch('/api/chat', {
@@ -17,26 +36,26 @@ class APIAIProvider implements AIProvider {
 
     if (!response.ok) {
       const message =
-        (typeof data?.error === 'string' && data.error) ||
-        (typeof data?.message === 'string' && data.message) ||
+        (typeof (data as any)?.error === 'string' && (data as any).error) ||
+        (typeof (data as any)?.message === 'string' && (data as any).message) ||
         'The AI assistant is temporarily unavailable. Please try again in a moment.';
       throw new Error(message);
     }
 
-    if (typeof data?.response !== 'string' || !data.response.trim()) {
+    const text = extractAssistantText(data);
+    if (!text) {
       throw new Error('The AI assistant returned an empty response. Please try again.');
     }
 
-    return data.response;
+    return text;
   }
 }
 
 let providerInstance: AIProvider | null = null;
 
 export function getAIProvider(): AIProvider {
-  if (providerInstance) {
-    return providerInstance;
+  if (!providerInstance) {
+    providerInstance = new APIAIProvider();
   }
-  providerInstance = new APIAIProvider();
   return providerInstance;
 }

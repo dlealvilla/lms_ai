@@ -1,33 +1,35 @@
-# Folio local test checklist
+# Folio click-through checklist (local)
 
-Generated: 2026-11-01T03:20:57.085Z (UTC)
-Base: `http://127.0.0.1:5173`
+Generated from `scripts/folio-e2e.mjs` against Vite `:5173` + local API `:3001` + embedded Postgres `:54329`.
+`/api/chat` stubbed at the network layer with `{ response }` shape matching `src/lib/ai`.
 
-**26 passed / 0 failed**
+## Result: 27/27 PASS
 
-- [x] PASS: Landing page loads
-- [x] PASS: Landing → Teacher Login
-- [x] PASS: Quick login Dr. Smith fills email
-- [x] PASS: Teacher mock login → dashboard
-- [x] PASS: Teacher dashboard greeting visible
-- [x] PASS: Teacher open COMP101 course
-- [x] PASS: Teacher course Assessments tab
-- [x] PASS: Teacher open student detail
-- [x] PASS: Teacher marking view
-- [x] PASS: Teacher logout control present/clickable
-- [x] PASS: Student mock login → dashboard
-- [x] PASS: Student open COMP101
-- [x] PASS: Student assessment editor loads
-- [x] PASS: AI tutor sticky note (stubbed /api/chat)
-- [x] PASS: Insert ¶ into document
-- [x] PASS: Editor toolbar B
-- [x] PASS: Editor toolbar I
-- [x] PASS: Editor toolbar U
-- [x] PASS: Editor toolbar H1
-- [x] PASS: Editor toolbar H2
-- [x] PASS: Submit Assessment button visible
-- [x] PASS: Submit Assessment opens confirmation (cancelled) — dismissed via Escape
-- [x] PASS: Admin mock login → dashboard
-- [x] PASS: Admin Users tab
-- [x] PASS: Admin Courses tab
-- [x] PASS: + New assessment button clickable
+- Landing page loads
+- Landing → Teacher Login
+- Quick login Dr. Smith fills email
+- Teacher mock login → dashboard
+- Teacher dashboard greeting visible
+- Teacher open COMP101 course
+- Teacher course Assessments tab
+- Teacher open student detail
+- Teacher marking view
+- Teacher logout control present/clickable
+- Student mock login → dashboard
+- Student open COMP101
+- Assessment editor clean (no error notes)
+- Student assessment editor loads
+- AI tutor sticky note (stubbed /api/chat)
+- Insert ¶ into document
+- Editor toolbar B / I / U / H1 / H2
+- Submit Assessment button visible
+- Submit Assessment opens confirmation (cancelled)
+- Admin mock login → dashboard
+- Admin Users / Courses tabs
+- + New assessment button clickable
+
+## Branding checks (manual on screenshots)
+
+- Sidebar / header show **WildMind** + **AI for Education** (never "Folio")
+- Teacher avatar initials **SS** for Dr. Sarah Smith
+- Assessment editor: one AI-highlighted insert + sensible margin notes, no empty-response leftovers

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { GraduationCap } from 'lucide-react';
+import { BrandLockup } from '@/components/BrandLockup';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { cn } from '@/lib/utils';
 
@@ -31,23 +31,8 @@ export function LibraryHeader({
         className,
       )}
     >
-      <Link to={home} className="flex items-center gap-3 group">
-        <div
-          className={cn(
-            'flex items-center justify-center rounded-[9px] bg-ink text-white',
-            compact ? 'w-8 h-8' : 'w-9 h-9',
-          )}
-        >
-          <GraduationCap className={compact ? 'h-4 w-4' : 'h-4.5 w-4.5'} />
-        </div>
-        <div>
-          <div className={cn('font-semibold text-ink', compact ? 'text-sm' : 'text-[15px]')}>
-            Wildmind
-          </div>
-          {!compact && (
-            <div className="text-[11px] text-[#999]">Library · Folio</div>
-          )}
-        </div>
+      <Link to={home} className="group">
+        <BrandLockup size={compact ? 'sm' : 'lg'} />
       </Link>
 
       {showUser && user && (
@@ -55,11 +40,7 @@ export function LibraryHeader({
           <div className="font-semibold text-sm text-ink">{user.name}</div>
           <div className="text-xs text-ink-subtle flex items-center justify-end gap-3">
             <span>{user.role}</span>
-            <button
-              type="button"
-              onClick={logout}
-              className="hover:text-ink"
-            >
+            <button type="button" onClick={logout} className="hover:text-ink">
               Sign out
             </button>
           </div>
