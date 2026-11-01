@@ -85,7 +85,7 @@ This is an open prototype, not a finished product.
 | Attempt analytics not on `main` | Sample analytics UI lives on theme/dev branches; scores aren’t computed from live attempts yet |
 | Mock auth | Unsigned base64 tokens; `TOKEN_SECRET` not used to sign on current `main` |
 | Gemini key hygiene | `/api/chat` still checks `VITE_GEMINI_*` and logs key metadata |
-| Bookshelf theme | Open-book / shelf UI is on `theme/bookshelf` (open PR) — not merged to `main` |
+| Folio theme | Editorial Folio UI is on `theme/folio` (open PR) — evolves Bookshelf; not merged to `main` |
 | Demo page title | Historically “LMS Writing Prototype” in `index.html` (fixed on this launch branch) |
 
 See [ROADMAP.md](ROADMAP.md) for the ordered view.

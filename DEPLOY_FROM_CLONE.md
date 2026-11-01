@@ -56,7 +56,7 @@ git push -u origin main
 7. **Add Environment Variable:**
    - Click **"Environment Variables"**
    - Add: 
-     - Name: `VITE_GEMINI_API_KEY`
+     - Name: `GEMINI_API_KEY`
      - Value: Your Gemini API key (or leave empty for mock mode)
    - Click **"Save"**
 
@@ -86,7 +86,7 @@ vercel --prod
 
 1. Go to Vercel Dashboard → Your Project
 2. Click **"Settings"** → **"Environment Variables"**
-3. Add `VITE_GEMINI_API_KEY` with your API key
+3. Add `GEMINI_API_KEY` with your API key
 4. Select all environments (Production, Preview, Development)
 5. Click **"Save"**
 6. **Redeploy** for changes to take effect:
@@ -107,7 +107,7 @@ vercel --prod
 - Run `npm install` locally to verify dependencies
 
 ### If environment variables don't work:
-- Make sure variable name is exactly `VITE_GEMINI_API_KEY`
+- Make sure variable name is exactly `GEMINI_API_KEY`
 - Redeploy after adding/changing variables
 - Check that you selected all environments
 

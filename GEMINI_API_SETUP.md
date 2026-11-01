@@ -42,7 +42,7 @@ Make sure you're using the correct type of API key:
 
 1. Copy your API key
 2. Go to Vercel Dashboard → Your Project → Settings → Environment Variables
-3. Update `VITE_GEMINI_API_KEY` with the new key
+3. Update `GEMINI_API_KEY` with the new key
 4. **Redeploy** your project
 
 ## Alternative: Check Available Models

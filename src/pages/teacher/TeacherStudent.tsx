@@ -118,8 +118,9 @@ export function TeacherStudent() {
   if (isLoading) {
     return (
       <AuthLayout>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">Loading student details...</div>
+        <div className="space-y-4" role="status" aria-label="Loading">
+          <div className="h-10 w-64 max-w-full animate-pulse rounded-lg bg-[#E8E6E1]/70" />
+          <div className="h-40 animate-pulse rounded-xl bg-[#E8E6E1]/70" />
         </div>
       </AuthLayout>
     );
@@ -128,7 +129,7 @@ export function TeacherStudent() {
   if (error || !student || !course) {
     return (
       <AuthLayout>
-        <div className="bg-red-50 text-red-600 p-4 rounded-lg">
+        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg">
           {error || 'Student not found'}
         </div>
       </AuthLayout>
@@ -139,57 +140,55 @@ export function TeacherStudent() {
     <AuthLayout>
       <div className="space-y-6">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-gray-500">
-          <Link to="/teacher/home" className="hover:text-gray-700">Home</Link>
+        <div className="flex items-center gap-2 text-sm text-ink-muted">
+          <Link to="/teacher/home" className="hover:text-ink">Home</Link>
           <span>/</span>
-          <Link to={`/teacher/courses/${courseId}`} className="hover:text-gray-700">
+          <Link to={`/teacher/courses/${courseId}`} className="hover:text-ink">
             {course.code}
           </Link>
           <span>/</span>
-          <span className="text-gray-900">{student.name}</span>
+          <span className="text-ink">{student.name}</span>
         </div>
 
         {/* Student header */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">{student.name}</h1>
-          <div className="text-gray-500">{student.email}</div>
+        <div className="folio-card p-6">
+          <h1 className="font-serif text-[32px] tracking-[0.01em] text-ink mb-1">{student.name}</h1>
+          <div className="text-sm text-ink-muted">{student.email}</div>
         </div>
 
         {/* Assessments list */}
         <section>
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">Assessments</h2>
+          <h2 className="text-lg font-semibold text-ink mb-4">Assessments</h2>
           
           {student.attempts.length === 0 ? (
-            <div className="bg-gray-50 rounded-lg p-8 text-center text-gray-500">
+            <div className="folio-card p-10 text-center text-sm text-ink-muted">
               No assessments for this course
             </div>
           ) : (
-            <div className="bg-white rounded-lg border border-gray-200 divide-y">
+            <div className="folio-card divide-y divide-[#E8E6E1]">
               {student.attempts.map((attempt) => (
                 <div key={attempt.assessmentId} className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="font-semibold text-gray-900">
+                        <h3 className="font-semibold text-ink">
                           {attempt.assessmentTitle}
                         </h3>
                         <span
-                          className={`px-2 py-0.5 rounded text-xs font-medium ${
-                            attempt.effectiveClosed
-                              ? 'bg-red-100 text-red-700'
-                              : 'bg-green-100 text-green-700'
+                          className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                            attempt.effectiveClosed ? 'pill-closed' : 'pill-open'
                           }`}
                         >
                           {attempt.effectiveClosed ? 'Closed' : 'Open'}
                         </span>
                         {!attempt.hasAttempt && (
-                          <span className="px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600">
+                          <span className="px-2 py-0.5 rounded text-xs bg-page-muted text-ink-muted">
                             Not started
                           </span>
                         )}
                       </div>
                       
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-ink-muted">
                         Last saved: {formatDate(attempt.lastSavedAt)}
                       </div>
                     </div>
@@ -207,13 +206,15 @@ export function TeacherStudent() {
                             [attempt.assessmentId]: e.target.value,
                           }))}
                           placeholder="0-100"
-                          className="w-20 px-2 py-1 border border-gray-300 rounded text-center text-sm"
+                          className="folio-input !w-20 !py-1.5 text-center text-sm"
                           disabled={!attempt.hasAttempt}
+                          aria-label={`Mark for ${attempt.assessmentTitle}`}
                         />
                         <button
+                          type="button"
                           onClick={() => handleSaveMark(attempt.assessmentId)}
                           disabled={!attempt.hasAttempt || savingMarks[attempt.assessmentId]}
-                          className="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 disabled:opacity-50"
+                          className="folio-btn-primary !py-1.5 !text-xs"
                         >
                           {savingMarks[attempt.assessmentId] ? '...' : 'Save'}
                         </button>
@@ -223,7 +224,7 @@ export function TeacherStudent() {
                       {attempt.hasAttempt && (
                         <Link
                           to={`/teacher/courses/${courseId}/students/${studentId}/assessments/${attempt.assessmentId}`}
-                          className="text-purple-600 hover:text-purple-800 text-sm font-medium"
+                          className="inline-flex items-center gap-1 text-sm font-semibold text-ink hover:underline"
                         >
                           View →
                         </Link>

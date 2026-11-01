@@ -3,7 +3,7 @@
 ## Check 1: Environment Variable is Set
 
 1. Go to Vercel Dashboard → Your Project → Settings → Environment Variables
-2. Verify `VITE_GEMINI_API_KEY` exists
+2. Verify `GEMINI_API_KEY` exists
 3. Make sure it's enabled for **Production** environment (and Preview/Development if needed)
 
 ## Check 2: Check Vercel Function Logs
@@ -20,7 +20,7 @@
 
 ### "Gemini API key not configured"
 - The environment variable isn't set or isn't being read
-- **Fix**: Make sure `VITE_GEMINI_API_KEY` is set in Vercel and redeploy
+- **Fix**: Make sure `GEMINI_API_KEY` is set in Vercel and redeploy
 
 ### "API_KEY_INVALID" or "PERMISSION_DENIED"
 - Your API key is invalid or doesn't have permissions

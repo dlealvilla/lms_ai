@@ -5,6 +5,8 @@ export interface ChatMessage {
   role: ChatRole;
   content: string;
   createdAt: number;
+  /** System/error note — never insertable into the essay */
+  isError?: boolean;
 }
 
 export interface InsertionEvent {

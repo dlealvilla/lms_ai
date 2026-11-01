@@ -75,12 +75,12 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl w-[90vw] h-[90vh] flex flex-col">
-        <div className="border-b border-gray-300 p-4 flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Submission Review</h2>
+      <div className="bg-page rounded-lg shadow-xl border border-[#E8E6E1] w-[90vw] h-[90vh] flex flex-col">
+        <div className="border-b border-[#E8E6E1] p-4 flex justify-between items-center">
+          <h2 className="text-xl font-serif font-bold text-ink">Submission Review</h2>
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-600 hover:text-gray-800"
+            className="px-4 py-2 text-ink-muted hover:text-gray-800"
           >
             ✕
           </button>
@@ -88,8 +88,8 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
 
         <div className="flex-1 overflow-hidden flex">
           {/* Left: Document Preview */}
-          <div className="flex-1 border-r border-gray-300 overflow-y-auto">
-            <div className="p-4 border-b border-gray-300 bg-gray-50">
+          <div className="flex-1 border-r border-[#E8E6E1] overflow-y-auto">
+            <div className="p-4 border-b border-[#E8E6E1] bg-gray-50">
               <h3 className="font-semibold">Document Content</h3>
             </div>
             <div className="h-full overflow-y-auto">
@@ -99,7 +99,7 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
 
           {/* Right: Chat History & Insertions */}
           <div className="w-96 overflow-y-auto">
-            <div className="p-4 border-b border-gray-300 bg-gray-50">
+            <div className="p-4 border-b border-[#E8E6E1] bg-gray-50">
               <h3 className="font-semibold">Chat History</h3>
             </div>
             <div className="p-4 space-y-4">
@@ -109,10 +109,10 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
                   className={`p-3 rounded-lg ${
                     message.role === 'student'
                       ? 'bg-blue-100'
-                      : 'bg-gray-100'
+                      : 'bg-page-muted'
                   }`}
                 >
-                  <div className="text-xs text-gray-500 mb-1">
+                  <div className="text-xs text-ink-muted mb-1">
                     {message.role === 'student' ? 'Student' : 'AI'} •{' '}
                     {new Date(message.createdAt).toLocaleTimeString()}
                   </div>
@@ -121,22 +121,22 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
               ))}
             </div>
 
-            <div className="p-4 border-t border-gray-300 bg-gray-50">
+            <div className="p-4 border-t border-[#E8E6E1] bg-gray-50">
               <h3 className="font-semibold">Insertions ({submission.insertions.length})</h3>
             </div>
             <div className="p-4 space-y-3">
               {submission.insertions.length === 0 ? (
-                <div className="text-gray-500 text-sm">No text was inserted from AI responses.</div>
+                <div className="text-ink-muted text-sm">No text was inserted from AI responses.</div>
               ) : (
                 submission.insertions.map((insertion) => {
                   const aiMessage = getMessageById(insertion.aiMessageId);
                   return (
                     <div key={insertion.id} className="border border-gray-200 rounded p-3">
-                      <div className="text-xs text-gray-500 mb-1">
+                      <div className="text-xs text-ink-muted mb-1">
                         {new Date(insertion.createdAt).toLocaleTimeString()}
                       </div>
                       <div className="text-sm font-medium mb-1">AI Message:</div>
-                      <div className="text-sm text-gray-700 mb-2 bg-gray-50 p-2 rounded">
+                      <div className="text-sm text-ink mb-2 bg-gray-50 p-2 rounded">
                         {aiMessage?.content.substring(0, 100)}
                         {aiMessage && aiMessage.content.length > 100 && '...'}
                       </div>
@@ -153,7 +153,7 @@ export function SubmissionModal({ submission, onClose, onDownload }: SubmissionM
           </div>
         </div>
 
-        <div className="border-t border-gray-300 p-4 flex justify-end gap-2">
+        <div className="border-t border-[#E8E6E1] p-4 flex justify-end gap-2">
           <button
             onClick={onDownload}
             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"

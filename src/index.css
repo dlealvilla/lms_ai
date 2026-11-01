@@ -1,132 +1,301 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
 @layer base {
   :root {
     /* ============================================
-       WILDMIND DAY MODE (DEFAULT)
+       FOLIO THEME — WildMind AI for Education
+       Modern evolution of Bookshelf: flat spines, Newsreader + Inter
        ============================================ */
-    
-    /* Backgrounds - Paper-like in daylight */
-    --background: 250 251 253; /* #FAFBFD */
-    --background-elevated: 246 248 251; /* #F6F8FB */
-    --background-muted: 255 255 255;
-    
-    /* Text - Deep slate, never black */
-    --foreground: 31 41 55; /* #1F2937 */
-    --foreground-muted: 91 100 114; /* #5B6472 */
-    --foreground-subtle: 148 163 184;
-    
-    /* Borders & Separators */
-    --border: 15 23 42 / 0.08;
-    --border-strong: 15 23 42 / 0.12;
-    --separator: 15 23 42 / 0.08;
-    
-    /* Human Hemisphere - Cerulean/Sky Blue (cognition, writing) */
-    --primary: 111 174 255; /* #6FAEFF */
-    --primary-hover: 155 203 255; /* #9BCBFF */
-    --primary-wash: 232 242 255; /* #E8F2FF */
-    --primary-foreground: 31 41 55;
-    
-    /* AI Hemisphere - Muted Amber/Gold (system intelligence) */
-    --secondary: 244 162 97; /* #F4A261 */
-    --secondary-hover: 255 212 138; /* #FFD48A */
-    --secondary-wash: 255 241 214; /* #FFF1D6 */
-    --secondary-foreground: 31 41 55;
-    
-    /* Accents */
-    --accent: 111 174 255;
-    --accent-foreground: 31 41 55;
-    
-    /* Status Colors */
-    --success: 34 197 94;
+
+    --background: 250 250 248; /* #FAFAF8 */
+    --background-elevated: 255 255 255; /* #FFFFFF */
+    --background-muted: 243 242 238; /* #F3F2EE */
+
+    --foreground: 17 17 17; /* #111111 */
+    --foreground-muted: 102 102 102; /* #666666 */
+    --foreground-subtle: 153 153 153; /* #999999 */
+
+    --border: 232 230 225; /* #E8E6E1 */
+    --border-strong: 17 17 17 / 0.18;
+    --separator: 232 230 225;
+
+    /* Primary CTA — ink black */
+    --primary: 17 17 17;
+    --primary-hover: 34 34 34;
+    --primary-wash: 17 17 17 / 0.06;
+    --primary-foreground: 255 255 255;
+
+    /* Secondary — dusty blue spine */
+    --secondary: 61 107 154; /* #3D6B9A */
+    --secondary-hover: 52 92 132;
+    --secondary-wash: 61 107 154 / 0.12;
+    --secondary-foreground: 255 255 255;
+
+    --accent: 196 92 74; /* COMP terracotta */
+    --accent-foreground: 255 255 255;
+
+    --success: 15 107 62; /* #0F6B3E */
     --success-foreground: 255 255 255;
-    --warning: 245 158 11;
-    --warning-foreground: 31 41 55;
-    --error: 239 68 68;
+    --warning: 160 128 32;
+    --warning-foreground: 17 17 17;
+    --error: 185 50 50;
     --error-foreground: 255 255 255;
-    --info: 111 174 255;
+    --info: 61 107 154;
     --info-foreground: 255 255 255;
-    
-    /* Shadows - Soft elevation, not glow */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-    --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.1);
-    
-    /* Radius */
-    --radius-sm: 0.375rem;
-    --radius: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1rem;
-    
-    /* Spacing scale */
+
+    /* Surfaces / ink */
+    --page: 255 255 255;
+    --page-muted: 250 250 248;
+    --ink: 17 17 17;
+    --ink-muted: 102 102 102;
+    --ink-subtle: 153 153 153;
+
+    /* Folio spine accents (kept as named tokens for Tailwind) */
+    --wood: 250 250 248;
+    --wood-mid: 243 242 238;
+    --wood-deep: 232 230 225;
+    --shelf: 232 230 225;
+    --shelf-deep: 243 242 238;
+    --gold: 17 17 17; /* primary CTA maps here for legacy class reuse */
+    --spine-comp: 196 92 74; /* #C45C4A */
+    --spine-writ: 61 107 154; /* #3D6B9A */
+    --spine-hist: 74 122 82; /* #4A7A52 */
+    --spine-gold: 160 128 32;
+    --spine-purple: 110 80 140;
+    --binding: 232 230 225;
+    --sticky: 255 249 230; /* #FFF9E6 */
+    --hairline: 232 230 225;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow: 0 8px 40px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.08);
+
+    --radius-sm: 8px;
+    --radius: 10px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
+
+    --font-serif: 'Newsreader', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   }
-  
+
   [data-theme="night"] {
-    /* ============================================
-       WILDMIND NIGHT MODE
-       ============================================ */
-    
-    /* Backgrounds - Deep space navy */
-    --background: 7 11 20; /* #070B14 */
-    --background-elevated: 12 18 34; /* #0C1222 */
-    --background-muted: 17 26 51; /* #111A33 */
-    
-    /* Text - Light, readable */
-    --foreground: 229 231 235; /* #E5E7EB */
-    --foreground-muted: 156 163 175; /* #9CA3AF */
-    --foreground-subtle: 107 114 128;
-    
-    /* Borders - Subtle with gradient potential */
-    --border: 255 255 255 / 0.1;
-    --border-strong: 255 255 255 / 0.15;
-    --separator: 255 255 255 / 0.08;
-    
-    /* Human Hemisphere - Electric Cyan/Blue */
-    --primary: 91 200 255; /* #5BC8FF */
-    --primary-hover: 143 211 255; /* #8FD3FF */
-    --primary-wash: 91 200 255 / 0.15;
-    --primary-foreground: 7 11 20;
-    
-    /* AI Hemisphere - Electric Amber/Orange */
-    --secondary: 255 138 0; /* #FF8A00 */
-    --secondary-hover: 255 183 3; /* #FFB703 */
-    --secondary-wash: 255 138 0 / 0.15;
-    --secondary-foreground: 7 11 20;
-    
-    /* Accents */
-    --accent: 91 200 255;
-    --accent-foreground: 7 11 20;
-    
-    /* Status Colors - Adjusted for dark */
-    --success: 74 222 128;
-    --success-foreground: 7 11 20;
-    --warning: 251 191 36;
-    --warning-foreground: 7 11 20;
-    --error: 248 113 113;
-    --error-foreground: 7 11 20;
-    --info: 91 200 255;
-    --info-foreground: 7 11 20;
-    
-    /* Shadows - Glow instead of shadow */
-    --shadow-sm: 0 2px 8px rgba(91, 200, 255, 0.1);
-    --shadow: 0 8px 24px rgba(91, 200, 255, 0.15);
-    --shadow-md: 0 12px 32px rgba(91, 200, 255, 0.2);
-    --shadow-lg: 0 16px 48px rgba(91, 200, 255, 0.25);
+    --background: 24 24 22;
+    --background-elevated: 34 34 32;
+    --background-muted: 40 40 38;
+    --foreground: 250 250 248;
+    --foreground-muted: 168 168 160;
+    --primary: 250 250 248;
+    --primary-foreground: 17 17 17;
+    --page: 34 34 32;
+    --ink: 250 250 248;
   }
-  
+
   body {
     background-color: rgb(var(--background));
     color: rgb(var(--foreground));
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
+
+  button, a, input, textarea, select {
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease,
+      box-shadow 160ms ease, opacity 160ms ease, transform 160ms ease;
+  }
+
+  h1, h2, h3, .font-serif, .serif {
+    font-family: var(--font-serif);
+    font-weight: 560;
+    font-optical-sizing: auto;
+    letter-spacing: 0.005em;
+  }
+  h1 {
+    letter-spacing: 0.01em;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--ink));
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .bg-wood {
+    background-color: #FAFAF8;
+  }
+  .bg-shelf-board {
+    background-color: #F3F2EE;
+  }
+  .bg-page {
+    background-color: #FFFFFF;
+    color: #111111;
+  }
+  .bg-sticky {
+    background-color: #FFF9E6;
+  }
+  .text-ink {
+    color: #111111;
+  }
+  .text-ink-muted {
+    color: #666666;
+  }
+  .text-ink-subtle {
+    color: #999999;
+  }
+  .text-gold {
+    color: #111111;
+  }
+  .text-parchment {
+    color: #111111;
+  }
+  .border-gold {
+    border-color: #111111;
+  }
+  .border-hairline {
+    border-color: #E8E6E1;
+  }
+  .writing-spine {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  .shadow-folio {
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.04);
+  }
+  .pill-open {
+    background: #E8F6EE;
+    color: #0F6B3E;
+  }
+  .pill-closed {
+    background: #F3F2EE;
+    color: #888888;
+  }
+}
+
+/* TipTap AI-inserted mark — Folio terracotta accent */
+.ai-inserted-text {
+  background-color: #FFF8F6;
+  border-left: 3px solid #C45C4A;
+  border-right: 2px solid #C45C4A;
+  padding: 2px 6px;
+  border-radius: 0 8px 8px 0;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+
+
+.folio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.folio-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #111;
+  color: #fff;
+}
+.folio-btn-primary:hover { background: #222; }
+.folio-btn-primary:active { background: #000; }
+.folio-btn-primary:disabled { opacity: 0.45; pointer-events: none; }
+.folio-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #F3F2EE;
+  color: #111;
+}
+.folio-btn-secondary:hover { background: #E8E6E1; }
+.folio-btn-secondary:active { background: #DEDAD2; }
+.folio-btn-secondary:disabled { opacity: 0.45; pointer-events: none; }
+.folio-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #E8E6E1;
+  background: #FAFAF8;
+  color: #111;
+  font-size: 14px;
+}
+.folio-input::placeholder { color: #999; }
+.folio-input:hover { border-color: #DEDAD2; }
+.folio-input:focus {
+  outline: none;
+  border-color: #111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.12);
+}
+.folio-card {
+  background: #fff;
+  border: 1px solid #E8E6E1;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.04);
+}
+.folio-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #999;
+}
+
+@keyframes folio-toast-in {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Comfortable writing measure */
+.ProseMirror {
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.75;
+  color: #111111;
+  max-width: 72ch;
+  margin-inline: auto;
+}
+
+.ProseMirror h1,
+.ProseMirror h2 {
+  font-family: var(--font-serif);
+  font-weight: 560;
+  color: #111111;
+  letter-spacing: 0.005em;
+}
+.ProseMirror h1 { font-size: 1.85rem; margin: 0 0 1rem; }
+.ProseMirror h2 { font-size: 1.4rem; margin: 0 0 0.75rem; }
+.ProseMirror p { margin: 0 0 1rem; }
+.ProseMirror ul, .ProseMirror ol { padding-left: 1.5em; margin: 0 0 0.75rem; }
+
+
+/* Reliable Folio responsive helpers (avoid Tailwind variant edge cases) */
+@media (min-width: 1024px) {
+  .folio-mobile-only { display: none !important; }
+}
+@media (max-width: 1023px) {
+  .folio-desktop-only { display: none !important; }
 }

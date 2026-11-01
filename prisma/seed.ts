@@ -106,7 +106,20 @@ async function main() {
     },
   });
 
-  console.log('✓ Courses created:', course1.code, course2.code);
+  const course3 = await prisma.course.upsert({
+    where: { id: 'course-hist201-2025t2' },
+    update: {},
+    create: {
+      id: 'course-hist201-2025t2',
+      tenantId: tenant.id,
+      code: 'HIST201',
+      title: 'World History',
+      term: '2025 T2',
+      status: CourseStatus.PAST,
+    },
+  });
+
+  console.log('✓ Courses created:', course1.code, course2.code, course3.code);
 
   // Assign teacher to both courses
   await prisma.courseTeacher.upsert({
@@ -125,6 +138,17 @@ async function main() {
     create: {
       tenantId: tenant.id,
       courseId: course2.id,
+      teacherId: teacher.id,
+    },
+  });
+
+
+  await prisma.courseTeacher.upsert({
+    where: { courseId_teacherId: { courseId: course3.id, teacherId: teacher.id } },
+    update: {},
+    create: {
+      tenantId: tenant.id,
+      courseId: course3.id,
       teacherId: teacher.id,
     },
   });
@@ -150,6 +174,16 @@ async function main() {
       create: {
         tenantId: tenant.id,
         courseId: course2.id,
+        studentId: student.id,
+      },
+    });
+
+    await prisma.enrollment.upsert({
+      where: { courseId_studentId: { courseId: course3.id, studentId: student.id } },
+      update: {},
+      create: {
+        tenantId: tenant.id,
+        courseId: course3.id,
         studentId: student.id,
       },
     });
@@ -256,6 +290,8 @@ async function main() {
   console.log('✓ Assessments created');
 
   // Create assessment attempts with sample state
+  const aiInsertId = 'ins_demo_hook';
+  const aiMsgId = 'msg_2';
   const sampleState = {
     assessmentId: assessment1.id,
     documentContent: {
@@ -264,14 +300,32 @@ async function main() {
         {
           type: 'heading',
           attrs: { level: 1 },
-          content: [{ type: 'text', text: 'My Programming Essay' }],
+          content: [{ type: 'text', text: 'Programming Fundamentals Essay' }],
         },
         {
           type: 'paragraph',
           content: [
             {
               type: 'text',
-              text: 'Programming is a fundamental skill in the modern world...',
+              text: 'Programming is a fundamental skill in the modern world. From the apps on our phones to the systems that keep hospitals running, software quietly shapes daily life. ',
+            },
+            {
+              type: 'text',
+              text: 'Consider this: every swipe, search, and notification depends on algorithms written by people who started exactly where this essay begins—with curiosity and careful practice.',
+              marks: [{ type: 'aiInserted', attrs: { insertionId: aiInsertId } }],
+            },
+            {
+              type: 'text',
+              text: ' Understanding how those algorithms work is the first step toward building with them responsibly.',
+            },
+          ],
+        },
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'In this essay I will outline what makes a strong foundation in programming: clear problem decomposition, comfort with core data structures, and the habit of testing ideas early.',
             },
           ],
         },
@@ -285,19 +339,48 @@ async function main() {
         createdAt: Date.now() - 3600000,
       },
       {
-        id: 'msg_2',
+        id: aiMsgId,
         role: 'ai',
-        content: 'Of course! Your introduction could benefit from a stronger hook. Consider starting with a compelling statistic or question about programming.',
+        content:
+          'Try opening with a concrete image of software in everyday life, then land on why learning the fundamentals matters. Here is a short hook you can drop in after your first sentence.',
         createdAt: Date.now() - 3500000,
       },
+      {
+        id: 'msg_3',
+        role: 'student',
+        content: 'Should I mention algorithms this early?',
+        createdAt: Date.now() - 3400000,
+      },
+      {
+        id: 'msg_4',
+        role: 'ai',
+        content:
+          'A light mention is fine—keep it tied to daily experience so the reader stays with you. Save deeper algorithm detail for the next section.',
+        createdAt: Date.now() - 3300000,
+      },
     ],
-    insertions: [],
+    insertions: [
+      {
+        id: aiInsertId,
+        aiMessageId: aiMsgId,
+        insertedText:
+          'Consider this: every swipe, search, and notification depends on algorithms written by people who started exactly where this essay begins—with curiosity and careful practice.',
+        createdAt: Date.now() - 3450000,
+      },
+    ],
   };
 
-  // Alice's attempts
+  // Alice's attempts — refresh demo essay/notes on every seed so screenshots stay clean
   await prisma.assessmentAttempt.upsert({
     where: { assessmentId_studentId: { assessmentId: assessment1.id, studentId: alice.id } },
-    update: {},
+    update: {
+      state: sampleState,
+      lastSavedAt: new Date(),
+      submittedAt: null,
+      mark: null,
+      markedAt: null,
+      markedByTeacherId: null,
+    },
     create: {
       tenantId: tenant.id,
       assessmentId: assessment1.id,

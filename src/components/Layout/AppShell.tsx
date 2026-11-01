@@ -107,9 +107,9 @@ export function AppShell({ children, title, breadcrumbs }: AppShellProps) {
             <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <GraduationCap className="h-5 w-5" />
             </div>
-            <div>
-              <div className="text-sm font-semibold text-foreground">Wildmind</div>
-              <div className="text-xs text-foreground-muted">Education</div>
+            <div className="leading-tight">
+              <div className="text-sm font-semibold text-foreground">WildMind</div>
+              <div className="text-xs text-foreground-muted">AI for Education</div>
             </div>
             <Button
               variant="ghost"

@@ -1,0 +1,148 @@
+{
+  "generatedAt": "2026-11-01T03:40:55.875Z",
+  "base": "http://127.0.0.1:5173",
+  "checklist": [
+    {
+      "name": "Landing page loads",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Landing → Teacher Login",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Quick login Dr. Smith fills email",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Teacher mock login → dashboard",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Teacher dashboard greeting visible",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Teacher dashboard queue panels",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Teacher open COMP101 course",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Teacher course Assessments tab",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Teacher open student detail",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Teacher marking view",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Teacher logout control present/clickable",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Student mock login → dashboard",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Student open COMP101",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Assessment editor clean (no error notes)",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Student assessment editor loads",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "AI tutor sticky note (stubbed /api/chat)",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Insert ¶ into document",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Editor toolbar B",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Editor toolbar I",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Editor toolbar U",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Editor toolbar H1",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Editor toolbar H2",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Submit Assessment button visible",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Submit Assessment opens confirmation (cancelled)",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Admin mock login → dashboard",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Admin Users tab",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "Admin Courses tab",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "name": "+ New assessment button clickable",
+      "pass": true,
+      "note": ""
+    }
+  ],
+  "pass": 28,
+  "fail": 0
+}

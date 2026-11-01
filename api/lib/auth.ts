@@ -12,9 +12,26 @@ export interface TokenPayload {
   exp: number;
 }
 
-const TOKEN_SECRET = process.env.TOKEN_SECRET || 'dev-secret-key-change-in-production';
+function resolveTokenSecret(): string {
+  const fromEnv = process.env.TOKEN_SECRET;
+  if (fromEnv && fromEnv.trim() !== '') {
+    return fromEnv;
+  }
+  if (process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production') {
+    throw new Error(
+      'TOKEN_SECRET must be set in production. Refusing to start with a weak default.',
+    );
+  }
+  // Dev-only fallback for local mock auth
+  return 'dev-secret-key-change-in-production';
+}
+
+const TOKEN_SECRET = resolveTokenSecret();
 
 // Simple base64 encoding for mock token (NOT secure for production)
+// Bound so production fails closed if unset; mock tokens remain unsigned base64 today.
+void TOKEN_SECRET;
+
 export function createMockToken(payload: Omit<TokenPayload, 'exp'>): string {
   const tokenPayload: TokenPayload = {
     ...payload,

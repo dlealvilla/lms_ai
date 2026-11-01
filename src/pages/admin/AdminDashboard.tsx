@@ -69,7 +69,7 @@ export function AdminDashboard() {
     return (
       <AuthLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">Loading admin dashboard...</div>
+          <div className="text-ink-muted">Loading admin dashboard...</div>
         </div>
       </AuthLayout>
     );
@@ -78,7 +78,7 @@ export function AdminDashboard() {
   if (error) {
     return (
       <AuthLayout>
-        <div className="bg-red-50 text-red-600 p-4 rounded-lg">
+        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg">
           {error}
         </div>
       </AuthLayout>
@@ -89,40 +89,40 @@ export function AdminDashboard() {
     <AuthLayout>
       <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
-          <p className="text-gray-600">Manage users, courses, and assessments</p>
+          <h1 className="font-serif text-3xl tracking-[0.01em] text-ink mb-2">Admin Dashboard</h1>
+          <p className="text-ink-muted">Manage users, courses, and assessments</p>
         </div>
 
         {/* Stats */}
         {stats && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white rounded-lg border border-gray-200 p-4">
-              <div className="text-2xl font-bold text-gray-900">{stats.userCount}</div>
-              <div className="text-sm text-gray-500">Users</div>
+            <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] p-4">
+              <div className="text-2xl font-bold text-ink">{stats.userCount}</div>
+              <div className="text-sm text-ink-muted">Users</div>
             </div>
-            <div className="bg-white rounded-lg border border-gray-200 p-4">
-              <div className="text-2xl font-bold text-gray-900">{stats.courseCount}</div>
-              <div className="text-sm text-gray-500">Courses</div>
+            <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] p-4">
+              <div className="text-2xl font-bold text-ink">{stats.courseCount}</div>
+              <div className="text-sm text-ink-muted">Courses</div>
             </div>
-            <div className="bg-white rounded-lg border border-gray-200 p-4">
-              <div className="text-2xl font-bold text-gray-900">{stats.assessmentCount}</div>
-              <div className="text-sm text-gray-500">Assessments</div>
+            <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] p-4">
+              <div className="text-2xl font-bold text-ink">{stats.assessmentCount}</div>
+              <div className="text-sm text-ink-muted">Assessments</div>
             </div>
-            <div className="bg-white rounded-lg border border-gray-200 p-4">
-              <div className="text-2xl font-bold text-gray-900">{stats.attemptCount}</div>
-              <div className="text-sm text-gray-500">Attempts</div>
+            <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] p-4">
+              <div className="text-2xl font-bold text-ink">{stats.attemptCount}</div>
+              <div className="text-sm text-ink-muted">Attempts</div>
             </div>
           </div>
         )}
 
         {/* Tabs */}
-        <div className="flex gap-4 border-b border-gray-200">
+        <div className="flex gap-4 border-b border-[#E8E6E1]">
           <button
             onClick={() => setActiveTab('users')}
             className={`pb-2 px-1 font-medium ${
               activeTab === 'users'
                 ? 'border-b-2 border-red-500 text-red-600'
-                : 'text-gray-500 hover:text-gray-700'
+                : 'text-ink-muted hover:text-ink'
             }`}
           >
             Users ({users.length})
@@ -132,7 +132,7 @@ export function AdminDashboard() {
             className={`pb-2 px-1 font-medium ${
               activeTab === 'courses'
                 ? 'border-b-2 border-red-500 text-red-600'
-                : 'text-gray-500 hover:text-gray-700'
+                : 'text-ink-muted hover:text-ink'
             }`}
           >
             Courses ({courses.length})
@@ -142,24 +142,24 @@ export function AdminDashboard() {
         {/* Users tab */}
         {activeTab === 'users' && (
           <section>
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] overflow-hidden">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-page-muted">
                   <tr>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Name</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Email</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Role</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Status</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Name</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Email</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Role</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-[#E0D4C0]">
                   {users.map((user) => (
-                    <tr key={user.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 font-medium text-gray-900">{user.name}</td>
-                      <td className="px-4 py-3 text-gray-600">{user.email}</td>
+                    <tr key={user.id} className="hover:bg-page-muted">
+                      <td className="px-4 py-3 font-medium text-ink">{user.name}</td>
+                      <td className="px-4 py-3 text-ink-muted">{user.email}</td>
                       <td className="px-4 py-3">
                         <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                          user.role === 'ADMIN' ? 'bg-red-100 text-red-700' :
+                          user.role === 'ADMIN' ? 'bg-error/10 text-error border border-error/30' :
                           user.role === 'TEACHER' ? 'bg-purple-100 text-purple-700' :
                           'bg-blue-100 text-blue-700'
                         }`}>
@@ -168,7 +168,7 @@ export function AdminDashboard() {
                       </td>
                       <td className="px-4 py-3">
                         <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                          user.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+                          user.status === 'ACTIVE' ? 'bg-success/10 text-success border border-success/30' : 'bg-page-muted text-ink-muted'
                         }`}>
                           {user.status}
                         </span>
@@ -184,25 +184,25 @@ export function AdminDashboard() {
         {/* Courses tab */}
         {activeTab === 'courses' && (
           <section>
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <div className="bg-white rounded-xl border shadow-folio border-[#E8E6E1] overflow-hidden">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-page-muted">
                   <tr>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Code</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Title</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Term</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Status</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Code</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Title</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Term</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-ink-muted">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-[#E0D4C0]">
                   {courses.map((course) => (
-                    <tr key={course.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 font-medium text-gray-900">{course.code}</td>
-                      <td className="px-4 py-3 text-gray-600">{course.title}</td>
-                      <td className="px-4 py-3 text-gray-600">{course.term}</td>
+                    <tr key={course.id} className="hover:bg-page-muted">
+                      <td className="px-4 py-3 font-medium text-ink">{course.code}</td>
+                      <td className="px-4 py-3 text-ink-muted">{course.title}</td>
+                      <td className="px-4 py-3 text-ink-muted">{course.term}</td>
                       <td className="px-4 py-3">
                         <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                          course.status === 'CURRENT' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+                          course.status === 'CURRENT' ? 'bg-success/10 text-success border border-success/30' : 'bg-page-muted text-ink-muted'
                         }`}>
                           {course.status}
                         </span>

@@ -46,7 +46,7 @@ Test if the API route is working at all:
 
 1. Vercel Dashboard → Your Project → **Settings** → **Environment Variables**
 2. Check:
-   - ✅ `VITE_GEMINI_API_KEY` exists
+   - ✅ `GEMINI_API_KEY` exists
    - ✅ Value is set (not empty)
    - ✅ **Production** is checked (and Preview/Development if needed)
 3. If you just added it, **you must redeploy**:
@@ -71,7 +71,7 @@ Verify in your GitHub repo that the file exists at the root level.
 ### Issue 2: API Returns Mock Response
 **Problem**: Environment variable not set or not readable
 **Fix**:
-- Set `VITE_GEMINI_API_KEY` in Vercel
+- Set `GEMINI_API_KEY` in Vercel
 - Make sure it's enabled for Production
 - Redeploy after setting
 

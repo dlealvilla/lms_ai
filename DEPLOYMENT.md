@@ -65,7 +65,7 @@ git push
 
 4. **Set Environment Variables:**
    - Click "Environment Variables"
-   - Add: `VITE_GEMINI_API_KEY` = `your_actual_api_key_here`
+   - Add: `GEMINI_API_KEY` = `your_actual_api_key_here`
    - Click "Save"
    - **Note:** If you don't add this, the app will run in mock mode (which is fine for testing)
 
@@ -92,7 +92,7 @@ git push
    vercel
    ```
    - Follow the prompts
-   - When asked about environment variables, add `VITE_GEMINI_API_KEY`
+   - When asked about environment variables, add `GEMINI_API_KEY`
 
 4. **For production deployment:**
    ```bash
@@ -106,7 +106,7 @@ After your first deployment:
 1. Go to your project in Vercel Dashboard
 2. Click "Settings" → "Environment Variables"
 3. Add:
-   - **Name:** `VITE_GEMINI_API_KEY`
+   - **Name:** `GEMINI_API_KEY`
    - **Value:** Your actual Gemini API key
    - **Environment:** Production, Preview, Development (select all)
 4. Click "Save"
@@ -136,13 +136,13 @@ You can configure this in:
 
 ### Environment Variables Not Working
 
-- Make sure the variable name is exactly `VITE_GEMINI_API_KEY`
+- Make sure the variable name is exactly `GEMINI_API_KEY`
 - Vite requires the `VITE_` prefix for client-side variables
 - Redeploy after adding/changing environment variables
 
 ### App Shows "Mock AI mode"
 
-- This means `VITE_GEMINI_API_KEY` is not set or empty
+- This means `GEMINI_API_KEY` is not set or empty
 - Add the environment variable in Vercel Dashboard
 - Redeploy the project
 

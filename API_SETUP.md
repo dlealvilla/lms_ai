@@ -20,7 +20,7 @@ The AI generation now uses a **Vercel serverless function** (API route) instead 
 Make sure you have set in Vercel Dashboard:
 
 **Settings → Environment Variables:**
-- Name: `VITE_GEMINI_API_KEY`
+- Name: `GEMINI_API_KEY`
 - Value: Your Gemini API key
 - Environments: Production, Preview, Development (select all)
 
@@ -58,7 +58,7 @@ npm run dev
 
 1. **Check if API key is set:**
    - Go to Vercel Dashboard → Your Project → Settings → Environment Variables
-   - Make sure `VITE_GEMINI_API_KEY` is set
+   - Make sure `GEMINI_API_KEY` is set
 
 2. **Test the API:**
    - Open browser console
@@ -79,7 +79,7 @@ npm run dev
    - Look for error messages
 
 2. Verify environment variable:
-   - Make sure `VITE_GEMINI_API_KEY` is set in Vercel
+   - Make sure `GEMINI_API_KEY` is set in Vercel
    - Redeploy after adding/changing env vars
 
 3. Check API key validity:

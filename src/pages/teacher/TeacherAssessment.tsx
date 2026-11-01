@@ -99,18 +99,24 @@ export function TeacherAssessment() {
     navigate(`/teacher/courses/${courseId}/students/${studentId}`);
   };
 
+  const handleOpenAnalytics = () => {
+    navigate(
+      `/teacher/courses/${courseId}/students/${studentId}/assessments/${assessmentId}/analytics`,
+    );
+  };
+
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="text-gray-500">Loading student attempt...</div>
+      <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8]">
+        <div className="text-ink-muted">Loading student attempt...</div>
       </div>
     );
   }
 
   if (error || !assessment || !student) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="bg-red-50 text-red-600 p-4 rounded-lg">
+      <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8]">
+        <div className="bg-error/10 text-error border border-error/30 p-4 rounded-lg">
           {error || 'Attempt not found'}
         </div>
       </div>
@@ -128,7 +134,8 @@ export function TeacherAssessment() {
   return (
     <AssessmentWorkspace
       assessmentId={assessmentId!}
-      assessmentTitle={`${assessment.title} — ${student.name}`}
+      assessmentTitle={assessment.title}
+      studentName={student.name}
       mode="teacher"
       readOnly={true}
       effectiveClosed={assessment.effectiveClosed}
@@ -138,6 +145,7 @@ export function TeacherAssessment() {
       pdfUrl={assessment.pdfBlobUrl}
       pdfFileName={assessment.pdfFileName}
       onBack={handleBack}
+      onOpenAnalytics={handleOpenAnalytics}
     />
   );
 }

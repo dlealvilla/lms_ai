@@ -7,6 +7,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        serif: ['var(--font-serif)'],
+        sans: ['var(--font-sans)'],
+      },
       colors: {
         background: 'rgb(var(--background) / <alpha-value>)',
         'background-elevated': 'rgb(var(--background-elevated) / <alpha-value>)',
@@ -49,6 +53,18 @@ export default {
           DEFAULT: 'rgb(var(--info) / <alpha-value>)',
           foreground: 'rgb(var(--info-foreground) / <alpha-value>)',
         },
+        page: 'rgb(var(--page) / <alpha-value>)',
+        'page-muted': 'rgb(var(--page-muted) / <alpha-value>)',
+        ink: 'rgb(var(--ink) / <alpha-value>)',
+        'ink-muted': 'rgb(var(--ink-muted) / <alpha-value>)',
+        'ink-subtle': 'rgb(var(--ink-subtle) / <alpha-value>)',
+        wood: 'rgb(var(--wood) / <alpha-value>)',
+        shelf: 'rgb(var(--shelf) / <alpha-value>)',
+        gold: 'rgb(var(--gold) / <alpha-value>)',
+        binding: 'rgb(var(--binding) / <alpha-value>)',
+        'spine-comp': 'rgb(var(--spine-comp) / <alpha-value>)',
+        'spine-writ': 'rgb(var(--spine-writ) / <alpha-value>)',
+        'spine-hist': 'rgb(var(--spine-hist) / <alpha-value>)',
       },
       borderRadius: {
         sm: 'var(--radius-sm)',

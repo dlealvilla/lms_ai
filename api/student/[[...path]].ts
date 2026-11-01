@@ -202,6 +202,8 @@ async function handleGetAttempt(
     assessment: {
       id: assessment.id,
       title: assessment.title,
+      courseCode: assessment.course.code,
+      courseId: assessment.course.id,
       effectiveClosed: assessmentWithStatus.effectiveClosed,
       pdfBlobUrl: assessment.pdfBlobUrl,
       pdfFileName: assessment.pdfFileName,
