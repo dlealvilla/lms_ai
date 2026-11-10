@@ -24,7 +24,7 @@
 
 ### "API_KEY_INVALID" or "PERMISSION_DENIED"
 - Your API key is invalid or doesn't have permissions
-- **Fix**: Get a new key from https://makersuite.google.com/app/apikey
+- **Fix**: Get a new key (see [Using Gemini API keys](https://ai.google.dev/gemini-api/docs/api-key))
 
 ### "QUOTA_EXCEEDED"
 - You've exceeded your API quota
@@ -37,15 +37,20 @@
 
 ## Check 4: Test the API Directly
 
-You can test the API route directly:
+`/api/chat` requires a signed-in session. Sign in to your deployment in the
+browser, copy the value of `localStorage.lms_auth_token` from the browser's
+developer tools, then:
 
 ```bash
-curl -X POST https://your-app.vercel.app/api/chat \
+curl -X POST "https://<your-app>.vercel.app/api/chat" \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <session-token>" \
   -d '{"prompt": "Hello", "chatHistory": []}'
 ```
 
-Replace `your-app.vercel.app` with your actual Vercel URL.
+Replace `<your-app>` with your actual Vercel deployment name. Without a valid
+token the route returns `401 Unauthorized`; very rapid repeated requests return
+`429` for a few minutes.
 
 If it returns a mock response, the API key isn't set.
 If it returns a real response, it's working!

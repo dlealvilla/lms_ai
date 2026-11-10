@@ -37,8 +37,8 @@ Vercel logs are in a different place:
 
 Test if the API route is working at all:
 
-1. Open your deployed app URL (e.g., `https://your-app.vercel.app`)
-2. Try accessing: `https://your-app.vercel.app/api/chat`
+1. Open your deployed app URL (e.g., `https://<your-app>.vercel.app`)
+2. Try accessing: `https://<your-app>.vercel.app/api/chat`
    - Should return: `{"error":"Method not allowed"}` (because it needs POST)
    - If you get 404, the API route isn't deployed
 

@@ -84,7 +84,7 @@ npm run dev
 
 3. Check API key validity:
    - Make sure your Gemini API key is valid
-   - Get a new key from: https://makersuite.google.com/app/apikey
+   - Get a new key: see [Using Gemini API keys](https://ai.google.dev/gemini-api/docs/api-key)
 
 ### API route returns 404
 

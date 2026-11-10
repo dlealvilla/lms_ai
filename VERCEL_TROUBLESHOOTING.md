@@ -1,54 +1,41 @@
-# Why Vercel Can't Find Your Repository
+# Why Vercel can't find your repository
 
-## Common Reasons:
+If your fork or copy of `wildmind-ai-for-education` doesn't show up when you
+import a project in Vercel, it's almost always one of these.
 
-### 1. **Repository is Private**
-- Vercel needs permission to access private repos
-- Solution: Make sure Vercel GitHub App has access
+## Common reasons
 
-### 2. **Vercel GitHub App Not Authorized**
-- Vercel needs to be connected to your GitHub account
-- Solution: Re-authorize Vercel
+### 1. The repository is private
+Vercel needs permission to read private repositories through the Vercel GitHub App.
 
-### 3. **Repository Name Mismatch**
-- GitHub is case-sensitive
-- `lms_ai` vs `LMS_AI` vs `lms-ai` are different
-- Solution: Check exact name
+### 2. The Vercel GitHub App isn't installed or authorized for that repository
+The app may be installed only for selected repositories.
 
-## How to Fix:
+### 3. Repository name or owner mismatch
+GitHub names are exact: check you're looking under the right account or
+organization, and that the name matches (for example `wildmind-ai-for-education`).
 
-### Option A: Re-authorize Vercel (Recommended)
+## How to fix
 
-1. Go to [vercel.com/account](https://vercel.com/account)
-2. Click **"Connected Accounts"** or **"GitHub"**
-3. Click **"Disconnect"** then **"Connect"** again
-4. Make sure to grant access to **all repositories** or specifically `lms_ai`
-5. Try importing again
+### Option A: Check the Vercel ↔ GitHub connection (recommended)
 
-### Option B: Check Repository Settings
+Follow Vercel's guide [Deploying GitHub projects with Vercel](https://vercel.com/docs/git/vercel-for-github),
+in particular the sections on connecting your GitHub account and choosing which
+repositories the Vercel app can access. Grant access to your repository, then try
+importing again.
 
-1. Go to your repo on GitHub: `https://github.com/dlealvilla/lms_ai`
-2. Click **"Settings"** → **"Integrations"** → **"Installed GitHub Apps"**
-3. Find **"Vercel"** and make sure it has access
-4. If not, click **"Configure"** and grant access
+### Option B: Check the GitHub App's repository access
 
-### Option C: Make Repository Public (Temporary Test)
+In GitHub, open your repository's **Settings → GitHub Apps** (or your account's
+**Settings → Applications → Installed GitHub Apps**), find **Vercel**, choose
+**Configure**, and make sure the repository is included. GitHub documents this in
+[Reviewing and modifying installed GitHub Apps](https://docs.github.com/en/apps/using-github-apps/reviewing-and-modifying-installed-github-apps).
 
-1. Go to repo **"Settings"** → **"General"** → Scroll down
-2. Change visibility to **"Public"** (temporarily)
-3. Try importing in Vercel
-4. Change back to private after connecting
+### Option C: Deploy with the Vercel CLI
 
-### Option D: Use the Clone (lms_ai_vercel) - Not Recommended
+If the import screen still doesn't list the repository, you can deploy from your
+local clone with the [Vercel CLI](https://vercel.com/docs/cli) (`vercel`, then
+`vercel --prod`) and connect Git later.
 
-If you must use `lms_ai_vercel`, we can:
-1. Change your local remote to point to `lms_ai_vercel`
-2. Push all code there
-3. Connect Vercel to that repo
-
-But this creates duplicate repos, which is messy.
-
-## Best Solution:
-
-**Re-authorize Vercel with GitHub and grant access to `lms_ai` repository.**
-
+See [DEPLOY_FROM_CLONE.md](DEPLOY_FROM_CLONE.md) for the full setup, including
+the environment variables the app needs.

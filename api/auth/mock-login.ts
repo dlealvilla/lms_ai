@@ -1,9 +1,31 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { prisma, withDbRetry } from '../lib/db.js';
-import { createMockToken } from '../lib/auth.js';
+import { createSessionToken } from '../lib/auth.js';
+import { consume, getClientIp, type RateLimitRule } from '../lib/rate-limit.js';
 
 const ROLE_ENUM = ['STUDENT', 'TEACHER', 'ADMIN', 'SUPER_ADMIN'] as const;
 type RoleEnum = (typeof ROLE_ENUM)[number];
+
+/**
+ * Roles reachable through the demo login screens (/login/student,
+ * /login/teacher, /login/admin). SUPER_ADMIN is not offered by any screen,
+ * so the mock login no longer issues it or switches an account to it.
+ */
+const MOCK_LOGIN_ROLES: readonly RoleEnum[] = ROLE_ENUM.filter((r) => r !== 'SUPER_ADMIN');
+
+/** The only tenant the demo client ever logs into. */
+const DEFAULT_TENANT_SLUG = 'wildmind-academy';
+const MOCK_LOGIN_TENANTS: readonly string[] = [DEFAULT_TENANT_SLUG];
+
+const MAX_EMAIL_LENGTH = 254;
+// Same shape a browser <input type="email"> accepts: something@something, no spaces.
+const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+$/;
+
+// Generous abuse guards (per serverless instance). Normal demo use never gets close.
+export const MOCK_LOGIN_RATE_LIMITS: Record<'ipLogin' | 'ipCreate', RateLimitRule> = {
+  ipLogin: { name: 'mock-login:ip:10m', limit: 200, windowMs: 10 * 60 * 1000 },
+  ipCreate: { name: 'mock-login:create:ip:1h', limit: 100, windowMs: 60 * 60 * 1000 },
+};
 
 /**
  * Map any client-provided role string to the Prisma Role enum.
@@ -32,26 +54,52 @@ export default async function handler(
     return response.status(405).json({ error: 'Method not allowed' });
   }
 
+  const clientIp = getClientIp(request);
+  const loginLimit = consume(MOCK_LOGIN_RATE_LIMITS.ipLogin, clientIp);
+  if (!loginLimit.allowed) {
+    response.setHeader('Retry-After', String(loginLimit.retryAfterSec));
+    return response.status(429).json({
+      error: 'Too many sign-in attempts',
+      message: 'Too many sign-in attempts. Please wait a few minutes and try again.',
+    });
+  }
+
   try {
-    const { email, role: rawRole, tenantSlug } = request.body;
+    const { email, role: rawRole, tenantSlug } = request.body || {};
 
     if (!email || rawRole == null || rawRole === '') {
       return response.status(400).json({ error: 'Email and role are required' });
     }
 
+    if (
+      typeof email !== 'string' ||
+      email.length > MAX_EMAIL_LENGTH ||
+      !EMAIL_SHAPE.test(email)
+    ) {
+      return response.status(400).json({
+        error: 'Invalid email',
+        message: 'Please enter a valid email address.',
+      });
+    }
+
     const role = normalizeRole(rawRole);
-    if (!role) {
+    if (!role || !MOCK_LOGIN_ROLES.includes(role)) {
       return response.status(400).json({
         error: 'Invalid role',
-        message: `Role must be one of: ${ROLE_ENUM.join(', ')} (case-insensitive)`,
+        message: `Role must be one of: ${MOCK_LOGIN_ROLES.join(', ')} (case-insensitive)`,
       });
+    }
+
+    const slug = tenantSlug == null || tenantSlug === '' ? DEFAULT_TENANT_SLUG : tenantSlug;
+    if (typeof slug !== 'string' || !MOCK_LOGIN_TENANTS.includes(slug)) {
+      return response.status(404).json({ error: 'Tenant not found' });
     }
 
     // Find tenant (retry: Neon free tier can be cold on first request)
     const tenant = await withDbRetry(
       () =>
         prisma.tenant.findUnique({
-          where: { slug: tenantSlug || 'wildmind-academy' },
+          where: { slug },
         }),
       { label: 'mock-login:tenant' },
     );
@@ -76,6 +124,15 @@ export default async function handler(
 
     // For mock login, create user if not exists
     if (!user) {
+      const createLimit = consume(MOCK_LOGIN_RATE_LIMITS.ipCreate, clientIp);
+      if (!createLimit.allowed) {
+        response.setHeader('Retry-After', String(createLimit.retryAfterSec));
+        return response.status(429).json({
+          error: 'Too many new accounts',
+          message: 'Too many new demo accounts from this network. Please try again later.',
+        });
+      }
+
       // Generate a name from email
       const namePart = email.split('@')[0];
       const name = namePart.charAt(0).toUpperCase() + namePart.slice(1);
@@ -97,7 +154,10 @@ export default async function handler(
 
     // Verify role matches (for mock login, we allow the requested role)
     // In production, you'd verify against the actual user role
-    if (user.role !== role) {
+    // Owner decision pending: this still lets any visitor switch an existing
+    // account's role via the demo screens (see PR "Needs owner decision").
+    // Users already at SUPER_ADMIN are never downgraded or touched here.
+    if (user.role !== role && user.role !== 'SUPER_ADMIN') {
       // Update role for mock login flexibility
       user = await withDbRetry(
         () =>
@@ -110,7 +170,7 @@ export default async function handler(
     }
 
     // Create token
-    const token = createMockToken({
+    const token = createSessionToken({
       userId: user.id,
       tenantId: tenant.id,
       role: user.role as RoleEnum,

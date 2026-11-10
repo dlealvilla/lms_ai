@@ -13,29 +13,29 @@ This guide walks you through deploying the LMS Writing Prototype to Vercel via G
 ### If you don't have a GitHub repository yet:
 
 1. **Create a new repository on GitHub:**
-   - Go to [github.com/new](https://github.com/new)
-   - Name it (e.g., `lms-ai` or `lms-writing-prototype`)
+   - Follow GitHub's guide to [creating a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)
+   - Name it (e.g., `wildmind-ai-for-education`)
    - Choose Public or Private
    - **Don't** initialize with README, .gitignore, or license (we already have these)
    - Click "Create repository"
 
 2. **Initialize git and push your code:**
    ```bash
-   cd /Users/usyd/Desktop/LMS_AI
+   cd /path/to/wildmind-ai-for-education
    git init
    git add .
    git commit -m "Initial commit: LMS Writing Prototype"
    git branch -M main
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+   git remote add origin https://github.com/<your-username>/<your-repo>.git
    git push -u origin main
    ```
 
-   Replace `YOUR_USERNAME` and `YOUR_REPO_NAME` with your actual GitHub username and repository name.
+   Replace `<your-username>` and `<your-repo>` with your actual GitHub username and repository name.
 
 ### If you already have a GitHub repository:
 
 ```bash
-cd /Users/usyd/Desktop/LMS_AI
+cd /path/to/wildmind-ai-for-education
 git add .
 git commit -m "Ready for deployment"
 git push
@@ -72,7 +72,7 @@ git push
 5. **Deploy:**
    - Click "Deploy"
    - Wait for the build to complete (usually 1-3 minutes)
-   - Your app will be live at a URL like `https://your-project-name.vercel.app`
+   - Your app will be live at a URL like `https://<your-project>.vercel.app`
 
 ### Option B: Deploy via Vercel CLI
 
@@ -88,7 +88,7 @@ git push
 
 3. **Deploy:**
    ```bash
-   cd /Users/usyd/Desktop/LMS_AI
+   cd /path/to/wildmind-ai-for-education
    vercel
    ```
    - Follow the prompts
@@ -167,6 +167,7 @@ Vercel will automatically detect the push and redeploy!
 ## Useful Links
 
 - [Vercel Documentation](https://vercel.com/docs)
-- [Vite Deployment Guide](https://vitejs.dev/guide/static-deploy.html#vercel)
-- [Vercel Dashboard](https://vercel.com/dashboard)
+- [Vite Deployment Guide](https://vite.dev/guide/static-deploy.html#vercel)
+- [Getting started with Vercel](https://vercel.com/docs/getting-started-with-vercel)
+- [Deploying your own copy (env vars, database)](DEPLOY_FROM_CLONE.md)
 
