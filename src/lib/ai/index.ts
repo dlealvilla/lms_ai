@@ -1,4 +1,5 @@
 import type { AIProvider } from './types';
+import { getAuthHeaders } from '../auth/AuthContext';
 
 /** Pull a usable assistant string from common API / stub shapes. */
 function extractAssistantText(data: unknown): string | null {
@@ -25,6 +26,7 @@ class APIAIProvider implements AIProvider {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...getAuthHeaders(),
       },
       body: JSON.stringify({
         prompt,
