@@ -10,7 +10,7 @@ Your API key exists, but the **Generative Language API** might not be enabled fo
 
 ### Step 1: Enable the API
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+1. Open the Google Cloud Console (see [Google Cloud documentation](https://cloud.google.com/docs) if you are new to it)
 2. Select your project (or create one if you don't have one)
 3. Go to **APIs & Services** → **Library**
 4. Search for **"Generative Language API"**
@@ -33,7 +33,7 @@ Make sure you're using the correct type of API key:
 
 ### Step 4: Get a New API Key (if needed)
 
-1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
+1. Follow [Using Gemini API keys](https://ai.google.dev/gemini-api/docs/api-key) to open Google AI Studio's API key page
 2. If you see your existing key, make sure the API is enabled
 3. Or create a new API key
 4. Make sure to enable the Generative Language API for that key

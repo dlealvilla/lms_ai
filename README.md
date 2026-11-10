@@ -46,7 +46,7 @@ A multi-role LMS prototype (student / teacher / admin) where writing assessments
 5. **Teacher** opens the student’s attempt **read-only** — same workspace, chat + marks visible — and can set a mark (0–100).
 6. **Admin** gets a tenant overview (read-oriented today).
 
-Auth for the demo is **mock email login** with unsigned base64 tokens (`api/lib/auth.ts`) — fine for a prototype, not production identity.
+Auth for the demo is **mock email login** (any password) issuing HMAC-SHA256-signed session tokens (`api/lib/auth.ts`, keyed by `TOKEN_SECRET`) — fine for a prototype, not production identity.
 
 ---
 
@@ -67,7 +67,7 @@ npm run dev
 
 Open the URL Vite prints (usually `http://localhost:5173`). Use the landing page role buttons, or `/login/student` and `/login/teacher`.
 
-**Scripts:** `dev`, `build`, `lint`, `preview`, `db:generate`, `db:push`, `db:migrate`, `db:seed`, `db:studio`. There is **no** `npm test` yet — see [good first issues](docs/good-first-issues.md).
+**Scripts:** `dev`, `build`, `lint`, `test:security`, `preview`, `db:generate`, `db:push`, `db:migrate`, `db:seed`, `db:studio`. There is no full `npm test` suite yet — `npm run test:security` checks session signing, `/api/chat` auth and rate limits; see [good first issues](docs/good-first-issues.md).
 
 **Gemini:** Prefer `GEMINI_API_KEY` (server-only). Current `main` still accepts `VITE_GEMINI_API_KEY` as a fallback in `/api/chat` — don’t put a real key in a `VITE_` var.
 
@@ -83,7 +83,7 @@ This is an open prototype, not a finished product.
 | No create-course API | Courses/assessments come from `prisma/seed.ts`; teacher API is mostly GET/PATCH |
 | No per-assessment AI settings | Every open assessment gets the same tutor behaviour |
 | Attempt analytics not on `main` | Sample analytics UI lives on theme/dev branches; scores aren’t computed from live attempts yet |
-| Mock auth | Unsigned base64 tokens; `TOKEN_SECRET` not used to sign on current `main` |
+| Mock auth | Demo email login, any password; sessions signed with `TOKEN_SECRET` (HMAC-SHA256), 7-day expiry |
 | Gemini key hygiene | `/api/chat` still checks `VITE_GEMINI_*` and logs key metadata |
 | Folio theme | Editorial Folio UI is on `theme/folio` (open PR) — evolves Bookshelf; not merged to `main` |
 | Demo page title | Historically “LMS Writing Prototype” in `index.html` (fixed on this launch branch) |
