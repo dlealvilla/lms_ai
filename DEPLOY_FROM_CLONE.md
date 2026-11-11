@@ -52,6 +52,7 @@ In the Vercel project, add these
 | `DATABASE_URL` | yes | Postgres connection string (pooled) |
 | `TOKEN_SECRET` | yes | Long random string used to sign login sessions (HMAC-SHA256). Deployed builds refuse to sign or accept sessions without it. Changing it signs everyone out. |
 | `GEMINI_API_KEY` | for AI chat | Server-only Gemini key ([get an API key](https://ai.google.dev/gemini-api/docs/api-key)). Never use a `VITE_` prefix. |
+| `GEMINI_MODEL` | optional | Override the Gemini model used by `/api/chat`. Defaults to `gemini-3.6-flash`. |
 | `CRON_SECRET` | recommended | Shared secret for `/api/cron/auto-close-assessments` (`x-cron-secret` header) |
 | `BLOB_READ_WRITE_TOKEN` | for PDF upload | Vercel Blob token used by teacher PDF uploads |
 
