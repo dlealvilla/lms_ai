@@ -65,12 +65,14 @@ export default async function handler(
 
     // Initialize Gemini
     const genAI = new GoogleGenerativeAI(apiKey);
-    
-    // Use gemini-2.5-flash (available and supports generateContent)
-    // Model names must include the 'models/' prefix
-    // Available models: gemini-2.5-flash, gemini-2.5-pro, gemini-pro-latest, etc.
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
-    console.log('Using gemini-2.5-flash model');
+
+    // Default Flash model. gemini-2.5-flash returns 404 for new Gemini keys.
+    // Google suggests gemini-3.8-flash, but that model (and 3.7) timed out on a
+    // free-tier key; gemini-3.6-flash responds. Override with GEMINI_MODEL.
+    const DEFAULT_GEMINI_MODEL = 'gemini-3.6-flash';
+    const modelName = process.env.GEMINI_MODEL?.trim() || DEFAULT_GEMINI_MODEL;
+    const model = genAI.getGenerativeModel({ model: modelName });
+    console.log(`Using ${modelName} model`);
 
     // Convert chat history to Gemini format
     // Filter and ensure first message is from user
