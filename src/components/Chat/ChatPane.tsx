@@ -5,6 +5,8 @@ import { Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { showToast } from '@/lib/toast';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { AssistantMarkdown } from './AssistantMarkdown';
+import { markdownToPlainText } from '@/lib/ai/assistantText';
 
 interface ChatPaneProps {
   messages: ChatMessage[];
@@ -96,8 +98,9 @@ export function ChatPane({
     if (readOnly) return;
     const insertFunction = (window as any).__editorInsertText;
     if (insertFunction) {
-      insertFunction(message.content, message.id);
-      onInsertText(message.content, message.id);
+      const clean = markdownToPlainText(message.content);
+      insertFunction(clean, message.id);
+      onInsertText(clean, message.id);
     } else {
       showToast('Editor is not ready for insert', 'error');
     }
@@ -152,7 +155,11 @@ export function ChatPane({
               >
                 {isStudent ? 'You asked' : message.isError ? 'AI · notice' : 'AI · draft ready'}
               </div>
-              <div className="whitespace-pre-wrap break-words">{message.content}</div>
+              {isStudent ? (
+                <div className="whitespace-pre-wrap break-words">{message.content}</div>
+              ) : (
+                <AssistantMarkdown text={message.content} />
+              )}
               {!isStudent && !readOnly && !message.isError && (
                 <button
                   type="button"

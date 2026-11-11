@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth, Role } from '../lib/auth/AuthContext';
 import { GraduationCap } from 'lucide-react';
-import { DecorativeSpine } from '@/components/bookshelf';
 
 export function Login() {
   const { role: roleParam } = useParams<{ role: string }>();
@@ -13,6 +12,7 @@ export function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [quickBusy, setQuickBusy] = useState<string | null>(null);
 
   const role: Role = (roleParam?.toUpperCase() as Role) || 'STUDENT';
 
@@ -48,47 +48,60 @@ export function Login() {
 
   const config = getRoleConfig();
 
+  const signIn = async (signInEmail: string, signInPassword: string) => {
+    await login(signInEmail || config.defaultEmail, signInPassword, role);
+    navigate(config.redirectTo);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
 
     try {
-      await login(email || config.defaultEmail, password, role);
-      navigate(config.redirectTo);
-    } catch (err: any) {
-      setError(err.message || 'Login failed');
+      await signIn(email, password);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const quickFill = (quickEmail: string) => {
+  const quickSignIn = async (quickEmail: string) => {
     setEmail(quickEmail);
+    setError(null);
+    setIsLoading(true);
+    setQuickBusy(quickEmail);
+    try {
+      // Same demo login path and rate limits as the form; password is unused by the API.
+      await signIn(quickEmail, '');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Login failed');
+    } finally {
+      setIsLoading(false);
+      setQuickBusy(null);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] text-ink flex">
-      <aside
-        className="hidden sm:flex w-[72px] py-7 flex-col items-center border-r border-[#E8E6E1] bg-white"
-        aria-label="Decorative spine rail"
-      >
-        <div className="w-9 h-9 rounded-[10px] bg-ink text-white flex items-center justify-center mb-4">
-          <GraduationCap className="h-4 w-4" />
+    <div className="min-h-screen bg-[#FAFAF8] text-ink flex flex-col">
+      <header className="border-b border-[#E8E6E1] bg-white">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-16 py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-[9px] bg-ink text-white">
+              <GraduationCap className="h-5 w-5" />
+            </div>
+            <div className="leading-tight">
+              <div className="font-semibold text-[15px]">WildMind</div>
+              <div className="text-[11px] text-[#555]">AI for Education</div>
+            </div>
+          </Link>
         </div>
-        <div className="flex flex-col items-center gap-2.5 flex-1">
-          <DecorativeSpine label="COMP101" color="#C45C4A" height={56} />
-          <DecorativeSpine label="WRIT201" color="#3D6B9A" height={72} />
-          <DecorativeSpine label="HIST201" color="#4A7A52" height={48} />
-        </div>
-        <div className="w-7 h-7 rounded-full bg-[#E8E6E1] text-[11px] font-bold flex items-center justify-center text-[#555]" aria-hidden>
-          WM
-        </div>
-      </aside>
+      </header>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-[400px] bg-white border border-[#E8E6E1] rounded-xl shadow-folio px-9 py-10">
-          <div className="text-[12px] font-semibold tracking-[0.08em] text-[#888] mb-2">
+          <div className="text-[12px] font-semibold tracking-[0.08em] text-[#555] mb-2">
             WILDMIND AI FOR EDUCATION
           </div>
           <h1 className="font-serif text-[36px] text-ink tracking-[0.01em] mb-1.5">
@@ -100,7 +113,7 @@ export function Login() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-[11px] font-semibold text-[#888] tracking-[0.06em] mb-1.5"
+                className="block text-[12px] font-semibold text-[#555] tracking-[0.06em] mb-1.5"
               >
                 EMAIL
               </label>
@@ -111,13 +124,14 @@ export function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={config.defaultEmail}
                 className="folio-input"
+                autoComplete="username"
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="block text-[11px] font-semibold text-[#888] tracking-[0.06em] mb-1.5"
+                className="block text-[12px] font-semibold text-[#555] tracking-[0.06em] mb-1.5"
               >
                 PASSWORD
               </label>
@@ -128,8 +142,9 @@ export function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 className="folio-input"
+                autoComplete="current-password"
               />
-              <p className="text-xs text-ink-subtle mt-2">Mock login — any password works</p>
+              <p className="text-sm text-ink-muted mt-2">Demo — sample accounts, no real data</p>
             </div>
 
             {error && (
@@ -143,40 +158,41 @@ export function Login() {
               disabled={isLoading}
               className="folio-btn-primary w-full !py-3"
             >
-              {isLoading ? 'Signing in…' : 'Sign In'}
+              {isLoading && !quickBusy ? 'Signing in…' : 'Sign In'}
             </button>
           </form>
 
           <div className="mt-5 pt-4 border-t border-[#E8E6E1] text-center">
-            <p className="text-[11px] text-ink-subtle mb-2">Quick login</p>
+            <p className="text-sm text-ink-muted mb-2">Quick login</p>
             <div className="flex flex-wrap gap-2 justify-center">
               {config.quick.map((q) => (
                 <button
                   key={q.email}
                   type="button"
-                  onClick={() => quickFill(q.email)}
-                  className="folio-btn-secondary !text-xs"
+                  onClick={() => quickSignIn(q.email)}
+                  disabled={isLoading}
+                  className="folio-btn-secondary !text-sm"
                 >
-                  {q.label}
+                  {quickBusy === q.email ? 'Signing in…' : q.label}
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="mt-6 text-center text-xs text-ink-subtle">
+          <div className="mt-6 text-center text-sm text-ink-muted">
             {role !== 'STUDENT' && (
-              <Link to="/login/student" className="hover:text-ink mx-2">
-                Student Login
+              <Link to="/login/student" className="hover:text-ink mx-2 underline-offset-4 hover:underline">
+                Student login
               </Link>
             )}
             {role !== 'TEACHER' && (
-              <Link to="/login/teacher" className="hover:text-ink mx-2">
-                Teacher Login
+              <Link to="/login/teacher" className="hover:text-ink mx-2 underline-offset-4 hover:underline">
+                Teacher login
               </Link>
             )}
             {role !== 'ADMIN' && (
-              <Link to="/login/admin" className="hover:text-ink mx-2">
-                Admin Login
+              <Link to="/login/admin" className="hover:text-ink mx-2 underline-offset-4 hover:underline">
+                Admin login
               </Link>
             )}
           </div>

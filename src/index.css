@@ -1,6 +1,23 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
+/*
+  Tailwind v4 treats any --spacing-* variable in this file as a spacing
+  token, and max-w-sm/md/lg/xl/2xl then use those instead of the default
+  --container-* widths. --spacing-xl was 2rem, so the landing subtitle
+  wrapped one word per line. Folio space tokens are named --folio-space-*
+  so they cannot collide. The container widths below restore the defaults
+  if a future token ever collides again.
+*/
+@theme {
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+}
+
 @layer base {
   :root {
     /* ============================================
@@ -77,12 +94,12 @@
     --radius-md: 10px;
     --radius-lg: 12px;
 
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-2xl: 3rem;
+    --folio-space-xs: 0.25rem;
+    --folio-space-sm: 0.5rem;
+    --folio-space-md: 1rem;
+    --folio-space-lg: 1.5rem;
+    --folio-space-xl: 2rem;
+    --folio-space-2xl: 3rem;
 
     --font-serif: 'Newsreader', 'Source Serif 4', Georgia, 'Times New Roman', serif;
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -299,3 +316,46 @@
 @media (max-width: 1023px) {
   .folio-desktop-only { display: none !important; }
 }
+
+/* Compact, safe markdown in AI margin notes (no raw HTML). */
+.assistant-md {
+  overflow-wrap: break-word;
+}
+.assistant-md > *:first-child { margin-top: 0; }
+.assistant-md > *:last-child { margin-bottom: 0; }
+.assistant-md p { margin: 0 0 0.6em; }
+.assistant-md h1, .assistant-md h2, .assistant-md h3, .assistant-md h4 {
+  font-family: var(--font-serif);
+  font-weight: 560;
+  letter-spacing: 0.005em;
+  font-size: 1em;
+  margin: 0 0 0.4em;
+}
+.assistant-md ul, .assistant-md ol {
+  margin: 0 0 0.6em;
+  padding-left: 1.25em;
+}
+.assistant-md li { margin: 0 0 0.2em; }
+.assistant-md blockquote {
+  margin: 0 0 0.6em;
+  padding-left: 0.75em;
+  border-left: 3px solid #F0E0A0;
+  color: #444;
+}
+.assistant-md code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  background: #fff;
+  border-radius: 4px;
+  padding: 0.05em 0.3em;
+}
+.assistant-md pre {
+  margin: 0 0 0.6em;
+  padding: 8px 10px;
+  background: #fff;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.assistant-md pre code { padding: 0; background: transparent; }
+.assistant-md a { text-decoration: underline; color: inherit; }
+.assistant-md hr { border: 0; border-top: 1px solid #E8E6E1; margin: 0.6em 0; }
